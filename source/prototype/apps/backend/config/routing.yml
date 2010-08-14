@@ -1,0 +1,47 @@
+sf_guard_permission:
+  class: sfPropelRouteCollection
+  options:
+    model:                sfGuardPermission
+    module:               sf_guard_permission
+    prefix_path:          /sf_guard_permission
+    column:               id
+    with_wildcard_routes: true
+
+sf_guard_user:
+  class: sfPropelRouteCollection
+  options:
+    model:                sfGuardUser
+    module:               sf_guard_user
+    prefix_path:          /sf_guard_user
+    column:               id
+    with_wildcard_routes: true
+
+listing:
+  class: sfPropelRouteCollection
+  options:
+    model:                listing
+    module:               listing
+    prefix_path:          /listing
+    column:               id
+    with_wildcard_routes: true
+
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+s:
+  url: /admin
+  param: { module: sfGuardUser, action: index }
+
+# default rules
+homepage:
+  url:   /
+  param: { module: default, action: index }
+
+# generic rules
+# please, remove them by adding more specific rules
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*

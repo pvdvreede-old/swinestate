@@ -1,0 +1,16 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/08-Security
+
+new:
+  is_secure: true
+  credentials: agent
+
+
+edit:
+  is_secure: true
+  credentials: admin
+
+
+default:
+  is_secure: false
+
