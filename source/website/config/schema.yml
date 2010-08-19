@@ -1,0 +1,50 @@
+propel:
+  listing:
+    id: ~
+    listing_type_id: { type: integer, required: true, foreignTable: listing_type, foreignReference: id }
+    action_type_id: { type: integer, required: true, foreignTable: action_type, foreignReference: id }
+    address_id: { type: integer, required: true, foreignTable: address, foreignReference: id }
+    name: { type: varchar(255), required: true }
+    description: { type: varchar(2000), required: true }
+    bedrooms: { type: integer }
+    bathrooms: { type: integer }
+    garage: { type: integer }
+    asking_price: { type: decimal, required: true }
+    actual_price: { type: decimal }
+    listing_status_id: { type: integer, required: true, foreignTable: listing_status, foreignReference: id }
+    created_at: ~
+    updated_at: ~
+
+  listing_type:
+    id: ~
+    name: { type: varchar(255), required: true }
+    created_at: ~
+    updated_at: ~
+
+  action_type:
+    id: ~
+    name: { type: varchar(255), required: true }
+    created_at: ~
+    updated_at: ~
+
+  listing_status:
+    id: ~
+    name: { type: varchar(255), required: true }
+    created_at: ~
+    updated_at: ~
+
+  address:
+    id: ~
+    suburb_id: { type: integer, required: true, foreignTable: suburb, foreignReference: id }
+    street_number: { type: varchar(10), required: true }
+    street_name: { type: varchar(255), required: true }
+    created_at: ~
+    updated_at: ~
+
+  suburb:
+    id: ~
+    name: { type: varchar(100), required: true }
+    postcode: { type: integer, required: true }
+    country: { type: varchar(100), required: true }
+    created_at: ~
+    updated_at: ~

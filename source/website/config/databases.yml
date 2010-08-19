@@ -1,0 +1,24 @@
+dev:
+  propel:
+    class: sfPropelDatabase
+    param:
+      classname: DebugPDO
+      debug: { realmemoryusage: true, details: { time: { enabled: true }, slow: { enabled: true, threshold: 0.1 }, mem: { enabled: true }, mempeak: { enabled: true }, memdelta: { enabled: true } } }
+      dsn: 'mysql:host=localhost;dbname=swinestate-pt'
+      username: swinestate
+      password: test
+test:
+  propel:
+    param:
+      classname: DebugPDO
+all:
+  propel:
+    class: sfPropelDatabase
+    param:
+      classname: PropelPDO
+      dsn: 'mysql:dbname=SWINESTATE;host=localhost'
+      username: root
+      password: null
+      encoding: utf8
+      persistent: true
+      pooling: true

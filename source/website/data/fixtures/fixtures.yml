@@ -1,0 +1,35 @@
+
+ListingType:
+  house:
+    name: House
+
+  office:
+    name: Office
+
+  apartment:
+    name: Apartment
+
+  townhouse:
+    name: Townhouse
+
+ActionType:
+  rental:
+    name: Rental
+
+  sale:
+    name: Sale
+
+  lease:
+    name: Lease
+
+ListingStatus:
+  active:
+    name: Active
+
+  sold:
+    name: Sold
+
+  rented:
+    name: Rented
+
+
