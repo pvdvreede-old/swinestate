@@ -11,9 +11,8 @@
   <body>
       <h1>Name and logo here</h1>
       <p>Login or register links here</p>
-      <p>Menu Here</p>
-       <?php echo $sf_content ?>
-      
+      <?php //include_partial('mainMenu'); ?>
+      <?php echo $sf_content ?> 
       <p>Footer here</p>
   </body>
 </html>

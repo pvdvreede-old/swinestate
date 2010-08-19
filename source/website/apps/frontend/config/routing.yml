@@ -6,6 +6,14 @@ homepage:
   url:   /
   param: { module: listing, action: index }
 
+search:
+  url: /search
+  param: { module: listing, action: search }
+
+view_single:
+  url: /view/:id
+  param: {module: listing, action: view }
+  requirements: { id: \d+ }
 
 # generic rules
 # please, remove them by adding more specific rules

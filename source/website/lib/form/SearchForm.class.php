@@ -11,12 +11,14 @@
  */
 class SearchForm extends sfForm {
 
-    private static $bedrooms_choices = array('0' => 'Any',
-                                             '1' => '1+',
-                                             '2' => '2+'  );
-    private static $bathroom_choices = array('0' => 'Any',
-                                             '1' => '1+',
-                                             '2' => '2+'  );
+    private static $bedrooms_choices = array(0 => 'Any',
+                                             1 => '1+',
+                                             2 => '2+',
+                                             3 => '3+',
+                                             4 => '4+');
+    private static $bathroom_choices = array(0 => 'Any',
+                                             1 => '1+',
+                                             2 => '2+'  );
 
     public function configure() {
 
