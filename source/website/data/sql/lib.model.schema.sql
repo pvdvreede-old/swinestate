@@ -133,5 +133,27 @@ CREATE TABLE `suburb`
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
+#-----------------------------------------------------------------------------
+#-- user_profile
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user_profile`;
+
+
+CREATE TABLE `user_profile`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`user_id` INTEGER  NOT NULL,
+	`first_name` VARCHAR(20),
+	`last_name` VARCHAR(20),
+	`email` VARCHAR(355),
+	PRIMARY KEY (`id`),
+	INDEX `user_profile_FI_1` (`user_id`),
+	CONSTRAINT `user_profile_FK_1`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON DELETE CASCADE
+)Type=InnoDB;
+
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

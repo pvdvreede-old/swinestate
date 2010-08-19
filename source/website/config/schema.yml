@@ -48,3 +48,11 @@ propel:
     country: { type: varchar(100), required: true }
     created_at: ~
     updated_at: ~
+
+  user_profile:
+    _attributes: { phpName: sfGuardUserProfile }
+    id:
+    user_id:     { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade }
+    first_name:  varchar(20)
+    last_name:   varchar(20)
+    email:       varchar(355)
