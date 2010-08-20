@@ -2,7 +2,7 @@
 <?php use_javascripts_for_form($form) ?>
 
 <div id='search'>
-    <form action="<?php echo url_for('@search');  ?>" method="post">
+    <form action="<?php echo url_for('@sale_search');  ?>" method="post">
     <?php echo $form->renderGlobalErrors() ?>
     <p><?php echo $form['suburb']->renderLabel(); ?>: <?php echo $form['suburb']->render(); ?></p>
     <p>

@@ -15,36 +15,70 @@ class userActions extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeRegister(sfWebRequest $request)
+  public function executeDetails(sfWebRequest $request)
   {
-    $this->form = new RegisterForm();
+
+    $this->form = new UserDetailsForm();
+
+    if ($this->getUser()->isAuthenticated()) {
+        $this->form->configure($this->getUser()->getProfile());
+        $this->action = 'Update';
+        $new = false;
+    } else {       
+        $this->action = 'Create';
+        $new = true;      
+    }
+    
+    // deal with the request
+    if ($request->isMethod('post')) {
+     
+        $this->form->bind($request->getParameter('user'));
+        
+        if ($this->form->isValid()) {
+            
+            $userValues = $this->form->getValues();
+            
+            if ($new) {
+                
+                $user = new sfGuardUser();
+                $user->setUsername($userValues['username']);
+                $user->setPassword($userValues['password']);
+                $user->save();
+                
+                $this->getUser()->signin($user, false);
+
+                $this->getUser()->getProfile()->setEmailAddress($userValues['email_address']);
+
+            } else {
+
+                //if ($userValues['password'] != '')
+                    //$this->getUser()-setPassword($userValues['password']);
+
+            }
+
+            $this->getUser()->getProfile()->setFirstName($userValues['first_name']);
+            $this->getUser()->getProfile()->setLastName($userValues['last_name']);
+            
+            $this->getUser()->getProfile()->setPhoneNumber($userValues['phone_number']);
+            $this->getUser()->getProfile()->save();
+            
+
+            $this->redirect('@profile_page');
+            
+        }
+        
+    }
+
   }
 
-  public function executeSearch(sfWebRequest $request)
+  public function executeProfile(sfWebRequest $request)
   {
+       if (!$this->getUser()->isAuthenticated()) {
 
-      $this->form = new SearchForm();
+           $this->redirect('@homepage');
 
-      $c = new Criteria();
-
-      if ($request->getParameter('suburb') != '') {
-
-          $c->addJoin(ListingPeer::ADDRESS_ID, SuburbPeer::ID);
-          $c->addJoin(AddressPeer::SUBURB_ID, SuburbPeer::ID);
-          $c->add(SuburbPeer::NAME, '%'.strtolower($request->getParameter('suburb')).'%', Criteria::LIKE);
-
-      }
-
-      if ($request->getParameter('listing_type') != 0) {
-
-          $c->add(ListingPeer::LISTING_TYPE_ID, $request->getParameter('listing_type'));
-
-      }
-
-      $c->add(ListingPeer::BATHROOMS, $request->getParameter('bathrooms'), Criteria::GREATER_EQUAL);
-      $c->add(ListingPeer::BEDROOMS, $request->getParameter('bedrooms'), Criteria::GREATER_EQUAL);
-
-      $this->listings = ListingPeer::doSelect($c);
+       }
+   
 
   }
 

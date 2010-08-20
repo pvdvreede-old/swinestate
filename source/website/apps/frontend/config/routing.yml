@@ -6,8 +6,8 @@ homepage:
   url:   /
   param: { module: listing, action: index }
 
-search:
-  url: /search
+sale_search:
+  url: /sale/search
   param: { module: listing, action: search }
 
 view_single:
@@ -27,6 +27,26 @@ sf_guard_password:
   url:   /request_password
   param: { module: sfGuardAuth, action: password }
 
+register:
+  url: /user/register
+  param: { module: user, action: details }
+
+alter_user:
+  url: /user/details
+  param: { module: user, action: details }
+
+alter_alert:
+  url: /user/alert/new
+  param: { module: user, action: alterAlert }
+
+
+change_password:
+  url: /user/password
+  param: { module: user, action: changePassword }
+
+profile_page:
+  url: /user/profile
+  param: { module: user, action: profile }
 
 # generic rules
 # please, remove them by adding more specific rules

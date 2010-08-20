@@ -53,6 +53,7 @@ propel:
     _attributes: { phpName: sfGuardUserProfile }
     id:
     user_id:     { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade }
-    first_name:  varchar(20)
-    last_name:   varchar(20)
-    email:       varchar(355)
+    first_name:  varchar(50)
+    last_name:   varchar(50)
+    email_address:       varchar(355)
+    phone_number: varchar(20)

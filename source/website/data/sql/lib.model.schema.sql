@@ -144,9 +144,10 @@ CREATE TABLE `user_profile`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`user_id` INTEGER  NOT NULL,
-	`first_name` VARCHAR(20),
-	`last_name` VARCHAR(20),
-	`email` VARCHAR(355),
+	`first_name` VARCHAR(50),
+	`last_name` VARCHAR(50),
+	`email_address` VARCHAR(355),
+	`phone_number` VARCHAR(20),
 	PRIMARY KEY (`id`),
 	INDEX `user_profile_FI_1` (`user_id`),
 	CONSTRAINT `user_profile_FK_1`
