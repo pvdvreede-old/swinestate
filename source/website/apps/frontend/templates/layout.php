@@ -10,7 +10,7 @@
     </head>
     <body>
         <div id="content">
-            <h1>Name and logo here</h1>
+            <h1><?php echo sfConfig::get('app_app_name'); ?></h1>
 
             <div id="user_dets">
             <?php if ($sf_user->isAuthenticated()) : ?>
@@ -23,10 +23,13 @@
 
             <?php endif; ?>
             </div>
-                    <div id="menu">
-                        <ul>
-                            <li><a href="<?php echo url_for('@homepage'); ?>">Selling</a></li>
-                        </ul>
+                    <div id="main_menu">
+                        <p>
+                            <span class="button"><?php echo link_to('Selling', '@homepage'); ?></span>
+                            <span class="button"><?php echo link_to('Renting', '@rent_homepage'); ?>  </span>
+                            <span class="button"><?php echo link_to('About', '@about'); ?></span>
+                            <span class="button"><?php echo link_to('Contact', '@contact'); ?></span>
+                        </p>
                     </div>
 
             <?php //include_partial('mainMenu'); ?>

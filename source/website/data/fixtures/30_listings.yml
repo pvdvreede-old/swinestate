@@ -1,5 +1,11 @@
 ## YAML Template.
 ---
+sfGuardUser:
+  paul:
+    username: Paul
+    algorithm: sha1
+    password: <?php echo sha1('test')."\n"; ?>
+
 
 Suburb:
 <?php for ($i = 1; $i<=50; $i++) : ?>  
@@ -24,12 +30,14 @@ Listing:
 <?php for ($i = 1; $i<=50; $i++) : ?>
   listing<?php echo $i; ?>:
     name: Test house <?php echo $i."\n" ; ?>
+    user_id: paul
     description: |
       It provides an architecture, components and tools for developers to build complex web applications faster. Choosing symfony allows you to release your applications earlier, host and scale them without problem, and maintain them over time with no surprise. Symfony is based on experience. It does not reinvent the wheel: it uses most of the best practices of web development and integrates some great third-party libraries.
     bedrooms: <?php echo rand(1, 7)."\n"; ?>
     bathrooms: <?php echo rand(1, 7)."\n"; ?>
     action_type_id: <?php echo ($i % 3 ? "sale\n" : "rental\n"); ?>
-    listing_type_id: <?php echo ($i % 6 ? "house\n" : "office\n"); ?>
+    property_type_id: <?php echo ($i % 6 ? "house\n" : "office\n"); ?>
+    listing_type_id: <?php echo ($i % 6 ? "sale\n" : "rent\n"); ?>
     address_id: address_<?php echo $i."\n"; ?>
     listing_status_id: <?php echo ($i % 6 ? "active\n" : "sold\n"); ?>
 <?php endfor; ?>

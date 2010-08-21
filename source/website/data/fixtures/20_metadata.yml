@@ -1,0 +1,20 @@
+
+ListingMetadataColumn:
+  sale_auction_date:
+    listing_type_id: sale
+    code: SALE_AUCTION_DATE
+    label: Auction date
+    value_type: STRING
+
+  sale_asking_price:
+    listing_type_id: sale
+    code: SALE_ASKING_PRICE
+    label: Asking price
+    value_type: DECIMAL
+
+  sale_actual_price:
+    listing_type_id: sale
+    code: SALE_ACTUAL_PRICE
+    label: Actual price
+    value_type: DECIMAL
+

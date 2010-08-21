@@ -13,34 +13,42 @@ DROP TABLE IF EXISTS `listing`;
 CREATE TABLE `listing`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`user_id` INTEGER  NOT NULL,
 	`listing_type_id` INTEGER  NOT NULL,
+	`property_type_id` INTEGER  NOT NULL,
 	`action_type_id` INTEGER  NOT NULL,
 	`address_id` INTEGER  NOT NULL,
 	`name` VARCHAR(255)  NOT NULL,
-	`description` VARCHAR(2000)  NOT NULL,
+	`description` TEXT  NOT NULL,
 	`bedrooms` INTEGER,
 	`bathrooms` INTEGER,
 	`garage` INTEGER,
-	`asking_price` DECIMAL  NOT NULL,
-	`actual_price` DECIMAL,
 	`listing_status_id` INTEGER  NOT NULL,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	PRIMARY KEY (`id`),
-	INDEX `listing_FI_1` (`listing_type_id`),
+	INDEX `listing_FI_1` (`user_id`),
 	CONSTRAINT `listing_FK_1`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`),
+	INDEX `listing_FI_2` (`listing_type_id`),
+	CONSTRAINT `listing_FK_2`
 		FOREIGN KEY (`listing_type_id`)
 		REFERENCES `listing_type` (`id`),
-	INDEX `listing_FI_2` (`action_type_id`),
-	CONSTRAINT `listing_FK_2`
+	INDEX `listing_FI_3` (`property_type_id`),
+	CONSTRAINT `listing_FK_3`
+		FOREIGN KEY (`property_type_id`)
+		REFERENCES `property_type` (`id`),
+	INDEX `listing_FI_4` (`action_type_id`),
+	CONSTRAINT `listing_FK_4`
 		FOREIGN KEY (`action_type_id`)
 		REFERENCES `action_type` (`id`),
-	INDEX `listing_FI_3` (`address_id`),
-	CONSTRAINT `listing_FK_3`
+	INDEX `listing_FI_5` (`address_id`),
+	CONSTRAINT `listing_FK_5`
 		FOREIGN KEY (`address_id`)
 		REFERENCES `address` (`id`),
-	INDEX `listing_FI_4` (`listing_status_id`),
-	CONSTRAINT `listing_FK_4`
+	INDEX `listing_FI_6` (`listing_status_id`),
+	CONSTRAINT `listing_FK_6`
 		FOREIGN KEY (`listing_status_id`)
 		REFERENCES `listing_status` (`id`)
 )Type=InnoDB;
@@ -53,6 +61,22 @@ DROP TABLE IF EXISTS `listing_type`;
 
 
 CREATE TABLE `listing_type`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(255)  NOT NULL,
+	`created_at` DATETIME,
+	`updated_at` DATETIME,
+	PRIMARY KEY (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- property_type
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `property_type`;
+
+
+CREATE TABLE `property_type`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(255)  NOT NULL,
@@ -94,6 +118,55 @@ CREATE TABLE `listing_status`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- listing_metadata_column
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `listing_metadata_column`;
+
+
+CREATE TABLE `listing_metadata_column`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`listing_type_id` INTEGER  NOT NULL,
+	`code` VARCHAR(25)  NOT NULL,
+	`label` VARCHAR(255)  NOT NULL,
+	`value_type` VARCHAR(255)  NOT NULL,
+	`created_at` DATETIME,
+	`updated_at` DATETIME,
+	PRIMARY KEY (`id`),
+	INDEX `listing_metadata_column_FI_1` (`listing_type_id`),
+	CONSTRAINT `listing_metadata_column_FK_1`
+		FOREIGN KEY (`listing_type_id`)
+		REFERENCES `listing_type` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- listing_metadata_value
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `listing_metadata_value`;
+
+
+CREATE TABLE `listing_metadata_value`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`metadata_column_id` INTEGER  NOT NULL,
+	`listing_id` INTEGER  NOT NULL,
+	`value` VARCHAR(2000)  NOT NULL,
+	`created_at` DATETIME,
+	`updated_at` DATETIME,
+	PRIMARY KEY (`id`),
+	INDEX `listing_metadata_value_FI_1` (`metadata_column_id`),
+	CONSTRAINT `listing_metadata_value_FK_1`
+		FOREIGN KEY (`metadata_column_id`)
+		REFERENCES `listing_metadata_column` (`id`),
+	INDEX `listing_metadata_value_FI_2` (`listing_id`),
+	CONSTRAINT `listing_metadata_value_FK_2`
+		FOREIGN KEY (`listing_id`)
+		REFERENCES `listing` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- address
 #-----------------------------------------------------------------------------
 
@@ -104,6 +177,7 @@ CREATE TABLE `address`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`suburb_id` INTEGER  NOT NULL,
+	`unit_number` VARCHAR(10),
 	`street_number` VARCHAR(10)  NOT NULL,
 	`street_name` VARCHAR(255)  NOT NULL,
 	`created_at` DATETIME,
@@ -127,6 +201,7 @@ CREATE TABLE `suburb`
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(100)  NOT NULL,
 	`postcode` INTEGER  NOT NULL,
+	`state` VARCHAR(3)  NOT NULL,
 	`country` VARCHAR(100)  NOT NULL,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
@@ -148,6 +223,8 @@ CREATE TABLE `user_profile`
 	`last_name` VARCHAR(50),
 	`email_address` VARCHAR(355),
 	`phone_number` VARCHAR(20),
+	`created_at` DATETIME,
+	`updated_at` DATETIME,
 	PRIMARY KEY (`id`),
 	INDEX `user_profile_FI_1` (`user_id`),
 	CONSTRAINT `user_profile_FK_1`

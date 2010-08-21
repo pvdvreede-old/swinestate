@@ -1,21 +1,28 @@
 propel:
   listing:
     id: ~
+    user_id: { type: integer, required: true, foreignTable: sf_guard_user, foreignReference: id }
     listing_type_id: { type: integer, required: true, foreignTable: listing_type, foreignReference: id }
+    property_type_id: { type: integer, required: true, foreignTable: property_type, foreignReference: id }
     action_type_id: { type: integer, required: true, foreignTable: action_type, foreignReference: id }
+    listing_status_id: { type: integer, required: true, foreignTable: listing_status, foreignReference: id }
     address_id: { type: integer, required: true, foreignTable: address, foreignReference: id }
     name: { type: varchar(255), required: true }
-    description: { type: varchar(2000), required: true }
+    description: { type: longvarchar, required: true }
     bedrooms: { type: integer }
     bathrooms: { type: integer }
     garage: { type: integer }
-    asking_price: { type: decimal, required: true }
-    actual_price: { type: decimal }
     listing_status_id: { type: integer, required: true, foreignTable: listing_status, foreignReference: id }
     created_at: ~
     updated_at: ~
 
   listing_type:
+    id: ~
+    name: { type: varchar(255), required: true }
+    created_at: ~
+    updated_at: ~
+
+  property_type:
     id: ~
     name: { type: varchar(255), required: true }
     created_at: ~
@@ -33,9 +40,27 @@ propel:
     created_at: ~
     updated_at: ~
 
+  listing_metadata_column:
+    id: ~
+    listing_type_id: { type: integer, required: true, foreignTable: listing_type, foreignReference: id }
+    code: { type: varchar(25), required: true }
+    label: { type: varchar(255), required: true }
+    value_type: { type: varchar, required: true }
+    created_at: ~
+    updated_at: ~
+
+  listing_metadata_value:
+    id: ~
+    metadata_column_id: { type: integer, required: true, foreignTable: listing_metadata_column, foreignReference: id }
+    listing_id: { type: integer, required: true, foreignTable: listing, foreignReference: id }
+    value: { type: varchar(2000), required: true }
+    created_at: ~
+    updated_at: ~
+
   address:
     id: ~
     suburb_id: { type: integer, required: true, foreignTable: suburb, foreignReference: id }
+    unit_number: varchar(10)
     street_number: { type: varchar(10), required: true }
     street_name: { type: varchar(255), required: true }
     created_at: ~
@@ -45,6 +70,7 @@ propel:
     id: ~
     name: { type: varchar(100), required: true }
     postcode: { type: integer, required: true }
+    state: { type: varchar(3), required: true }
     country: { type: varchar(100), required: true }
     created_at: ~
     updated_at: ~
@@ -55,5 +81,7 @@ propel:
     user_id:     { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade }
     first_name:  varchar(50)
     last_name:   varchar(50)
-    email_address:       varchar(355)
+    email_address: varchar(355)
     phone_number: varchar(20)
+    created_at: ~
+    updated_at: ~

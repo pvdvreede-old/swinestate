@@ -18,4 +18,16 @@
  */
 class ListingPeer extends BaseListingPeer {
 
+    public static function getUsersActiveListings($user_id) {
+
+        $c = new Criteria();
+        $c->addJoin(ListingPeer::LISTING_STATUS_ID, ListingStatusPeer::ID);
+        $c->add(ListingStatusPeer::NAME, 'Active');
+        $c->add(ListingPeer::USER_ID, $user_id);
+
+        return ListingPeer::doSelect($c);
+
+    }
+
+
 } // ListingPeer

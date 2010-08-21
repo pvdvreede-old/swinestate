@@ -52,4 +52,23 @@ class listingActions extends sfActions
   {
       $this->listing = ListingPeer::retrieveByPK($request->getParameter('id'));
   }
+
+  public function executeAlterListing(sfWebRequest $request)
+  {
+
+      $this->form = new SaleListingForm();
+
+      if ($request->hasParameter('id')) {
+
+        $listing = ListingPeer::retrieveByPK($request->getParameter('id'));
+
+        $this->action = 'Edit';
+        $this->form->configure($listing);
+
+      } else {
+
+        $this->action = 'Create';
+        
+      }
+  }
 }

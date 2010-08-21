@@ -9,7 +9,7 @@
             </tr>
             <tr>
                 <td><?php echo $listing->getAddress(); ?></td>
-                <td><a href="<?php echo url_for('@view_single?id=' . $listing->getId()); ?>">More details</a></td>
+                <td><?php echo link_to('More Details', '@view_single?id=' . $listing->getId()); ?></td>
             </tr>
         </table>
     </td></tr>

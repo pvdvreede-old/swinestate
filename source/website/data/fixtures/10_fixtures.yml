@@ -1,5 +1,12 @@
 
 ListingType:
+  sale:
+    name: Sale
+    
+  rent:
+    name: Rent
+
+PropertyType:
   house:
     name: House
 
@@ -31,5 +38,8 @@ ListingStatus:
 
   rented:
     name: Rented
+
+
+
 
 

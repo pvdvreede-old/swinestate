@@ -78,8 +78,8 @@ class userActions extends sfActions
            $this->redirect('@homepage');
 
        }
-   
 
+       $this->active_user_listings = ListingPeer::getUsersActiveListings($this->getUser()->getGuardUser()->getId());
   }
 
   public function executeView(sfWebRequest $request)
