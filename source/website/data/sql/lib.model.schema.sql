@@ -16,14 +16,13 @@ CREATE TABLE `listing`
 	`user_id` INTEGER  NOT NULL,
 	`listing_type_id` INTEGER  NOT NULL,
 	`property_type_id` INTEGER  NOT NULL,
-	`action_type_id` INTEGER  NOT NULL,
+	`listing_status_id` INTEGER  NOT NULL,
 	`address_id` INTEGER  NOT NULL,
 	`name` VARCHAR(255)  NOT NULL,
 	`description` TEXT  NOT NULL,
 	`bedrooms` INTEGER,
 	`bathrooms` INTEGER,
-	`garage` INTEGER,
-	`listing_status_id` INTEGER  NOT NULL,
+	`car_spaces` INTEGER,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	PRIMARY KEY (`id`),
@@ -39,18 +38,14 @@ CREATE TABLE `listing`
 	CONSTRAINT `listing_FK_3`
 		FOREIGN KEY (`property_type_id`)
 		REFERENCES `property_type` (`id`),
-	INDEX `listing_FI_4` (`action_type_id`),
+	INDEX `listing_FI_4` (`listing_status_id`),
 	CONSTRAINT `listing_FK_4`
-		FOREIGN KEY (`action_type_id`)
-		REFERENCES `action_type` (`id`),
+		FOREIGN KEY (`listing_status_id`)
+		REFERENCES `listing_status` (`id`),
 	INDEX `listing_FI_5` (`address_id`),
 	CONSTRAINT `listing_FK_5`
 		FOREIGN KEY (`address_id`)
-		REFERENCES `address` (`id`),
-	INDEX `listing_FI_6` (`listing_status_id`),
-	CONSTRAINT `listing_FK_6`
-		FOREIGN KEY (`listing_status_id`)
-		REFERENCES `listing_status` (`id`)
+		REFERENCES `address` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -77,22 +72,6 @@ DROP TABLE IF EXISTS `property_type`;
 
 
 CREATE TABLE `property_type`
-(
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(255)  NOT NULL,
-	`created_at` DATETIME,
-	`updated_at` DATETIME,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- action_type
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `action_type`;
-
-
-CREATE TABLE `action_type`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(255)  NOT NULL,
@@ -228,6 +207,34 @@ CREATE TABLE `user_profile`
 	PRIMARY KEY (`id`),
 	INDEX `user_profile_FI_1` (`user_id`),
 	CONSTRAINT `user_profile_FK_1`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON DELETE CASCADE
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- alert
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `alert`;
+
+
+CREATE TABLE `alert`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`user_id` INTEGER  NOT NULL,
+	`bedrooms` INTEGER,
+	`bathrooms` INTEGER,
+	`car_spaces` INTEGER,
+	`suburb` VARCHAR(100),
+	`postcode` INTEGER,
+	`amount_alerted` INTEGER,
+	`active` TINYINT,
+	`created_at` DATETIME,
+	`updated_at` DATETIME,
+	PRIMARY KEY (`id`),
+	INDEX `alert_FI_1` (`user_id`),
+	CONSTRAINT `alert_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
 		ON DELETE CASCADE

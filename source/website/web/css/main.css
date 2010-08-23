@@ -1,6 +1,6 @@
 body {
 
-	font-family: sans-serif; 
+    font-family: sans-serif;
 
 }
 
@@ -9,11 +9,6 @@ body {
       width: 60% ;
       margin-left: auto ;
       margin-right: auto ;
-}
-
-#user_dets {
-
-    text-align: right;
 }
 
 #footer {
@@ -41,49 +36,11 @@ td.validator_error {
     color: #f21111;
 }
 
-#main_menu {
-
-    
-    
-    padding-right: 8px;
-    padding-left: 8px;
-    padding-bottom: 3px;
-    padding-top: 3px;
-    border-right-color: #3ba63d;
-    border-left-color: #3ba63d;
-    border-bottom-color: #3ba63d;
-    border-top-color: #3ba63d;
-}
-
-#main_menu a {
-
-    font-style: normal;
-    color: white;
-    font-weight: bold;
-}
-
-#main_menu.button {
-
-    background-color: #28e9c2;
-}
-
-#main_menu.button:hover {
-
-    background-color: #30c8ab;
-}
-
-#main_menu a:hover {
-    
-    color: yellow;
-}
-
 table.listing {
     width: 97%;
 }
 
-#search {
-
-    
+#search { 
     border-right-style: solid;
     border-left-style: solid;
     border-bottom-style: solid;

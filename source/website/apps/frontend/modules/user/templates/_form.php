@@ -1,24 +1,25 @@
 <?php use_stylesheets_for_form($form) ?>
 <?php use_javascripts_for_form($form) ?>
 
-<form method="post" action="<?php echo url_for('@alter_user'); ?>" >
-<?php echo $form->renderGlobalErrors(); ?>
-<table>
-    <?php foreach ($form as $field) : ?>
-    <?php if (substr($field->getName(), 0, 1) != '_') : ?>
-    <tr>
-        <td class="label"><?php echo $field->renderLabel(); ?>: </td>
-        <td class="value"><?php echo $field->render(); ?></td>
-        <td class="validator_error"><?php echo $field->renderError(); ?></td>
-    </tr>
-    <?php else : ?>
-    <?php echo $field->render(); ?>
-    <?php endif; ?>
-    <?php endforeach; ?>
-    <tr>
-        <td><input type="submit" value="<?php echo $action; ?> User" /> </td>
-        <td><?php echo link_to('Cancel', '@profile_page'); ?></td>
-    </tr>
-</table>
-
+<form action="<?php echo url_for('user/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+<?php if (!$form->getObject()->isNew()): ?>
+<input type="hidden" name="sf_method" value="put" />
+<?php endif; ?>
+  <table>
+    <tfoot>
+      <tr>
+        <td colspan="2">
+          <?php echo $form->renderHiddenFields(false) ?>        
+          <?php if (!$form->getObject()->isNew()): ?>
+            &nbsp;<a href="<?php echo url_for('user/show') ?>">Back to profile</a>
+          <?php endif; ?>
+          <input type="submit" value="Save" />
+        </td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <?php echo $form->renderGlobalErrors() ?>
+      <?php echo $form; ?>
+    </tbody>
+  </table>
 </form>

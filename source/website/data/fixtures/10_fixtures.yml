@@ -19,16 +19,6 @@ PropertyType:
   townhouse:
     name: Townhouse
 
-ActionType:
-  rental:
-    name: Rental
-
-  sale:
-    name: Sale
-
-  lease:
-    name: Lease
-
 ListingStatus:
   active:
     name: Active
@@ -38,6 +28,12 @@ ListingStatus:
 
   rented:
     name: Rented
+
+  unpaid:
+    name: Unpaid
+
+  expired:
+    name: Expired
 
 
 

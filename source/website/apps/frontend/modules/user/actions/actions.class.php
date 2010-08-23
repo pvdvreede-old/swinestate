@@ -10,80 +10,69 @@
  */
 class userActions extends sfActions
 {
- /**
-  * Executes index action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeDetails(sfWebRequest $request)
+
+  public function executeIndex(sfWebRequest $request)
   {
+    // show index page with user options if signed in, other go to login page
+      if ($this->getUser()->isAuthenticated()) {
+          $this->template('show');
+      } else {
+          $this->redirect('@sf_guard_signin');
+      }
 
-    $this->form = new UserDetailsForm();
+  }
 
-    if ($this->getUser()->isAuthenticated()) {
-        $this->form->configure($this->getUser()->getProfile());
-        $this->action = 'Update';
-        $new = false;
-    } else {       
-        $this->action = 'Create';
-        $new = true;      
-    }
+  public function executeShow(sfWebRequest $request)
+  {
+    $this->redirectUnless($this->getUser()->isAuthenticated(), '@sf_guard_signin');
+  }
+
+  public function executeNew(sfWebRequest $request)
+  {
+    $this->forward404Unless(!$this->getUser()->isAuthenticated());
+    $this->form = new sfGuardUserForm();
+  }
+
+  public function executeCreate(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod(sfRequest::POST));
+
+    $this->form = new sfGuardUserForm();
+
+    $this->processForm($request, $this->form);
+
+    $this->setTemplate('new');
+  }
+
+  public function executeEdit(sfWebRequest $request)
+  {
+    $this->redirectUnless($this->getUser()->isAuthenticated(), '@sf_guard_signin');
+    $this->form = new sfGuardUserForm($this->getUser()->getGuardUser());
+  }
+
+  public function executeUpdate(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
+    $this->redirectUnless($this->getUser()->isAuthenticated(), '@sf_guard_signin');
     
-    // deal with the request
-    if ($request->isMethod('post')) {
-     
-        $this->form->bind($request->getParameter('user'));
-        
-        if ($this->form->isValid()) {
-            
-            $userValues = $this->form->getValues();
-            
-            if ($new) {
-                
-                $user = new sfGuardUser();
-                $user->setUsername($userValues['username']);
-                $user->setPassword($userValues['password']);
-                $user->save();
-                
-                $this->getUser()->signin($user, false);
+    $this->form = new sfGuardUserForm($this->getUser()->getGuardUser());
 
-                $this->getUser()->getProfile()->setEmailAddress($userValues['email_address']);
+    $this->processForm($request, $this->form);
 
-            } else {
+    $this->setTemplate('edit');
+  }
 
-                //if ($userValues['password'] != '')
-                    //$this->getUser()-setPassword($userValues['password']);
+  protected function processForm(sfWebRequest $request, sfForm $form)
+  {
+    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+    if ($form->isValid())
+    {
+      $user = $form->save();
 
-            }
+      $this->getUser()->signin($user, false);
 
-            $this->getUser()->getProfile()->setFirstName($userValues['first_name']);
-            $this->getUser()->getProfile()->setLastName($userValues['last_name']);
-            
-            $this->getUser()->getProfile()->setPhoneNumber($userValues['phone_number']);
-            $this->getUser()->getProfile()->save();
-            
-
-            $this->redirect('@profile_page');
-            
-        }
-        
+      $this->redirect('user/show');
     }
-
   }
 
-  public function executeProfile(sfWebRequest $request)
-  {
-       if (!$this->getUser()->isAuthenticated()) {
-
-           $this->redirect('@homepage');
-
-       }
-
-       $this->active_user_listings = ListingPeer::getUsersActiveListings($this->getUser()->getGuardUser()->getId());
-  }
-
-  public function executeView(sfWebRequest $request)
-  {
-      $this->listing = ListingPeer::retrieveByPK($request->getParameter('id'));
-  }
 }

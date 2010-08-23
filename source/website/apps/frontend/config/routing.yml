@@ -4,29 +4,9 @@
 # default rules
 homepage:
   url:   /
-  param: { module: listing, action: index }
+  param: { module: sale, action: index }
 
-rent_homepage:
-  url:   /
-  param: { module: listing, action: index }
-
-about:
-  url:   /
-  param: { module: listing, action: index }
-
-contact:
-  url:   /
-  param: { module: listing, action: index }
-
-sale_search:
-  url: /sale/search
-  param: { module: listing, action: search }
-
-view_single:
-  url: /view/:id
-  param: {module: listing, action: view }
-  requirements: { id: \d+ }
-
+# Rules for the guard plugin
 sf_guard_signin:
   url:   /login
   param: { module: sfGuardAuth, action: signin }
@@ -39,34 +19,9 @@ sf_guard_password:
   url:   /request_password
   param: { module: sfGuardAuth, action: password }
 
-register:
-  url: /user/register
-  param: { module: user, action: details }
-
-alter_user:
-  url: /user/details
-  param: { module: user, action: details }
-
-alter_alert:
-  url: /user/alert/new
-  param: { module: user, action: alterAlert }
-
-create_sale_listing:
-  url: /sale/new
-  param: { module: listing, action: alterListing }
-
-edit_sale_listing:
-  url: /sale/edit/:id
-  param: { module: listing, action: alterListing }
+editing:
+  url: /:module/:action/:id
   requirements: { id: \d+ }
-
-change_password:
-  url: /user/password
-  param: { module: user, action: changePassword }
-
-profile_page:
-  url: /user/profile
-  param: { module: user, action: profile }
 
 # generic rules
 # please, remove them by adding more specific rules
@@ -76,3 +31,4 @@ default_index:
 
 default:
   url:   /:module/:action/*
+  
