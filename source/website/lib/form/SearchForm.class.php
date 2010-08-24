@@ -30,7 +30,9 @@ class SearchForm extends sfForm {
             'suburb' => new sfWidgetFormInputText(),
             'listing_type' => new sfWidgetFormPropelChoice(array(
                 'model' => 'PropertyType',
-                'criteria' => $list_criteria)
+                'criteria' => $list_criteria,
+                'expanded' => true,
+                'multiple' => 'true')
             ),
             'bedrooms' => new sfWidgetFormChoice(array(
                 'choices' => self::$bathroom_choices

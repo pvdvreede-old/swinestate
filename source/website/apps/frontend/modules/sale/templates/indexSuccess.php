@@ -19,7 +19,7 @@
     </tr>
   </thead>
   <tbody>
-    <?php foreach ($Listings as $Listing): ?>
+    <?php foreach ($pager->getResults() as $Listing): ?>
     <tr>
       <td><a href="<?php echo url_for('sale/show?id='.$Listing->getId()) ?>"><?php echo $Listing->getId() ?></a></td>
       <td><?php echo $Listing->getUserId() ?></td>
@@ -38,5 +38,10 @@
     <?php endforeach; ?>
   </tbody>
 </table>
+
+<?php    include_partial('global/pagination', array(
+    'pager' => $pager,
+    'page_url' => $page_url
+)); ?>
 
   <a href="<?php echo url_for('sale/new') ?>">New</a>

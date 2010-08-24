@@ -27,6 +27,51 @@ class searchActions extends sfActions
       $this->form = new SearchForm();
       $this->listing_type = 'sale';
 
+      // deal with the search request when it comes in
+      if ($request->hasParameter('suburb')) {
+
+          $this->form->bind($request->getParameter($this->form->getName()));
+
+          if ($this->form->isValid()) {
+
+              $values = $this->form->getValues();
+
+              // add criteria as we go along
+              $c = new Criteria();
+
+              if ($values['suburb'] == '') {
+
+                  // create the join to the suburb to filter it
+                  $c->addJoin(ListingPeer::ADDRESS_ID, AddressPeer::ID);
+                  $c->addJoin(AddressPeer::SUBURB_ID, SuburbPeer::ID);
+                  $c->add(SuburbPeer::NAME, '%'.strtolower($values['suburb']).'%', Criteria::LIKE);
+              }
+
+              if ($values['bathrooms'] != 0) {
+
+                  $c->add(ListingPeer::BATHROOMS, $values['bathrooms'], Criteria::GREATER_EQUAL);
+              }
+
+              if ($values['bedrooms'] != 0) {
+
+                  $c->add(ListingPeer::BEDROOMS, $values['bedrooms'], Criteria::GREATER_EQUAL);
+              }
+
+              if (!isset($values['listing_type'])) {
+
+                  $c->add(ListingPeer::LISTING_TYPE_ID, $values['listing_type'], Criteria::IN);
+
+              }
+
+
+              
+
+          }
+
+      }
+
+
+
       $this->setTemplate('index');
   }
 

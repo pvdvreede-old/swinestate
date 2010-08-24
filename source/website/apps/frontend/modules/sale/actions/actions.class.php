@@ -12,7 +12,14 @@ class saleActions extends sfActions
 
   public function executeIndex(sfWebRequest $request)
   {
-    $this->Listings = ListingPeer::doSelect(new Criteria());
+    $this->pager = new sfPropelPager(
+            'Listing',
+            sfConfig::get('app_items_on_page')
+            );
+    $this->pager->setPage($request->getParameter('page', 1));
+    $this->pager->init();
+    $this->page_url = 'sale/index';
+
   }
 
   public function executeShow(sfWebRequest $request)
