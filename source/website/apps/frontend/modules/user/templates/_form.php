@@ -5,7 +5,7 @@
 <?php if (!$form->getObject()->isNew()): ?>
 <input type="hidden" name="sf_method" value="put" />
 <?php endif; ?>
-  <table>
+  <table class="form">
     <tfoot>
       <tr>
         <td colspan="2">
@@ -13,7 +13,7 @@
           <?php if (!$form->getObject()->isNew()): ?>
             &nbsp;<a href="<?php echo url_for('user/show') ?>">Back to profile</a>
           <?php endif; ?>
-          <input type="submit" value="Save" />
+          <input type="submit" value="<?php ($form->getObject()->isNew() ? 'Register' : 'Update') ?>" />
         </td>
       </tr>
     </tfoot>

@@ -9,6 +9,7 @@
  */
 class saleActions extends sfActions
 {
+
   public function executeIndex(sfWebRequest $request)
   {
     $this->Listings = ListingPeer::doSelect(new Criteria());

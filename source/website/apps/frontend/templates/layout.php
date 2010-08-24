@@ -19,7 +19,9 @@
             <?php echo $sf_content ?>
 
             <div id="footer">
-                <p>Footer here</p>
+                <p>Copyright SwinEstate 2010</p>
+                <p>Swinburne Uni Professional Project</p>
+                <p>Group 26</p>
             </div>
         </div>
     </body>

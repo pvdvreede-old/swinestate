@@ -4,11 +4,19 @@ body {
 
 }
 
+#user_context {
+
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
 
 #content {
-      width: 60% ;
+      width: 75% ;
       margin-left: auto ;
       margin-right: auto ;
+    position: relative;
 }
 
 #footer {
@@ -36,8 +44,10 @@ td.validator_error {
     color: #f21111;
 }
 
-table.listing {
+table.form {
     width: 97%;
+    vertical-align: top;
+    text-align: left;
 }
 
 #search { 
