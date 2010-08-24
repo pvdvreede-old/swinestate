@@ -29,7 +29,7 @@ class userActions extends sfActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->forward404Unless(!$this->getUser()->isAuthenticated());
+    $this->redirectIf($this->getUser()->isAuthenticated(), '@homepage');;
     $this->form = new sfGuardUserForm();
   }
 

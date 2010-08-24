@@ -4,7 +4,7 @@
 # default rules
 homepage:
   url:   /
-  param: { module: sale, action: index }
+  param: { module: search, action: index }
 
 # Rules for the guard plugin
 sf_guard_signin:

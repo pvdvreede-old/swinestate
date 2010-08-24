@@ -13,7 +13,7 @@
           <?php if (!$form->getObject()->isNew()): ?>
             &nbsp;<a href="<?php echo url_for('user/show') ?>">Back to profile</a>
           <?php endif; ?>
-          <input type="submit" value="<?php ($form->getObject()->isNew() ? 'Register' : 'Update') ?>" />
+          <input type="submit" value="<?php echo ($form->getObject()->isNew() ? 'Register' : 'Update') ?>" />
         </td>
       </tr>
     </tfoot>

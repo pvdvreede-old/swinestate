@@ -9,15 +9,17 @@
         <?php include_javascripts() ?>
     </head>
     <body>
-        <div id="content">
+        <div id="wrap">
             <h1><?php echo sfConfig::get('app_app_name'); ?></h1>
 			
 			<?php include_partial('global/userContext'); ?>
 			
 			<?php include_partial('global/mainMenu'); ?>
-			
-            <?php echo $sf_content ?>
 
+            <div id="content">
+                <?php echo $sf_content ?>
+            </div>
+            
             <div id="footer">
                 <p>Copyright SwinEstate 2010</p>
                 <p>Swinburne Uni Professional Project</p>

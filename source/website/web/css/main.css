@@ -12,11 +12,16 @@ body {
 }
 
 
-#content {
+#wrap {
       width: 75% ;
       margin-left: auto ;
       margin-right: auto ;
-    position: relative;
+      position: relative;
+}
+
+#content {
+
+    margin-top: 10px;
 }
 
 #footer {
@@ -50,6 +55,12 @@ table.form {
     text-align: left;
 }
 
+table.form th {
+    text-align: right;
+    vertical-align: top;
+    background-color: #c2cccd;
+}
+
 #search { 
     border-right-style: solid;
     border-left-style: solid;
@@ -59,7 +70,7 @@ table.form {
     border-left-color: #279ac7;
     border-bottom-color: #279ac7;
     border-top-color: #279ac7;
-    background-color: #14dce9;
+    background-color: #c2cccd;
     padding-right: 5px;
     padding-left: 5px;
     padding-bottom: 5px;
