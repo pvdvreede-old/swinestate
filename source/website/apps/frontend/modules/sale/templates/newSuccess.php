@@ -1,4 +1,4 @@
-<h1>New Listing</h1>
+<h2>New Listing</h2>
 
 <?php include_partial('global/form', array(
     'form' => $form,

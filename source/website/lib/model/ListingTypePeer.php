@@ -18,4 +18,16 @@
  */
 class ListingTypePeer extends BaseListingTypePeer {
 
+    public static function getIdFromName($name) {
+
+        // build the criteria for SQL
+        $c = new Criteria();
+        // get the item where the name = the parameter
+        $c->add(self::NAME, $name);
+
+        // return the id of the selected DB object
+        return self::doSelectOne($c)->getId();
+
+    }
+
 } // ListingTypePeer

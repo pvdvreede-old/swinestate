@@ -10,8 +10,18 @@
 class alertActions extends sfActions {
 
     public function executeIndex(sfWebRequest $request) {
+
         $this->redirectUnless($this->getUser()->isAuthenticated(), '@sf_guard_signin');
-        $this->Alerts = AlertPeer::doSelect(new Criteria());
+
+        $this->pager = new sfPropelPager(
+                        'Alert',
+                        sfConfig::get('app_items_on_page')
+        );
+        $this->pager->setCriteria(AlertPeer::getAlertCriteriaForUser($this->getUser()->getGuardUser()->getId()));
+        $this->pager->setPage($request->getParameter('page', 1));
+        $this->pager->init();
+        $this->page_url = 'alert/index';
+        
     }
 
     public function executeShow(sfWebRequest $request) {

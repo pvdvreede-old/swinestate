@@ -10,6 +10,7 @@
 
         <?php echo $form['bedrooms']->renderLabel(); ?>: <?php echo $form['bedrooms']->render(); ?>
         <?php echo $form['bathrooms']->renderLabel(); ?>: <?php echo $form['bathrooms']->render(); ?>
+        <?php echo $form->renderHiddenFields(false) ?>
         <input type="submit" value="Search" />
     </p>
     </form>

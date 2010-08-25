@@ -18,4 +18,14 @@
  */
 class AlertPeer extends BaseAlertPeer {
 
+    public static function getAlertCriteriaForUser($user_id) {
+
+        $c = new Criteria();
+
+        $c->add(self::USER_ID, $user_id);
+
+        return $c;
+
+    }
+
 } // AlertPeer

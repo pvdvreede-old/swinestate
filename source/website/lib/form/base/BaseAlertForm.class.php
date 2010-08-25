@@ -16,6 +16,7 @@ abstract class BaseAlertForm extends BaseFormPropel
     $this->setWidgets(array(
       'id'             => new sfWidgetFormInputHidden(),
       'user_id'        => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => false)),
+      'name'           => new sfWidgetFormInputText(),
       'bedrooms'       => new sfWidgetFormInputText(),
       'bathrooms'      => new sfWidgetFormInputText(),
       'car_spaces'     => new sfWidgetFormInputText(),
@@ -30,6 +31,7 @@ abstract class BaseAlertForm extends BaseFormPropel
     $this->setValidators(array(
       'id'             => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
       'user_id'        => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id')),
+      'name'           => new sfValidatorString(array('max_length' => 100)),
       'bedrooms'       => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'bathrooms'      => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'car_spaces'     => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),

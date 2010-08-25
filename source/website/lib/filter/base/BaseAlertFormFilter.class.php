@@ -13,6 +13,7 @@ abstract class BaseAlertFormFilter extends BaseFormFilterPropel
   {
     $this->setWidgets(array(
       'user_id'        => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
+      'name'           => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'bedrooms'       => new sfWidgetFormFilterInput(),
       'bathrooms'      => new sfWidgetFormFilterInput(),
       'car_spaces'     => new sfWidgetFormFilterInput(),
@@ -26,6 +27,7 @@ abstract class BaseAlertFormFilter extends BaseFormFilterPropel
 
     $this->setValidators(array(
       'user_id'        => new sfValidatorPropelChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
+      'name'           => new sfValidatorPass(array('required' => false)),
       'bedrooms'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'bathrooms'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'car_spaces'     => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
@@ -54,6 +56,7 @@ abstract class BaseAlertFormFilter extends BaseFormFilterPropel
     return array(
       'id'             => 'Number',
       'user_id'        => 'ForeignKey',
+      'name'           => 'Text',
       'bedrooms'       => 'Number',
       'bathrooms'      => 'Number',
       'car_spaces'     => 'Number',

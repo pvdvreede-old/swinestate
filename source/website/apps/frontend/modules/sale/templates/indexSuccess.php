@@ -1,4 +1,4 @@
-<h1>Listings List</h1>
+<h2>Listings List</h2>
 
 <table>
   <thead>

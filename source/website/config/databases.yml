@@ -22,3 +22,10 @@ all:
       encoding: utf8
       persistent: true
       pooling: true
+prod:
+  propel:
+    class: sfPropelDatabase
+    param:
+      dsn: 'mysql:host=mysql.vdvreede.net;dbname=swinestate'
+      username: swinestate
+      password: bestteamever
