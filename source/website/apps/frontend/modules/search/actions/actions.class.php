@@ -23,7 +23,7 @@ class searchActions extends sfActions {
 
     public function executeSale(sfWebRequest $request) {
 
-        
+
         $this->form = new SearchForm();
         $this->listing_type = 'sale';
 
@@ -68,13 +68,14 @@ class searchActions extends sfActions {
                                 'Listing',
                                 sfConfig::get('app_items_on_page')
                 );
-                $this->buildPaginateString($request);
                 $this->pager->setCriteria($c);
                 $this->pager->setPage($request->getParameter('page', 1));
                 $this->pager->init();
                 $this->page_url = 'alert/index';
                 $this->show_results = true;
                 $this->module_link = 'sale';
+                $this->page_url = 'search/sale';
+                $this->get_string = $this->buildPaginateString($request);
             }
         }
 
@@ -82,13 +83,30 @@ class searchActions extends sfActions {
     }
 
     protected function buildPaginateString($request) {
+
         // re build the url for the pagination to return the same search with the next page number.
         $gets = $request->getGetParameters();
 
-        foreach ($gets as $get) {
-            print_r($get);
+        $gets_string = '';
+ 
+        foreach ($gets['search'] as $k => $v) {
+
+            if (is_array($v)) {
+                
+                foreach ($v as $l => $b) {
+                    
+                    $gets_string .= 'search[' . $k . '][]=' . $b . '&';
+                    
+                }
+                
+            } else {
+
+                $gets_string .= 'search[' . $k . ']=' . $v . '&';
+
+            }
         }
 
+        return $gets_string; //substr($gets_string, 0, -1);
     }
 
     public function executeRent(sfWebRequest $request) {

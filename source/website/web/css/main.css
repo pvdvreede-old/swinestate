@@ -39,6 +39,16 @@ td.label {
     vertical-align: top;
 }
 
+table.index_list {
+    width: 98%
+}
+
+table.index_list th {
+    
+    text-align: left;
+    vertical-align: top;
+}
+
 td.value {
     padding-left: 5px;
     vertical-align: top;

@@ -1,10 +1,13 @@
+<?php if (!isset($get_string)) $get_string = ''; ?>
+
+
 <?php if ($pager->haveToPaginate()): ?>
   <div class="pagination">
-    <a href="<?php echo url_for($page_url) ?>?page=1">
+    <a href="<?php echo url_for($page_url).'?'.$get_string.'page=1'; ?>">
       <<
     </a>
 
-    <a href="<?php echo url_for($page_url) ?>?page=<?php echo $pager->getPreviousPage() ?>">
+    <a href="<?php echo url_for($page_url).'?'.$get_string.'page='.$pager->getPreviousPage(); ?>">
       <
     </a>
 
@@ -12,15 +15,15 @@
       <?php if ($page == $pager->getPage()): ?>
         <?php echo $page ?>
       <?php else: ?>
-        <a href="<?php echo url_for($page_url) ?>?page=<?php echo $page ?>"><?php echo $page ?></a>
+        <a href="<?php echo url_for($page_url).'?'.$get_string.'page='.$page; ?>"><?php echo $page ?></a>
       <?php endif; ?>
     <?php endforeach; ?>
 
-    <a href="<?php echo url_for($page_url) ?>?page=<?php echo $pager->getNextPage() ?>">
+    <a href="<?php echo url_for($page_url).'?'.$get_string.'page='.$pager->getNextPage(); ?>">
       >
     </a>
 
-    <a href="<?php echo url_for($page_url) ?>?page=<?php echo $pager->getLastPage() ?>">
+    <a href="<?php echo url_for($page_url).'?'.$get_string.'page='.$pager->getLastPage(); ?>">
       >>
     </a>
   </div>

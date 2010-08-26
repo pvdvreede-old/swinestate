@@ -1,7 +1,8 @@
 <br />
 <?php    include_partial('global/pagination', array(
     'pager' => $pager,
-    'page_url' => $page_url
+    'page_url' => $page_url,
+    'get_string' => $get_string
 )); ?>
 
 <table class="search_listing">
@@ -23,5 +24,6 @@
 
 <?php    include_partial('global/pagination', array(
     'pager' => $pager,
-    'page_url' => $page_url
+    'page_url' => $page_url,
+    'get_string' => $get_string
 )); ?>

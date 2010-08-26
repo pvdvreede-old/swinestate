@@ -10,7 +10,8 @@
 <?php include_partial('results', array(
     'pager' => $pager,
     'module_link' => $module_link,
-    'page_url' => $page_url
+    'page_url' => $page_url,
+    'get_string' => $get_string
         )); ?>
 
 <?php endif; ?>
