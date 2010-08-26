@@ -1,28 +1,12 @@
 <table>
   <tbody>
     <tr>
-      <th>Id:</th>
-      <td><?php echo $Listing->getId() ?></td>
-    </tr>
-    <tr>
-      <th>User:</th>
-      <td><?php echo $Listing->getUserId() ?></td>
-    </tr>
-    <tr>
-      <th>Listing type:</th>
-      <td><?php echo $Listing->getListingTypeId() ?></td>
-    </tr>
-    <tr>
       <th>Property type:</th>
-      <td><?php echo $Listing->getPropertyTypeId() ?></td>
-    </tr>
-    <tr>
-      <th>Listing status:</th>
-      <td><?php echo $Listing->getListingStatusId() ?></td>
+      <td><?php echo $Listing->getPropertyType()->getName(); ?></td>
     </tr>
     <tr>
       <th>Address:</th>
-      <td><?php echo $Listing->getAddressId() ?></td>
+      <td><?php echo $Listing->getAddress() ?></td>
     </tr>
     <tr>
       <th>Name:</th>
@@ -44,19 +28,17 @@
       <th>Car spaces:</th>
       <td><?php echo $Listing->getCarSpaces() ?></td>
     </tr>
-    <tr>
-      <th>Created at:</th>
-      <td><?php echo $Listing->getCreatedAt() ?></td>
-    </tr>
-    <tr>
-      <th>Updated at:</th>
-      <td><?php echo $Listing->getUpdatedAt() ?></td>
-    </tr>
   </tbody>
 </table>
 
 <hr />
 
-<a href="<?php echo url_for('sale/edit?id='.$Listing->getId()) ?>">Edit</a>
-&nbsp;
-<a href="<?php echo url_for('sale/index') ?>">List</a>
+<?php if ($sf_user->isAuthenticated() && $Listing->getUserId() == $sf_user->getGuardUser()->getId()) : ?>
+
+You are the creator of this listing and can <a href="<?php echo url_for('sale/edit?id='.$Listing->getId()) ?>">edit</a> it.
+
+<?php else : ?>
+
+<?php echo link_to('Notify the seller of your interest', 'sale/index'); ?>
+
+<?php endif; ?>

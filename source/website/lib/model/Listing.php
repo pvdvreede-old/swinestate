@@ -40,6 +40,24 @@ class Listing extends BaseListing {
         return $object;
     }
 
+    public function getShortDescription() {
+
+        // only get the first 30 words of the description for a taste
+        $space_limit = strrpos($this->getDescription(), ' ', 30);
+
+        // if the space limit isnt false it is longer than thirty words and should be cut
+        if ($space_limit !== false) {
+            // create the new string and append '...' so people know it is continued
+            $new_desc = substr($this->getDescription(), 0, $space_limit);
+
+            return $new_desc.'...';
+        }
+
+        // if false then the whole thing is less than 30 words, so return the whole thing
+        return $this->getDescription();
+
+    }
+
 }
 
 // Listing

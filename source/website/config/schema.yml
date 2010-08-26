@@ -8,9 +8,9 @@ propel:
     address_id: { type: integer, required: true, foreignTable: address, foreignReference: id }
     name: { type: varchar(255), required: true }
     description: { type: longvarchar, required: true }
-    bedrooms: { type: integer }
-    bathrooms: { type: integer }
-    car_spaces: { type: integer }
+    bedrooms: { type: integer, default: 0 }
+    bathrooms: { type: integer, default: 0 }
+    car_spaces: { type: integer, default: 0 }
     created_at: ~
     updated_at: ~
 

@@ -20,17 +20,17 @@ class Address extends BaseAddress {
 
     public function  __toString() {
 
-//        $address = '';
-//
-//        // when there is a unit number, put that in the object string value
-//        if (isset($this->getUnitNumber()) || $this->getUnitNumber() != '') {
-//            $address .= $this->getUnitNumber().'/';
-//        }
-//
-//        // build rest of address
-//        $address .= $this->getStreetNumber().' '.$this->getStreetName().', '.$this->getSuburb()->getName().' '.$this->getSuburb()->getPostcode().' '.$this->getSuburb()->getState();
+        $address = '';
 
-        return $this->getStreetName();
+        // when there is a unit number, put that in the object string value
+        if ($this->getUnitNumber() != '') {
+            $address .= $this->getUnitNumber().'/';
+        }
+
+        // build rest of address
+        $address .= $this->getStreetNumber().' '.$this->getStreetName().', '.$this->getSuburb()->getName().' '.$this->getSuburb()->getPostcode().' '.$this->getSuburb()->getState();
+
+        return $address;
 
     }
 

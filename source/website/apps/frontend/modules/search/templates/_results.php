@@ -1,14 +1,20 @@
+<br />
+<?php    include_partial('global/pagination', array(
+    'pager' => $pager,
+    'page_url' => $page_url
+)); ?>
 
 <table class="search_listing">
     <?php foreach ($pager->getResults() as $listing) : ?>
     <tr>
         <td>
             <div class="listing">
-                <?php echo $listing->getName(); ?>
-                <?php echo $listing->getBathrooms(); ?>
-                <?php echo $listing->getBedrooms(); ?>
-                <?php echo $listing->getCarSpaces(); ?>
-                <?php echo link_to('More details...', $module_link.'/show?id='.$listing->getId()); ?>
+                <p><?php echo $listing->getName(); ?></p>
+                <p><?php echo $listing->getShortDescription(); ?></p>
+                <p>Bathrooms: <?php echo $listing->getBathrooms(); ?></p>
+                <p>Bedrooms: <?php echo $listing->getBedrooms(); ?></p>
+                <p>Car spaces: <?php echo $listing->getCarSpaces(); ?></p>
+                <p><?php echo link_to('More details...', $module_link.'/show?id='.$listing->getId()); ?></p>
             </div>
         </td>
     </tr>

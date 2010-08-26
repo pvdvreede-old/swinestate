@@ -6,7 +6,7 @@
     <?php echo $form->renderGlobalErrors() ?>
     <p><?php echo $form['suburb']->renderLabel(); ?>: <?php echo $form['suburb']->render(); ?></p>
     <p>
-        <?php echo $form['listing_type']->renderLabel(); ?>: <?php echo $form['listing_type']->render(); ?>
+        <?php echo $form['property_type']->renderLabel(); ?>: <?php echo $form['property_type']->render(); ?>
 
         <?php echo $form['bedrooms']->renderLabel(); ?>: <?php echo $form['bedrooms']->render(); ?>
         <?php echo $form['bathrooms']->renderLabel(); ?>: <?php echo $form['bathrooms']->render(); ?>

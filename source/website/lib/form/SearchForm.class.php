@@ -1,4 +1,5 @@
 <?php
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -12,13 +13,13 @@
 class SearchForm extends sfForm {
 
     private static $bedrooms_choices = array(0 => 'Any',
-                                             1 => '1+',
-                                             2 => '2+',
-                                             3 => '3+',
-                                             4 => '4+');
+        1 => '1+',
+        2 => '2+',
+        3 => '3+',
+        4 => '4+');
     private static $bathroom_choices = array(0 => 'Any',
-                                             1 => '1+',
-                                             2 => '2+'  );
+        1 => '1+',
+        2 => '2+');
 
     public function configure() {
 
@@ -28,7 +29,7 @@ class SearchForm extends sfForm {
 
         $this->setWidgets(array(
             'suburb' => new sfWidgetFormInputText(),
-            'listing_type' => new sfWidgetFormPropelChoice(array(
+            'property_type' => new sfWidgetFormPropelChoice(array(
                 'model' => 'PropertyType',
                 'criteria' => $list_criteria,
                 'expanded' => true,
@@ -42,9 +43,18 @@ class SearchForm extends sfForm {
             ))
         ));
 
+        $this->setValidators(array(
+            'suburb' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+            'property_type' => new sfValidatorPropelChoice(array('model' => 'PropertyType', 'column' => 'id', 'required' => false, 'multiple' => 'true')),
+            'bedrooms' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false)),
+            'bathrooms' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false))         
+        ));
 
+        $this->widgetSchema->setNameFormat('search[%s]');
 
+        $this->disableLocalCSRFProtection();
     }
 
 }
+
 ?>

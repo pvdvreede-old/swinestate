@@ -24,28 +24,25 @@ class searchActions extends sfActions {
     public function executeSale(sfWebRequest $request) {
 
         
-
         $this->form = new SearchForm();
         $this->listing_type = 'sale';
 
         // deal with the search request when it comes in
-        if ($request->hasParameter('bedrooms')) {
-
-            //$request->checkCSRFProtection();
+        if ($request->hasParameter('search')) {
 
             $this->form->bind($request->getParameter($this->form->getName()));
 
             if ($this->form->isValid()) {
 
                 $values = $this->form->getValues();
-                print_r($values);
+
                 // add criteria as we go along
                 $c = new Criteria();
 
                 // set the listing type as a selling property
                 $c->add(ListingPeer::LISTING_TYPE_ID, ListingTypePeer::getIdFromName('Sale'));
 
-                if ($values['suburb'] == '') {
+                if ($values['suburb'] != '') {
                     // create the join to the suburb to filter it
                     $c->addJoin(ListingPeer::ADDRESS_ID, AddressPeer::ID);
                     $c->addJoin(AddressPeer::SUBURB_ID, SuburbPeer::ID);
@@ -62,24 +59,36 @@ class searchActions extends sfActions {
                     $c->add(ListingPeer::BEDROOMS, $values['bedrooms'], Criteria::GREATER_EQUAL);
                 }
 
-                if (!isset($values['listing_type'])) {
+                if (isset($values['property_type'])) {
 
-                    $c->add(ListingPeer::LISTING_TYPE_ID, $values['listing_type'], Criteria::IN);
+                    $c->add(ListingPeer::PROPERTY_TYPE_ID, $values['property_type'], Criteria::IN);
                 }
 
                 $this->pager = new sfPropelPager(
                                 'Listing',
                                 sfConfig::get('app_items_on_page')
                 );
+                $this->buildPaginateString($request);
                 $this->pager->setCriteria($c);
                 $this->pager->setPage($request->getParameter('page', 1));
                 $this->pager->init();
                 $this->page_url = 'alert/index';
                 $this->show_results = true;
+                $this->module_link = 'sale';
             }
         }
 
         $this->setTemplate('index');
+    }
+
+    protected function buildPaginateString($request) {
+        // re build the url for the pagination to return the same search with the next page number.
+        $gets = $request->getGetParameters();
+
+        foreach ($gets as $get) {
+            print_r($get);
+        }
+
     }
 
     public function executeRent(sfWebRequest $request) {
