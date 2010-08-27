@@ -20,9 +20,9 @@ CREATE TABLE `listing`
 	`address_id` INTEGER  NOT NULL,
 	`name` VARCHAR(255)  NOT NULL,
 	`description` TEXT  NOT NULL,
-	`bedrooms` INTEGER,
-	`bathrooms` INTEGER,
-	`car_spaces` INTEGER,
+	`bedrooms` INTEGER default 0,
+	`bathrooms` INTEGER default 0,
+	`car_spaces` INTEGER default 0,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	PRIMARY KEY (`id`),
@@ -109,7 +109,10 @@ CREATE TABLE `listing_metadata_column`
 	`listing_type_id` INTEGER  NOT NULL,
 	`code` VARCHAR(25)  NOT NULL,
 	`label` VARCHAR(255)  NOT NULL,
-	`value_type` VARCHAR(255)  NOT NULL,
+	`value_type` VARCHAR(10)  NOT NULL,
+	`required` TINYINT,
+	`min_length` INTEGER,
+	`max_length` INTEGER,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	PRIMARY KEY (`id`),
@@ -185,6 +188,33 @@ CREATE TABLE `suburb`
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	PRIMARY KEY (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- listing_time
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `listing_time`;
+
+
+CREATE TABLE `listing_time`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`user_id` INTEGER  NOT NULL,
+	`listing_id` INTEGER  NOT NULL,
+	`start_date` DATETIME,
+	`end_date` DATETIME,
+	`created_at` DATETIME,
+	`updated_at` DATETIME,
+	PRIMARY KEY (`id`),
+	INDEX `listing_time_FI_1` (`user_id`),
+	CONSTRAINT `listing_time_FK_1`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`),
+	INDEX `listing_time_FI_2` (`listing_id`),
+	CONSTRAINT `listing_time_FK_2`
+		FOREIGN KEY (`listing_id`)
+		REFERENCES `listing` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

@@ -29,11 +29,6 @@ ListingStatus:
   rented:
     name: Rented
 
-  unpaid:
-    name: Unpaid
-
-  expired:
-    name: Expired
 
 
 

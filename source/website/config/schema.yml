@@ -37,7 +37,10 @@ propel:
     listing_type_id: { type: integer, required: true, foreignTable: listing_type, foreignReference: id }
     code: { type: varchar(25), required: true }
     label: { type: varchar(255), required: true }
-    value_type: { type: varchar, required: true }
+    value_type: { type: varchar(10), required: true }
+    required: boolean
+    min_length: integer
+    max_length: integer
     created_at: ~
     updated_at: ~
 
@@ -64,6 +67,15 @@ propel:
     postcode: { type: integer, required: true }
     state: { type: varchar(3), required: true }
     country: { type: varchar(100), required: true }
+    created_at: ~
+    updated_at: ~
+
+  listing_time:
+    id: ~
+    user_id: { type: integer, required: true, foreignTable: sf_guard_user, foreignReference: id }
+    listing_id: { type: integer, required: true, foreignTable: listing, foreignReference: id }
+    start_date: timestamp
+    end_date: timestamp
     created_at: ~
     updated_at: ~
 

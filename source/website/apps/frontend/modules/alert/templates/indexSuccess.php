@@ -1,6 +1,12 @@
 <h1>Alerts List</h1>
 
-<table>
+<?php if ($pager->count() == 0) : ?>
+
+<p>You do not have any alerts. Create a new one below.</p>
+
+<?php else :?>
+
+<table class="index_list">
   <thead>
     <tr>
       <th>Name</th>
@@ -33,5 +39,7 @@
     'pager' => $pager,
     'page_url' => $page_url
 )); ?>
+
+<?php endif; ?>
 
   <a href="<?php echo url_for('alert/new') ?>">New</a>

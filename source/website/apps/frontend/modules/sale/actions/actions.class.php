@@ -78,7 +78,7 @@ class saleActions extends sfActions
     {
       $Listing = $form->save();
 
-      $this->redirect('sale/edit?id='.$Listing->getId());
+      $this->redirect('listing/index');
     }
   }
 }

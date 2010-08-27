@@ -17,6 +17,10 @@
  */
 class Listing extends BaseListing {
 
+    public function  __toString() {
+        return $this->getName().' - '.$this->getAddress();
+    }
+
     public function save(PropelPDO $con = null) {
 
         // if this is the first save attach the user id, and the listing status
@@ -26,7 +30,7 @@ class Listing extends BaseListing {
                 $this->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
 
                 // make the listing unpaid by default so the user has to pay to get it shown
-                $this->setListingStatusId(ListingStatusPeer::getIdFromName('Unpaid'));
+                $this->setListingStatusId(ListingStatusPeer::getIdFromName('Active'));
 
             } catch (Exception $ex) {
                 // if there is an exception a user isnt logged in, so throw a 401 unauthorised exception.
@@ -56,6 +60,21 @@ class Listing extends BaseListing {
         // if false then the whole thing is less than 30 words, so return the whole thing
         return $this->getDescription();
 
+    }
+
+    public function getViewStatus() {
+
+        $c = new Criteria();
+
+        $c->add(ListingTimePeer::END_DATE, time(), Criteria::GREATER_EQUAL);
+
+        $times = $this->getListingTimes($c);
+
+        if (count($times) > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

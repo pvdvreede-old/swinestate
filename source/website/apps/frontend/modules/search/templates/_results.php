@@ -1,4 +1,4 @@
-<br />
+
 <?php    include_partial('global/pagination', array(
     'pager' => $pager,
     'page_url' => $page_url,
@@ -10,12 +10,12 @@
     <tr>
         <td>
             <div class="listing">
-                <p><?php echo $listing->getName(); ?></p>
-                <p><?php echo $listing->getShortDescription(); ?></p>
-                <p>Bathrooms: <?php echo $listing->getBathrooms(); ?></p>
-                <p>Bedrooms: <?php echo $listing->getBedrooms(); ?></p>
-                <p>Car spaces: <?php echo $listing->getCarSpaces(); ?></p>
-                <p><?php echo link_to('More details...', $module_link.'/show?id='.$listing->getId()); ?></p>
+                <p class="listing_title"><?php echo $listing->getName(); ?></p>
+                <p class="listing_desc"><?php echo html_entity_decode($listing->getShortDescription()); ?></p>
+                <p class="listing_count">Bathrooms: <?php echo $listing->getBathrooms(); ?>
+                Bedrooms: <?php echo $listing->getBedrooms(); ?>
+                Car spaces: <?php echo $listing->getCarSpaces(); ?></p>
+                <p class="listing_link"><?php echo link_to('More details...', $module_link.'/show?id='.$listing->getId()); ?></p>
             </div>
         </td>
     </tr>

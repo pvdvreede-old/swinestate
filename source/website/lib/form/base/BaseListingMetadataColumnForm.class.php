@@ -19,6 +19,9 @@ abstract class BaseListingMetadataColumnForm extends BaseFormPropel
       'code'            => new sfWidgetFormInputText(),
       'label'           => new sfWidgetFormInputText(),
       'value_type'      => new sfWidgetFormInputText(),
+      'required'        => new sfWidgetFormInputCheckbox(),
+      'min_length'      => new sfWidgetFormInputText(),
+      'max_length'      => new sfWidgetFormInputText(),
       'created_at'      => new sfWidgetFormDateTime(),
       'updated_at'      => new sfWidgetFormDateTime(),
     ));
@@ -28,7 +31,10 @@ abstract class BaseListingMetadataColumnForm extends BaseFormPropel
       'listing_type_id' => new sfValidatorPropelChoice(array('model' => 'ListingType', 'column' => 'id')),
       'code'            => new sfValidatorString(array('max_length' => 25)),
       'label'           => new sfValidatorString(array('max_length' => 255)),
-      'value_type'      => new sfValidatorString(array('max_length' => 255)),
+      'value_type'      => new sfValidatorString(array('max_length' => 10)),
+      'required'        => new sfValidatorBoolean(array('required' => false)),
+      'min_length'      => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
+      'max_length'      => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'created_at'      => new sfValidatorDateTime(array('required' => false)),
       'updated_at'      => new sfValidatorDateTime(array('required' => false)),
     ));

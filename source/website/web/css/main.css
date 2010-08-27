@@ -71,6 +71,39 @@ table.form th {
     background-color: #c2cccd;
 }
 
+div.listing {
+    position: relative;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+ 
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-top-style: solid;
+    border-right-color: #535353;
+    border-left-color: #535353;
+    border-bottom-color: #535353;
+    border-top-color: #535353;
+}
+
+p.listing_title {
+
+    font-weight: bold;
+}
+
+p.listing_count {
+    position: absolute;
+    top: 5px;
+    right: 8px;
+
+}
+
+table.search_listing {
+    width: 100%;
+}
+
 #search { 
     border-right-style: solid;
     border-left-style: solid;

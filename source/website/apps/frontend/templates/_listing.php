@@ -15,6 +15,9 @@
   <tbody>
     <?php foreach ($pager->getResults() as $item): ?>
     <tr>
+        <?php foreach ($column as $c) : ?>
+        <td><?php echo $item->$c; ?></td>
+
       <td><?php echo link_to($Listing->getName() , strtolower($Listing->getListingType()->getName()).'/edit?id='.$Listing->getId()); ?></td>
       <td><?php echo $Listing->getListingType()->getName() ?></td>
       <td><?php echo $Listing->getPropertyType()->getName() ?></td>

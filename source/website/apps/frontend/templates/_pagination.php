@@ -1,7 +1,8 @@
 <?php if (!isset($get_string)) $get_string = ''; ?>
 
-
+<br />
 <?php if ($pager->haveToPaginate()): ?>
+
   <div class="pagination">
     <a href="<?php echo url_for($page_url).'?'.$get_string.'page=1'; ?>">
       <<
@@ -36,3 +37,4 @@
     - page <strong><?php echo $pager->getPage() ?>/<?php echo $pager->getLastPage() ?></strong>
   <?php endif; ?>
 </div>
+<br />

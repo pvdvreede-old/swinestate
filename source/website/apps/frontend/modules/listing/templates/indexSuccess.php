@@ -11,12 +11,10 @@
     <tr>
       <th>Name</th>
       <th>Listing type</th>
-      <th>Property type</th>
-      <th>Listing status</th>
+      <th>Property type</th>     
       <th>Address</th>     
-      <th>Bedrooms</th>
-      <th>Bathrooms</th>
-      <th>Car spaces</th>
+      <th>Listing status</th>
+      <th>View status</th>
     </tr>
   </thead>
   <tbody>
@@ -25,11 +23,9 @@
       <td><?php echo link_to($Listing->getName() , strtolower($Listing->getListingType()->getName()).'/edit?id='.$Listing->getId()); ?></td>
       <td><?php echo $Listing->getListingType()->getName() ?></td>
       <td><?php echo $Listing->getPropertyType()->getName() ?></td>
+      <td><?php echo $Listing->getAddress() ?></td>
       <td><?php echo $Listing->getListingStatus()->getName() ?></td>
-      <td><?php echo $Listing->getAddress() ?></td>      
-      <td><?php echo $Listing->getBedrooms() ?></td>
-      <td><?php echo $Listing->getBathrooms() ?></td>
-      <td><?php echo $Listing->getCarSpaces() ?></td>
+      <td><?php echo ($Listing->getViewStatus() ? 'Active' : link_to('Click to make active', 'payment/new?id='.$Listing->getId())); ?></td>
     </tr>
     <?php endforeach; ?>
   </tbody>
