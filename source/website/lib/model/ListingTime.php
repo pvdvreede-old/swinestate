@@ -18,4 +18,27 @@
  */
 class ListingTime extends BaseListingTime {
 
+    public function save(PropelPDO $con = null) {
+
+        // if this is the first save attach the user id, and the listing status
+        if ($this->isNew()) {
+            try {
+
+                $this->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
+
+                // make the listing unpaid by default so the user has to pay to get it shown
+                $this->setPaymentStatus('pending');
+
+            } catch (Exception $ex) {
+                // if there is an exception a user isnt logged in, so throw a 401 unauthorised exception.
+                throw new sfException('You are not authorised to save a Listing', 401);
+            }
+        }
+
+        // call the parent to save
+        $object = parent::save($con);
+
+        return $object;
+    }
+
 } // ListingTime

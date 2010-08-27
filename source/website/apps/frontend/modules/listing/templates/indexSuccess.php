@@ -15,6 +15,7 @@
       <th>Address</th>     
       <th>Listing status</th>
       <th>View status</th>
+      <th>Payment history</th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +27,7 @@
       <td><?php echo $Listing->getAddress() ?></td>
       <td><?php echo $Listing->getListingStatus()->getName() ?></td>
       <td><?php echo ($Listing->getViewStatus() ? 'Active' : link_to('Click to make active', 'payment/new?id='.$Listing->getId())); ?></td>
+      <td><?php echo ($Listing->getPaymentHistory() ? link_to('Click here', 'payment/index') : 'None'); ?></td>
     </tr>
     <?php endforeach; ?>
   </tbody>

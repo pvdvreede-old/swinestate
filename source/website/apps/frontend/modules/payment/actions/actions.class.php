@@ -14,6 +14,11 @@ class paymentActions extends sfActions
     $this->ListingTimes = ListingTimePeer::doSelect(new Criteria());
   }
 
+  public function executeConfirm(sfWebRequest $request)
+  {
+      
+  }
+
   public function executeShow(sfWebRequest $request)
   {
     $this->ListingTime = ListingTimePeer::retrieveByPk($request->getParameter('id'));

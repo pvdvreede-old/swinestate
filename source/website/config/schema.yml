@@ -76,6 +76,23 @@ propel:
     listing_id: { type: integer, required: true, foreignTable: listing, foreignReference: id }
     start_date: timestamp
     end_date: timestamp
+    payment_status: {type: varchar(10), required: true }
+    created_at: ~
+    updated_at: ~
+
+  listing_photos:
+    id: ~
+    listing_id: { type: integer, required: true, foreignTable: listing, foreignReference: id }
+    path: { type: varchar(1000), required: true }
+    caption: { type: varchar(500) }
+    created_at: ~
+    updated_at: ~
+
+  listing_videos:
+    id: ~
+    listing_id: { type: integer, required: true, foreignTable: listing, foreignReference: id }
+    url: { type: varchar(1000), required: true }
+    caption: { type: varchar(500) }
     created_at: ~
     updated_at: ~
 
