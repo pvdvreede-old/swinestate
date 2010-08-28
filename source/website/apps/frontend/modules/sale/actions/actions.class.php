@@ -30,14 +30,14 @@ class saleActions extends sfActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = new ListingForm();
+    $this->form = new SaleListingForm();
   }
 
   public function executeCreate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST));
 
-    $this->form = new ListingForm();
+    $this->form = new SaleListingForm();
 
     $this->processForm($request, $this->form);
 
@@ -47,14 +47,14 @@ class saleActions extends sfActions
   public function executeEdit(sfWebRequest $request)
   {
     $this->forward404Unless($Listing = ListingPeer::retrieveByPk($request->getParameter('id')), sprintf('Object Listing does not exist (%s).', $request->getParameter('id')));
-    $this->form = new ListingForm($Listing);
+    $this->form = new SaleListingForm($Listing);
   }
 
   public function executeUpdate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
     $this->forward404Unless($Listing = ListingPeer::retrieveByPk($request->getParameter('id')), sprintf('Object Listing does not exist (%s).', $request->getParameter('id')));
-    $this->form = new ListingForm($Listing);
+    $this->form = new SaleListingForm($Listing);
 
     $this->processForm($request, $this->form);
 

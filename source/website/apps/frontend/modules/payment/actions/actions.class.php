@@ -16,7 +16,7 @@ class paymentActions extends sfActions
 
   public function executeConfirm(sfWebRequest $request)
   {
-      
+   
   }
 
   public function executeShow(sfWebRequest $request)
@@ -75,7 +75,7 @@ class paymentActions extends sfActions
     {
       $ListingTime = $form->save();
 
-      $this->redirect('payment/edit?id='.$ListingTime->getId());
+      $this->redirect('payment/confirm');
     }
   }
 }

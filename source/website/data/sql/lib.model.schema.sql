@@ -204,6 +204,7 @@ CREATE TABLE `listing_time`
 	`listing_id` INTEGER  NOT NULL,
 	`start_date` DATETIME,
 	`end_date` DATETIME,
+	`payment_status` VARCHAR(10)  NOT NULL,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	PRIMARY KEY (`id`),
@@ -213,6 +214,50 @@ CREATE TABLE `listing_time`
 		REFERENCES `sf_guard_user` (`id`),
 	INDEX `listing_time_FI_2` (`listing_id`),
 	CONSTRAINT `listing_time_FK_2`
+		FOREIGN KEY (`listing_id`)
+		REFERENCES `listing` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- listing_photos
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `listing_photos`;
+
+
+CREATE TABLE `listing_photos`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`listing_id` INTEGER  NOT NULL,
+	`path` VARCHAR(1000)  NOT NULL,
+	`caption` VARCHAR(500),
+	`created_at` DATETIME,
+	`updated_at` DATETIME,
+	PRIMARY KEY (`id`),
+	INDEX `listing_photos_FI_1` (`listing_id`),
+	CONSTRAINT `listing_photos_FK_1`
+		FOREIGN KEY (`listing_id`)
+		REFERENCES `listing` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- listing_videos
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `listing_videos`;
+
+
+CREATE TABLE `listing_videos`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`listing_id` INTEGER  NOT NULL,
+	`url` VARCHAR(1000)  NOT NULL,
+	`caption` VARCHAR(500),
+	`created_at` DATETIME,
+	`updated_at` DATETIME,
+	PRIMARY KEY (`id`),
+	INDEX `listing_videos_FI_1` (`listing_id`),
+	CONSTRAINT `listing_videos_FK_1`
 		FOREIGN KEY (`listing_id`)
 		REFERENCES `listing` (`id`)
 )Type=InnoDB;

@@ -2,7 +2,7 @@
 
 <p><?php echo $empty_result_text; ?></p>
 
-<?php else :?>
+<?php else : ?>
 
 <table class="index_list">
   <thead>

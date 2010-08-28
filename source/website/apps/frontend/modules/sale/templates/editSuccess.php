@@ -2,5 +2,6 @@
 
 <?php include_partial('global/form', array(
     'form' => $form,
-    'module_link' => 'sale'
+    'module_link' => 'sale',
+    'back_to' => 'listing/index'
         )) ?>

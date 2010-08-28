@@ -37,7 +37,7 @@ class ListingForm extends BaseListingForm
       $address_form = new AddressForm($address);
 
       $this->embedForm('address', $address_form);
-
+   
       // only use certain fields for the form
       $this->useFields(array(
           'name',
