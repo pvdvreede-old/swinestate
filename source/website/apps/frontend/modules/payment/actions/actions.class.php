@@ -16,7 +16,30 @@ class paymentActions extends sfActions
 
   public function executeConfirm(sfWebRequest $request)
   {
-   
+      //$this->forward404Unless($request->isMethod(sfRequest::POST));
+
+      $this->ListingTime = ListingTimePeer::retrieveByPK($request->getParameter('id'));
+
+      $this->form = new PaymentForm();
+
+      $this->form->listing_time_id = $this->ListingTime->getId();
+
+  }
+
+  public function executeFinish(sfWebRequest $request) {
+
+    $this->form = new PaymentForm();
+
+    $this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
+    if ($this->form->isValid())
+    {
+      $this->form->save();
+
+      $this->redirect('listing/index');
+    }
+
+    $this->setTemplate('confirm');
+
   }
 
   public function executeShow(sfWebRequest $request)
@@ -75,7 +98,7 @@ class paymentActions extends sfActions
     {
       $ListingTime = $form->save();
 
-      $this->redirect('payment/confirm');
+      $this->redirect('payment/confirm?id='.$ListingTime->getId());
     }
   }
 }

@@ -77,6 +77,7 @@ propel:
     start_date: timestamp
     end_date: timestamp
     payment_status: {type: varchar(10), required: true }
+    total_paid: float
     created_at: ~
     updated_at: ~
 

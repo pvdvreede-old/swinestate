@@ -5,3 +5,4 @@
 all:
   app_name: SwinEstate
   items_on_page: 5
+  daily_ad_cost: 25.00

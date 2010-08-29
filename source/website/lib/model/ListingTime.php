@@ -41,4 +41,13 @@ class ListingTime extends BaseListingTime {
         return $object;
     }
 
+    public function getTotalDays() {
+
+        // get the difference between the first date and last date
+        $difference = strtotime($this->getEndDate()) - strtotime($this->getStartDate());
+
+        return (($difference / 60) / 60) / 24;
+
+    }
+
 } // ListingTime

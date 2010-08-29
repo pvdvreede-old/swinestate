@@ -33,6 +33,5 @@
 
 <hr />
 
-<a href="<?php echo url_for('payment/edit?id='.$ListingTime->getId()) ?>">Edit</a>
-&nbsp;
+
 <a href="<?php echo url_for('payment/index') ?>">List</a>
