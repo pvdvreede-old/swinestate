@@ -10,7 +10,7 @@
 class PaymentForm extends sfForm {
 
     public $listing_time_id;
-    
+
     public function configure() {
         // create inputs for details of the user's paypal account
         $this->setWidgets(array(
@@ -22,30 +22,57 @@ class PaymentForm extends sfForm {
             ))
         ));
 
+        // create a criteria when checking a payment id to make sure it have not been paid
+        $listing_id_criteria = new Criteria();
+
+        $listing_id_criteria->add(ListingTimePeer::PAYMENT_STATUS, 'pending');
+
         // validators for the above
         $this->setValidators(array(
             'paypal_name' => new sfValidatorString(),
             'paypal_password' => new sfValidatorString(),
-            'paypal_password_again' => new sfValidatorString()
+            'paypal_password_again' => new sfValidatorString(),
+            'listing_time_id' => new sfValidatorPropelChoice(array(
+                'model' => 'ListingTime',
+                'column' => 'id',
+                'criteria' => $listing_id_criteria
+            ))
         ));
+
+        $this->validatorSchema->setPostValidator(
+                new sfValidatorSchemaCompare('paypal_password', '==', 'paypal_password_again')
+                );
 
         $this->widgetSchema->setNameFormat('payment[%s]');
     }
-    
+
     public function save(PropelPDO $con = null) {
-        
+
         // get the lising time row to confirm that payment against
         $c = new Criteria();
-        
+
         $c->add(ListingTimePeer::ID, $this->values['listing_time_id']);
-                
+
         $payment = ListingTimePeer::doSelectOne($c);
-        
+
         // set the payment status to paid and save the object to the DB
         $payment->setPaymentStatus('Paid');
-        
-        $payment->save();       
-        
+
+        // set the amount that was paid
+        $payment->setTotalPaid($payment->getPaidTotalFromDays());
+
+        // save the date of the payment
+        $payment->setPaymentDate(time());
+
+        // save the paypal account name for auditing of suspicious behaviour
+        $payment->setPayerAccountName($this->values['paypal_name']);
+
+        // seralise the values to the db
+        $payment->save();
+
+        return $payment;
     }
+
+  
 
 }

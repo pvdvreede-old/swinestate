@@ -25,5 +25,11 @@ class ListingTimeForm extends BaseListingTimeForm
               'start_date',
               'end_date'
               ));
+
+      $this->validatorSchema->setPostValidator(
+              new sfValidatorSchemaCompare('start_date', '<', 'end_date', array(), array(
+
+              ))
+              );
   }
 }

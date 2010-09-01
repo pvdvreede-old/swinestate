@@ -48,7 +48,7 @@
             <strong>Total cost:</strong>
         </td>
         <td>
-            <strong>$<?php echo $ListingTime->getTotalDays() * sfConfig::get('app_daily_ad_cost'); ?></strong>
+            <strong>$<?php echo $ListingTime->getPaidTotalFromDays(); ?></strong>
         </td>
     </tr>
 

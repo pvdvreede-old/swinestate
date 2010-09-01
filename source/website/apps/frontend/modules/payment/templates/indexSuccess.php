@@ -1,30 +1,34 @@
-<h1>ListingTimes List</h1>
+<h1>Payment History</h1>
 
-<table>
+<?php if ($singleListing) : ?>
+
+<h2>For <?php echo $ListingTimes[0]->getListing(); ?></h2>
+
+<?php endif; ?>
+
+<table class="index_list">
   <thead>
     <tr>
-      <th>Id</th>
-      <th>User</th>
-      <th>Listing</th>
+      <?php echo (!$singleListing ? '<th>Listing</th>' : ''); ?>
       <th>Start date</th>
       <th>End date</th>
-      <th>Created at</th>
-      <th>Updated at</th>
+      <th>Date Paid</th>
+      <th>PayPal Account</th>
+      <th>Amount</th>
     </tr>
   </thead>
   <tbody>
     <?php foreach ($ListingTimes as $ListingTime): ?>
     <tr>
-      <td><a href="<?php echo url_for('payment/show?id='.$ListingTime->getId()) ?>"><?php echo $ListingTime->getId() ?></a></td>
-      <td><?php echo $ListingTime->getUserId() ?></td>
-      <td><?php echo $ListingTime->getListingId() ?></td>
+      <?php echo (!$singleListing ? '<td>'.$ListingTime->getListing().'</td>' : ''); ?>
       <td><?php echo $ListingTime->getStartDate() ?></td>
       <td><?php echo $ListingTime->getEndDate() ?></td>
-      <td><?php echo $ListingTime->getCreatedAt() ?></td>
-      <td><?php echo $ListingTime->getUpdatedAt() ?></td>
+      <td><?php echo $ListingTime->getPaymentDate() ?></td>
+      <td><?php echo $ListingTime->getPayerAccountName() ?></td>
+      <td>$<?php echo $ListingTime->getTotalPaid() ?></td>
     </tr>
     <?php endforeach; ?>
   </tbody>
 </table>
 
-  <a href="<?php echo url_for('payment/new') ?>">New</a>
+<?php echo link_to('Back to Listings', 'listing/index'); ?>

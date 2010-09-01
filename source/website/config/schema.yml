@@ -77,7 +77,9 @@ propel:
     start_date: timestamp
     end_date: timestamp
     payment_status: {type: varchar(10), required: true }
-    total_paid: float
+    total_paid: { type: float, default: 0.00 }
+    payer_account_name: { type: varchar(100) }
+    payment_date: timestamp
     created_at: ~
     updated_at: ~
 
@@ -103,7 +105,7 @@ propel:
     user_id:     { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade }
     first_name:  varchar(50)
     last_name:   varchar(50)
-    email_address: varchar(355)
+    email_address: { type: varchar(355), index: unique }
     phone_number: varchar(20)
     created_at: ~
     updated_at: ~

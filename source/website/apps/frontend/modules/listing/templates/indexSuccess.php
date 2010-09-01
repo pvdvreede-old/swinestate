@@ -27,7 +27,7 @@
       <td><?php echo $Listing->getAddress() ?></td>
       <td><?php echo $Listing->getListingStatus()->getName() ?></td>
       <td><?php echo ($Listing->getViewStatus() ? 'Active' : link_to('Click to make active', 'payment/new?id='.$Listing->getId())); ?></td>
-      <td><?php echo ($Listing->getPaymentHistory() ? link_to('Click here', 'payment/index') : 'None'); ?></td>
+      <td><?php echo ($Listing->getPaymentHistory() ? link_to('Click here', 'payment/index?id='.$Listing->getId()) : 'None'); ?></td>
     </tr>
     <?php endforeach; ?>
   </tbody>
@@ -43,3 +43,5 @@
   <a href="<?php echo url_for('sale/new') ?>">New Sale Listing</a>
 
   <a href="<?php echo url_for('rent/new') ?>">New Rental Listing</a>
+
+  <?php echo link_to('See payment history for all listings', 'payment/index'); ?>

@@ -7,98 +7,113 @@
  * @subpackage payment
  * @author     Paul Van de Vreede
  */
-class paymentActions extends sfActions
-{
-  public function executeIndex(sfWebRequest $request)
-  {
-    $this->ListingTimes = ListingTimePeer::doSelect(new Criteria());
-  }
+class paymentActions extends sfActions {
 
-  public function executeConfirm(sfWebRequest $request)
-  {
-      //$this->forward404Unless($request->isMethod(sfRequest::POST));
+    public function executeIndex(sfWebRequest $request) {
 
-      $this->ListingTime = ListingTimePeer::retrieveByPK($request->getParameter('id'));
+        $c = new Criteria();
 
-      $this->form = new PaymentForm();
+        // add criteria to SQL to only show payments that have been paid (so are actual payments, not pending)
+        // and are for the current user
+        $c->add(ListingTimePeer::PAYMENT_STATUS, 'Paid');
+        $c->add(ListingTimePeer::USER_ID, $this->getUser()->getGuardUser()->getId());
 
-      $this->form->listing_time_id = $this->ListingTime->getId();
+        // setting the default value to showing all payments
+        $this->singleListing = false;
 
-  }
+        // if an id is put in the url then look at the payments of a single listing only and set the variable so the view knows its a single listing
+        if ($request->hasParameter('id')) {
+            $c->add(ListingTimePeer::LISTING_ID, $request->getParameter('id'));
+            $this->singleListing = true;
+        }
 
-  public function executeFinish(sfWebRequest $request) {
-
-    $this->form = new PaymentForm();
-
-    $this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
-    if ($this->form->isValid())
-    {
-      $this->form->save();
-
-      $this->redirect('listing/index');
+        $this->ListingTimes = ListingTimePeer::doSelect($c);
     }
 
-    $this->setTemplate('confirm');
 
-  }
+    public function executeConfirm(sfWebRequest $request) {
+        //$this->forward404Unless($request->isMethod(sfRequest::POST));
 
-  public function executeShow(sfWebRequest $request)
-  {
-    $this->ListingTime = ListingTimePeer::retrieveByPk($request->getParameter('id'));
-    $this->forward404Unless($this->ListingTime);
-  }
+        $this->ListingTime = ListingTimePeer::retrieveByPK($request->getParameter('id'));
 
-  public function executeNew(sfWebRequest $request)
-  {
-    $this->form = new ListingTimeForm();
-  }
+        $this->form = new PaymentForm();
 
-  public function executeCreate(sfWebRequest $request)
-  {
-    $this->forward404Unless($request->isMethod(sfRequest::POST));
+        $this->form->listing_time_id = $this->ListingTime->getId();
 
-    $this->form = new ListingTimeForm();
+        $this->form->configure();
 
-    $this->processForm($request, $this->form);
+        // if the confirmation form has been submitted
+        if ($request->hasParameter('payment') && $request->isMethod('post')) {
 
-    $this->setTemplate('new');
-  }
+            //check that the form is valid
+            $this->form->bind($request->getParameter($this->form->getName()));
 
-  public function executeEdit(sfWebRequest $request)
-  {
-    $this->forward404Unless($ListingTime = ListingTimePeer::retrieveByPk($request->getParameter('id')), sprintf('Object ListingTime does not exist (%s).', $request->getParameter('id')));
-    $this->form = new ListingTimeForm($ListingTime);
-  }
+            if ($this->form->isValid()) {
 
-  public function executeUpdate(sfWebRequest $request)
-  {
-    $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
-    $this->forward404Unless($ListingTime = ListingTimePeer::retrieveByPk($request->getParameter('id')), sprintf('Object ListingTime does not exist (%s).', $request->getParameter('id')));
-    $this->form = new ListingTimeForm($ListingTime);
+                /**********************************************
+                 *  PUT CODE HERE FOR PAYPAL PAYMENT PROCESSING
+                 *********************************************/
 
-    $this->processForm($request, $this->form);
 
-    $this->setTemplate('edit');
-  }
+                // call the save method on the form which will update the payment status
+                $this->receiptObject = $this->form->save();
 
-  public function executeDelete(sfWebRequest $request)
-  {
-    $request->checkCSRFProtection();
-
-    $this->forward404Unless($ListingTime = ListingTimePeer::retrieveByPk($request->getParameter('id')), sprintf('Object ListingTime does not exist (%s).', $request->getParameter('id')));
-    $ListingTime->delete();
-
-    $this->redirect('payment/index');
-  }
-
-  protected function processForm(sfWebRequest $request, sfForm $form)
-  {
-    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
-    if ($form->isValid())
-    {
-      $ListingTime = $form->save();
-
-      $this->redirect('payment/confirm?id='.$ListingTime->getId());
+                // once successful then redirect to the receipt page
+                $this->setTemplate('receipt');
+            }
+        }
     }
-  }
+
+    public function executeShow(sfWebRequest $request) {
+        $this->ListingTime = ListingTimePeer::retrieveByPk($request->getParameter('id'));
+        $this->forward404Unless($this->ListingTime);
+    }
+
+    public function executeNew(sfWebRequest $request) {
+        $this->form = new ListingTimeForm();
+    }
+
+    public function executeCreate(sfWebRequest $request) {
+        $this->forward404Unless($request->isMethod(sfRequest::POST));
+
+        $this->form = new ListingTimeForm();
+
+        $this->processForm($request, $this->form);
+
+        $this->setTemplate('new');
+    }
+
+    public function executeEdit(sfWebRequest $request) {
+        $this->forward404Unless($ListingTime = ListingTimePeer::retrieveByPk($request->getParameter('id')), sprintf('Object ListingTime does not exist (%s).', $request->getParameter('id')));
+        $this->form = new ListingTimeForm($ListingTime);
+    }
+
+    public function executeUpdate(sfWebRequest $request) {
+        $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
+        $this->forward404Unless($ListingTime = ListingTimePeer::retrieveByPk($request->getParameter('id')), sprintf('Object ListingTime does not exist (%s).', $request->getParameter('id')));
+        $this->form = new ListingTimeForm($ListingTime);
+
+        $this->processForm($request, $this->form);
+
+        $this->setTemplate('edit');
+    }
+
+    public function executeDelete(sfWebRequest $request) {
+        $request->checkCSRFProtection();
+
+        $this->forward404Unless($ListingTime = ListingTimePeer::retrieveByPk($request->getParameter('id')), sprintf('Object ListingTime does not exist (%s).', $request->getParameter('id')));
+        $ListingTime->delete();
+
+        $this->redirect('payment/index');
+    }
+
+    protected function processForm(sfWebRequest $request, sfForm $form) {
+        $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+        if ($form->isValid()) {
+            $ListingTime = $form->save();
+
+            $this->redirect('payment/confirm?id=' . $ListingTime->getId());
+        }
+    }
+
 }
