@@ -68,6 +68,17 @@ class userActions extends sfActions
     if ($form->isValid())
     {
       $user = $form->save();
+	  
+	  // send an email to the user with their registration details
+		$email = Swift_Message::newInstance()
+				 ->setFrom(sfContext::get('app_from_email'))
+				 ->setTo($user->getProfile()->getEmailAddress())
+				 ->setSubject(sfContext::get('app_app_name').' - Registration details')
+				 ->setBody($this->getPartial('profile', array(
+						'sf_user' => $user
+						)));
+				 
+		$this->getMailer()->send($email);
 
       $this->getUser()->signin($user, false);
 

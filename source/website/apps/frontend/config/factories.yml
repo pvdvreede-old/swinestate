@@ -7,6 +7,9 @@ prod:
     param:
       level:   err
       loggers: ~
+  mailer:
+    transport:
+      class: Swift_SendMailTransport
 
 test:
   storage:

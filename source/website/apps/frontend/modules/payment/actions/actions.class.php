@@ -57,7 +57,18 @@ class paymentActions extends sfActions {
 
                 // call the save method on the form which will update the payment status
                 $this->receiptObject = $this->form->save();
-
+				
+				// send an email to the user with the receipt details
+				$email = Swift_Message::newInstance()
+						 ->setFrom(sfContext::get('app_from_email'))
+						 ->setTo($this->getUser()->getProfile()->getEmailAddress())
+						 ->setSubject(sfContext::get('app_app_name').' - Payment details')
+						 ->setBody($this->getPartial('reciept', array(
+								'receiptObject' => $this->receiptObject
+								)));
+						 
+				$this->getMailer()->send($email);
+								
                 // once successful then redirect to the receipt page
                 $this->setTemplate('receipt');
             }

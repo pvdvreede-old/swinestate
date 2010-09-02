@@ -3,6 +3,11 @@
 
 # default values
 all:
+  # Name of application
   app_name: SwinEstate
+  # Amount of items for pagination
   items_on_page: 5
+  # Cost of the adds
   daily_ad_cost: 25.00
+  # from address in any emails sent from this website
+  from_email: info@swinestate.com

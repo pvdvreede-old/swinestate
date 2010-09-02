@@ -13,9 +13,11 @@ class ListingMetadataColumnForm extends sfForm
   {
 
       $c = new Criteria();
-
+	  
+	  // get all the columns in the database that relate to a sale
       $columns = ListingMetadataColumnPeer::doSelect($c);
-
+	  
+	  // for each of the columns add a form input and form validation depending on the data type
       foreach ($columns as $column) {
 
           switch($column->getValueType()) {

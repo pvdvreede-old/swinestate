@@ -18,9 +18,7 @@ class SaleListingForm extends ListingForm
       $metaForm = new ListingMetadataColumnForm();
 
       // add meta data for the type
-      $this->embedForm('meta', $metaForm);
-
-      $this->getWidget('meta')->setOption('label', 'Sale details');
+      $this->embedForm('sale_details', $metaForm);
       
 
   }
