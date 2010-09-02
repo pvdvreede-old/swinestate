@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Base class that represents a row from the 'listing_photos' table.
+ * Base class that represents a row from the 'interest' table.
  *
  * 
  *
@@ -11,14 +11,14 @@
  *
  * @package    lib.model.om
  */
-abstract class BaseListingPhotos extends BaseObject  implements Persistent {
+abstract class BaseInterest extends BaseObject  implements Persistent {
 
 
 	/**
 	 * The Peer class.
 	 * Instance provides a convenient way of calling static methods on a class
 	 * that calling code may not be able to identify.
-	 * @var        ListingPhotosPeer
+	 * @var        InterestPeer
 	 */
 	protected static $peer;
 
@@ -35,16 +35,17 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	protected $listing_id;
 
 	/**
-	 * The value for the path field.
-	 * @var        string
+	 * The value for the user_id field.
+	 * @var        int
 	 */
-	protected $path;
+	protected $user_id;
 
 	/**
-	 * The value for the caption field.
+	 * The value for the interest_status field.
+	 * Note: this column has a database default value of: 'Pending'
 	 * @var        string
 	 */
-	protected $caption;
+	protected $interest_status;
 
 	/**
 	 * The value for the created_at field.
@@ -64,6 +65,11 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	protected $aListing;
 
 	/**
+	 * @var        sfGuardUser
+	 */
+	protected $asfGuardUser;
+
+	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -79,7 +85,28 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 
 	// symfony behavior
 	
-	const PEER = 'ListingPhotosPeer';
+	const PEER = 'InterestPeer';
+
+	/**
+	 * Applies default values to this object.
+	 * This method should be called from the object's constructor (or
+	 * equivalent initialization method).
+	 * @see        __construct()
+	 */
+	public function applyDefaultValues()
+	{
+		$this->interest_status = 'Pending';
+	}
+
+	/**
+	 * Initializes internal state of BaseInterest object.
+	 * @see        applyDefaults()
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->applyDefaultValues();
+	}
 
 	/**
 	 * Get the [id] column value.
@@ -102,23 +129,23 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [path] column value.
+	 * Get the [user_id] column value.
 	 * 
-	 * @return     string
+	 * @return     int
 	 */
-	public function getPath()
+	public function getUserId()
 	{
-		return $this->path;
+		return $this->user_id;
 	}
 
 	/**
-	 * Get the [caption] column value.
+	 * Get the [interest_status] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getCaption()
+	public function getInterestStatus()
 	{
-		return $this->caption;
+		return $this->interest_status;
 	}
 
 	/**
@@ -201,7 +228,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	 * Set the value of [id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     ListingPhotos The current object (for fluent API support)
+	 * @return     Interest The current object (for fluent API support)
 	 */
 	public function setId($v)
 	{
@@ -211,7 +238,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 
 		if ($this->id !== $v) {
 			$this->id = $v;
-			$this->modifiedColumns[] = ListingPhotosPeer::ID;
+			$this->modifiedColumns[] = InterestPeer::ID;
 		}
 
 		return $this;
@@ -221,7 +248,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	 * Set the value of [listing_id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     ListingPhotos The current object (for fluent API support)
+	 * @return     Interest The current object (for fluent API support)
 	 */
 	public function setListingId($v)
 	{
@@ -231,7 +258,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 
 		if ($this->listing_id !== $v) {
 			$this->listing_id = $v;
-			$this->modifiedColumns[] = ListingPhotosPeer::LISTING_ID;
+			$this->modifiedColumns[] = InterestPeer::LISTING_ID;
 		}
 
 		if ($this->aListing !== null && $this->aListing->getId() !== $v) {
@@ -242,51 +269,55 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	} // setListingId()
 
 	/**
-	 * Set the value of [path] column.
+	 * Set the value of [user_id] column.
 	 * 
-	 * @param      string $v new value
-	 * @return     ListingPhotos The current object (for fluent API support)
+	 * @param      int $v new value
+	 * @return     Interest The current object (for fluent API support)
 	 */
-	public function setPath($v)
+	public function setUserId($v)
 	{
 		if ($v !== null) {
-			$v = (string) $v;
+			$v = (int) $v;
 		}
 
-		if ($this->path !== $v) {
-			$this->path = $v;
-			$this->modifiedColumns[] = ListingPhotosPeer::PATH;
+		if ($this->user_id !== $v) {
+			$this->user_id = $v;
+			$this->modifiedColumns[] = InterestPeer::USER_ID;
+		}
+
+		if ($this->asfGuardUser !== null && $this->asfGuardUser->getId() !== $v) {
+			$this->asfGuardUser = null;
 		}
 
 		return $this;
-	} // setPath()
+	} // setUserId()
 
 	/**
-	 * Set the value of [caption] column.
+	 * Set the value of [interest_status] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     ListingPhotos The current object (for fluent API support)
+	 * @return     Interest The current object (for fluent API support)
 	 */
-	public function setCaption($v)
+	public function setInterestStatus($v)
 	{
 		if ($v !== null) {
 			$v = (string) $v;
 		}
 
-		if ($this->caption !== $v) {
-			$this->caption = $v;
-			$this->modifiedColumns[] = ListingPhotosPeer::CAPTION;
+		if ($this->interest_status !== $v || $this->isNew()) {
+			$this->interest_status = $v;
+			$this->modifiedColumns[] = InterestPeer::INTEREST_STATUS;
 		}
 
 		return $this;
-	} // setCaption()
+	} // setInterestStatus()
 
 	/**
 	 * Sets the value of [created_at] column to a normalized version of the date/time value specified.
 	 * 
 	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
 	 *						be treated as NULL for temporal objects.
-	 * @return     ListingPhotos The current object (for fluent API support)
+	 * @return     Interest The current object (for fluent API support)
 	 */
 	public function setCreatedAt($v)
 	{
@@ -323,7 +354,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 					)
 			{
 				$this->created_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
-				$this->modifiedColumns[] = ListingPhotosPeer::CREATED_AT;
+				$this->modifiedColumns[] = InterestPeer::CREATED_AT;
 			}
 		} // if either are not null
 
@@ -335,7 +366,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	 * 
 	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
 	 *						be treated as NULL for temporal objects.
-	 * @return     ListingPhotos The current object (for fluent API support)
+	 * @return     Interest The current object (for fluent API support)
 	 */
 	public function setUpdatedAt($v)
 	{
@@ -372,7 +403,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 					)
 			{
 				$this->updated_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
-				$this->modifiedColumns[] = ListingPhotosPeer::UPDATED_AT;
+				$this->modifiedColumns[] = InterestPeer::UPDATED_AT;
 			}
 		} // if either are not null
 
@@ -389,6 +420,10 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	 */
 	public function hasOnlyDefaultValues()
 	{
+			if ($this->interest_status !== 'Pending') {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -413,8 +448,8 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->listing_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-			$this->path = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-			$this->caption = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->user_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+			$this->interest_status = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->created_at = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->updated_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->resetModified();
@@ -426,10 +461,10 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 6; // 6 = ListingPhotosPeer::NUM_COLUMNS - ListingPhotosPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 6; // 6 = InterestPeer::NUM_COLUMNS - InterestPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating ListingPhotos object", $e);
+			throw new PropelException("Error populating Interest object", $e);
 		}
 	}
 
@@ -451,6 +486,9 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 
 		if ($this->aListing !== null && $this->listing_id !== $this->aListing->getId()) {
 			$this->aListing = null;
+		}
+		if ($this->asfGuardUser !== null && $this->user_id !== $this->asfGuardUser->getId()) {
+			$this->asfGuardUser = null;
 		}
 	} // ensureConsistency
 
@@ -475,13 +513,13 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(ListingPhotosPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(InterestPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		// We don't need to alter the object instance pool; we're just modifying this instance
 		// already in the pool.
 
-		$stmt = ListingPhotosPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
+		$stmt = InterestPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
 		$row = $stmt->fetch(PDO::FETCH_NUM);
 		$stmt->closeCursor();
 		if (!$row) {
@@ -492,6 +530,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 		if ($deep) {  // also de-associate any related objects?
 
 			$this->aListing = null;
+			$this->asfGuardUser = null;
 		} // if (deep)
 	}
 
@@ -511,14 +550,14 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(ListingPhotosPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(InterestPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
 		try {
 			$ret = $this->preDelete($con);
 			// symfony_behaviors behavior
-			foreach (sfMixer::getCallables('BaseListingPhotos:delete:pre') as $callable)
+			foreach (sfMixer::getCallables('BaseInterest:delete:pre') as $callable)
 			{
 			  if (call_user_func($callable, $this, $con))
 			  {
@@ -529,10 +568,10 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 			}
 
 			if ($ret) {
-				ListingPhotosPeer::doDelete($this, $con);
+				InterestPeer::doDelete($this, $con);
 				$this->postDelete($con);
 				// symfony_behaviors behavior
-				foreach (sfMixer::getCallables('BaseListingPhotos:delete:post') as $callable)
+				foreach (sfMixer::getCallables('BaseInterest:delete:post') as $callable)
 				{
 				  call_user_func($callable, $this, $con);
 				}
@@ -568,7 +607,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(ListingPhotosPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(InterestPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
@@ -576,7 +615,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 		try {
 			$ret = $this->preSave($con);
 			// symfony_behaviors behavior
-			foreach (sfMixer::getCallables('BaseListingPhotos:save:pre') as $callable)
+			foreach (sfMixer::getCallables('BaseInterest:save:pre') as $callable)
 			{
 			  if (is_integer($affectedRows = call_user_func($callable, $this, $con)))
 			  {
@@ -587,7 +626,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 			}
 
 			// symfony_timestampable behavior
-			if ($this->isModified() && !$this->isColumnModified(ListingPhotosPeer::UPDATED_AT))
+			if ($this->isModified() && !$this->isColumnModified(InterestPeer::UPDATED_AT))
 			{
 			  $this->setUpdatedAt(time());
 			}
@@ -595,7 +634,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 			if ($isInsert) {
 				$ret = $ret && $this->preInsert($con);
 				// symfony_timestampable behavior
-				if (!$this->isColumnModified(ListingPhotosPeer::CREATED_AT))
+				if (!$this->isColumnModified(InterestPeer::CREATED_AT))
 				{
 				  $this->setCreatedAt(time());
 				}
@@ -612,12 +651,12 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 				}
 				$this->postSave($con);
 				// symfony_behaviors behavior
-				foreach (sfMixer::getCallables('BaseListingPhotos:save:post') as $callable)
+				foreach (sfMixer::getCallables('BaseInterest:save:post') as $callable)
 				{
 				  call_user_func($callable, $this, $con, $affectedRows);
 				}
 
-				ListingPhotosPeer::addInstanceToPool($this);
+				InterestPeer::addInstanceToPool($this);
 			} else {
 				$affectedRows = 0;
 			}
@@ -658,14 +697,21 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 				$this->setListing($this->aListing);
 			}
 
+			if ($this->asfGuardUser !== null) {
+				if ($this->asfGuardUser->isModified() || $this->asfGuardUser->isNew()) {
+					$affectedRows += $this->asfGuardUser->save($con);
+				}
+				$this->setsfGuardUser($this->asfGuardUser);
+			}
+
 			if ($this->isNew() ) {
-				$this->modifiedColumns[] = ListingPhotosPeer::ID;
+				$this->modifiedColumns[] = InterestPeer::ID;
 			}
 
 			// If this object has been modified, then save it to the database.
 			if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = ListingPhotosPeer::doInsert($this, $con);
+					$pk = InterestPeer::doInsert($this, $con);
 					$affectedRows += 1; // we are assuming that there is only 1 row per doInsert() which
 										 // should always be true here (even though technically
 										 // BasePeer::doInsert() can insert multiple rows).
@@ -674,7 +720,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 
 					$this->setNew(false);
 				} else {
-					$affectedRows += ListingPhotosPeer::doUpdate($this, $con);
+					$affectedRows += InterestPeer::doUpdate($this, $con);
 				}
 
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
@@ -757,8 +803,14 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->asfGuardUser !== null) {
+				if (!$this->asfGuardUser->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->asfGuardUser->getValidationFailures());
+				}
+			}
 
-			if (($retval = ListingPhotosPeer::doValidate($this, $columns)) !== true) {
+
+			if (($retval = InterestPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
@@ -781,7 +833,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	 */
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = ListingPhotosPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = InterestPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		$field = $this->getByPosition($pos);
 		return $field;
 	}
@@ -803,10 +855,10 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 				return $this->getListingId();
 				break;
 			case 2:
-				return $this->getPath();
+				return $this->getUserId();
 				break;
 			case 3:
-				return $this->getCaption();
+				return $this->getInterestStatus();
 				break;
 			case 4:
 				return $this->getCreatedAt();
@@ -833,12 +885,12 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	 */
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true)
 	{
-		$keys = ListingPhotosPeer::getFieldNames($keyType);
+		$keys = InterestPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getListingId(),
-			$keys[2] => $this->getPath(),
-			$keys[3] => $this->getCaption(),
+			$keys[2] => $this->getUserId(),
+			$keys[3] => $this->getInterestStatus(),
 			$keys[4] => $this->getCreatedAt(),
 			$keys[5] => $this->getUpdatedAt(),
 		);
@@ -857,7 +909,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	 */
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = ListingPhotosPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = InterestPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -879,10 +931,10 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 				$this->setListingId($value);
 				break;
 			case 2:
-				$this->setPath($value);
+				$this->setUserId($value);
 				break;
 			case 3:
-				$this->setCaption($value);
+				$this->setInterestStatus($value);
 				break;
 			case 4:
 				$this->setCreatedAt($value);
@@ -912,12 +964,12 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	 */
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = ListingPhotosPeer::getFieldNames($keyType);
+		$keys = InterestPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setListingId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setPath($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setCaption($arr[$keys[3]]);
+		if (array_key_exists($keys[2], $arr)) $this->setUserId($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setInterestStatus($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setCreatedAt($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setUpdatedAt($arr[$keys[5]]);
 	}
@@ -929,14 +981,14 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	 */
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(ListingPhotosPeer::DATABASE_NAME);
+		$criteria = new Criteria(InterestPeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(ListingPhotosPeer::ID)) $criteria->add(ListingPhotosPeer::ID, $this->id);
-		if ($this->isColumnModified(ListingPhotosPeer::LISTING_ID)) $criteria->add(ListingPhotosPeer::LISTING_ID, $this->listing_id);
-		if ($this->isColumnModified(ListingPhotosPeer::PATH)) $criteria->add(ListingPhotosPeer::PATH, $this->path);
-		if ($this->isColumnModified(ListingPhotosPeer::CAPTION)) $criteria->add(ListingPhotosPeer::CAPTION, $this->caption);
-		if ($this->isColumnModified(ListingPhotosPeer::CREATED_AT)) $criteria->add(ListingPhotosPeer::CREATED_AT, $this->created_at);
-		if ($this->isColumnModified(ListingPhotosPeer::UPDATED_AT)) $criteria->add(ListingPhotosPeer::UPDATED_AT, $this->updated_at);
+		if ($this->isColumnModified(InterestPeer::ID)) $criteria->add(InterestPeer::ID, $this->id);
+		if ($this->isColumnModified(InterestPeer::LISTING_ID)) $criteria->add(InterestPeer::LISTING_ID, $this->listing_id);
+		if ($this->isColumnModified(InterestPeer::USER_ID)) $criteria->add(InterestPeer::USER_ID, $this->user_id);
+		if ($this->isColumnModified(InterestPeer::INTEREST_STATUS)) $criteria->add(InterestPeer::INTEREST_STATUS, $this->interest_status);
+		if ($this->isColumnModified(InterestPeer::CREATED_AT)) $criteria->add(InterestPeer::CREATED_AT, $this->created_at);
+		if ($this->isColumnModified(InterestPeer::UPDATED_AT)) $criteria->add(InterestPeer::UPDATED_AT, $this->updated_at);
 
 		return $criteria;
 	}
@@ -951,9 +1003,9 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	 */
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(ListingPhotosPeer::DATABASE_NAME);
+		$criteria = new Criteria(InterestPeer::DATABASE_NAME);
 
-		$criteria->add(ListingPhotosPeer::ID, $this->id);
+		$criteria->add(InterestPeer::ID, $this->id);
 
 		return $criteria;
 	}
@@ -984,7 +1036,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	 * If desired, this method can also make copies of all associated (fkey referrers)
 	 * objects.
 	 *
-	 * @param      object $copyObj An object of ListingPhotos (or compatible) type.
+	 * @param      object $copyObj An object of Interest (or compatible) type.
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
 	 * @throws     PropelException
 	 */
@@ -993,9 +1045,9 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 
 		$copyObj->setListingId($this->listing_id);
 
-		$copyObj->setPath($this->path);
+		$copyObj->setUserId($this->user_id);
 
-		$copyObj->setCaption($this->caption);
+		$copyObj->setInterestStatus($this->interest_status);
 
 		$copyObj->setCreatedAt($this->created_at);
 
@@ -1017,7 +1069,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	 * objects.
 	 *
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-	 * @return     ListingPhotos Clone of current object.
+	 * @return     Interest Clone of current object.
 	 * @throws     PropelException
 	 */
 	public function copy($deepCopy = false)
@@ -1036,12 +1088,12 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	 * same instance for all member of this class. The method could therefore
 	 * be static, but this would prevent one from overriding the behavior.
 	 *
-	 * @return     ListingPhotosPeer
+	 * @return     InterestPeer
 	 */
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new ListingPhotosPeer();
+			self::$peer = new InterestPeer();
 		}
 		return self::$peer;
 	}
@@ -1050,7 +1102,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	 * Declares an association between this object and a Listing object.
 	 *
 	 * @param      Listing $v
-	 * @return     ListingPhotos The current object (for fluent API support)
+	 * @return     Interest The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
 	public function setListing(Listing $v = null)
@@ -1066,7 +1118,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 		// Add binding for other direction of this n:n relationship.
 		// If this object has already been added to the Listing object, it will not be re-added.
 		if ($v !== null) {
-			$v->addListingPhotos($this);
+			$v->addInterest($this);
 		}
 
 		return $this;
@@ -1089,10 +1141,59 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->aListing->addListingPhotoss($this);
+			   $this->aListing->addInterests($this);
 			 */
 		}
 		return $this->aListing;
+	}
+
+	/**
+	 * Declares an association between this object and a sfGuardUser object.
+	 *
+	 * @param      sfGuardUser $v
+	 * @return     Interest The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setsfGuardUser(sfGuardUser $v = null)
+	{
+		if ($v === null) {
+			$this->setUserId(NULL);
+		} else {
+			$this->setUserId($v->getId());
+		}
+
+		$this->asfGuardUser = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the sfGuardUser object, it will not be re-added.
+		if ($v !== null) {
+			$v->addInterest($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated sfGuardUser object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     sfGuardUser The associated sfGuardUser object.
+	 * @throws     PropelException
+	 */
+	public function getsfGuardUser(PropelPDO $con = null)
+	{
+		if ($this->asfGuardUser === null && ($this->user_id !== null)) {
+			$this->asfGuardUser = sfGuardUserPeer::retrieveByPk($this->user_id);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->asfGuardUser->addInterests($this);
+			 */
+		}
+		return $this->asfGuardUser;
 	}
 
 	/**
@@ -1110,6 +1211,7 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 		} // if ($deep)
 
 			$this->aListing = null;
+			$this->asfGuardUser = null;
 	}
 
 	// symfony_behaviors behavior
@@ -1119,9 +1221,9 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	 */
 	public function __call($method, $arguments)
 	{
-	  if (!$callable = sfMixer::getCallable('BaseListingPhotos:'.$method))
+	  if (!$callable = sfMixer::getCallable('BaseInterest:'.$method))
 	  {
-	    throw new sfException(sprintf('Call to undefined method BaseListingPhotos::%s', $method));
+	    throw new sfException(sprintf('Call to undefined method BaseInterest::%s', $method));
 	  }
 	
 	  array_unshift($arguments, $this);
@@ -1129,4 +1231,4 @@ abstract class BaseListingPhotos extends BaseObject  implements Persistent {
 	  return call_user_func_array($callable, $arguments);
 	}
 
-} // BaseListingPhotos
+} // BaseInterest

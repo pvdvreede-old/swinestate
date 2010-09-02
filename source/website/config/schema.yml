@@ -105,7 +105,7 @@ propel:
     user_id:     { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade }
     first_name:  varchar(50)
     last_name:   varchar(50)
-    email_address: { type: varchar(355), index: unique }
+    email_address: { type: varchar(355), index: unique, required: true }
     phone_number: varchar(20)
     created_at: ~
     updated_at: ~
@@ -121,5 +121,13 @@ propel:
     postcode: integer
     amount_alerted: { type: integer, default: 0 }
     active: boolean
+    created_at: ~
+    updated_at: ~
+
+  interest:
+    id: ~
+    listing_id: { type: integer, required: true, foreignTable: listing, foreignReference: id }
+    user_id: { type: integer, required: true, foreignTable: sf_guard_user, foreignReference: id }
+    interest_status: { type: varchar(10), default: Pending }
     created_at: ~
     updated_at: ~

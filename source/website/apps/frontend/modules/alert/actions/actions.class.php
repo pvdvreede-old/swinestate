@@ -77,7 +77,7 @@ class alertActions extends sfActions {
         $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
         if ($form->isValid()) {
             $Alert = $form->save();
-
+            $this->getUser()->setFlash('notice', 'The alert has been saved.');
             $this->redirect('alert/edit?id=' . $Alert->getId());
         }
     }

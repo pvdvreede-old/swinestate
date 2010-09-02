@@ -18,4 +18,22 @@
  */
 class sfGuardUserProfile extends BasesfGuardUserProfile {
 
+    public function hasInterestIn($listing_id) {
+
+        // check and see if the user has any interests in the listing
+        $c = new Criteria();
+
+        $c->add(InterestPeer::USER_ID, $this->getUserId());
+        $c->add(InterestPeer::LISTING_ID, $listing_id);
+
+
+        // if there is a row then the user has an interest for this listing
+        if (InterestPeer::doCount($c) > 0) {
+            return true;
+        }
+
+        return false;
+
+    }
+
 } // sfGuardUserProfile

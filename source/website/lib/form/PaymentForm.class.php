@@ -58,9 +58,6 @@ class PaymentForm extends sfForm {
         // set the payment status to paid and save the object to the DB
         $payment->setPaymentStatus('Paid');
 
-        // set the amount that was paid
-        $payment->setTotalPaid($payment->getPaidTotalFromDays());
-
         // save the date of the payment
         $payment->setPaymentDate(time());
 

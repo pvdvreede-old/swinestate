@@ -19,7 +19,7 @@
       </tr>
     </tfoot>
     <tbody>
-      <?php echo $form->renderGlobalErrors() ?>
+      <?php //echo $form->renderGlobalErrors() ?>
       <?php echo $form; ?>
     </tbody>
   </table>

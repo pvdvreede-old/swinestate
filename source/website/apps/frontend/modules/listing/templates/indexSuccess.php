@@ -26,7 +26,7 @@
       <td><?php echo $Listing->getPropertyType()->getName() ?></td>
       <td><?php echo $Listing->getAddress() ?></td>
       <td><?php echo $Listing->getListingStatus()->getName() ?></td>
-      <td><?php echo ($Listing->getViewStatus() ? 'Active' : link_to('Click to make active', 'payment/new?id='.$Listing->getId())); ?></td>
+      <td><?php echo html_entity_decode($Listing->getViewStatus()); ?></td>
       <td><?php echo ($Listing->getPaymentHistory() ? link_to('Click here', 'payment/index?id='.$Listing->getId()) : 'None'); ?></td>
     </tr>
     <?php endforeach; ?>

@@ -16,6 +16,17 @@
 			
 			<?php include_partial('global/mainMenu'); ?>
 
+            <?php if ($sf_user->hasFlash('notice')) : ?>
+            <div class="notice">
+                <p><?php echo $sf_user->getFlash('notice'); ?></p>
+            </div>
+            <?php endif; ?>
+            <?php if ($sf_user->hasFlash('error')) : ?>
+            <div class="error">
+                <p><?php echo $sf_user->getFlash('error'); ?></p>
+            </div>
+            <?php endif; ?>
+
             <div id="content">
                 <?php echo $sf_content ?>
             </div>

@@ -39,6 +39,12 @@ class searchActions extends sfActions {
                 // add criteria as we go along
                 $c = new Criteria();
 
+                // set criteria that only gets listings that have paid
+                $c->addJoin(ListingPeer::ID, ListingTimePeer::LISTING_ID);
+                $c->add(ListingTimePeer::START_DATE, time(), Criteria::LESS_THAN);
+                $c->add(ListingTimePeer::END_DATE, time(), Criteria::GREATER_THAN);
+                $c->add(ListingTimePeer::PAYMENT_STATUS, 'Paid');
+
                 // set the listing type as a selling property
                 $c->add(ListingPeer::LISTING_TYPE_ID, ListingTypePeer::getIdFromName('Sale'));
 
@@ -66,7 +72,7 @@ class searchActions extends sfActions {
 
                 $this->pager = new sfPropelPager(
                                 'Listing',
-                                sfConfig::get('app_items_on_page')
+                                sfConfig::get('app_search_items_on_page')
                 );
                 $this->pager->setCriteria($c);
                 $this->pager->setPage($request->getParameter('page', 1));

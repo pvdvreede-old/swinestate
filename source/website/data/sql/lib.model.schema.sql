@@ -278,11 +278,12 @@ CREATE TABLE `user_profile`
 	`user_id` INTEGER  NOT NULL,
 	`first_name` VARCHAR(50),
 	`last_name` VARCHAR(50),
-	`email_address` VARCHAR(355),
+	`email_address` VARCHAR(355)  NOT NULL,
 	`phone_number` VARCHAR(20),
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	PRIMARY KEY (`id`),
+	UNIQUE KEY `user_profile_U_1` (`email_address`),
 	INDEX `user_profile_FI_1` (`user_id`),
 	CONSTRAINT `user_profile_FK_1`
 		FOREIGN KEY (`user_id`)
@@ -317,6 +318,32 @@ CREATE TABLE `alert`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
 		ON DELETE CASCADE
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- interest
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `interest`;
+
+
+CREATE TABLE `interest`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`listing_id` INTEGER  NOT NULL,
+	`user_id` INTEGER  NOT NULL,
+	`interest_status` VARCHAR(10) default 'Pending',
+	`created_at` DATETIME,
+	`updated_at` DATETIME,
+	PRIMARY KEY (`id`),
+	INDEX `interest_FI_1` (`listing_id`),
+	CONSTRAINT `interest_FK_1`
+		FOREIGN KEY (`listing_id`)
+		REFERENCES `listing` (`id`),
+	INDEX `interest_FI_2` (`user_id`),
+	CONSTRAINT `interest_FK_2`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`)
 )Type=InnoDB;
 
 # This restores the fkey checks, after having unset them earlier

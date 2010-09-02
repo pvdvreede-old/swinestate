@@ -27,9 +27,16 @@ class paymentActions extends sfActions {
             $this->singleListing = true;
         }
 
-        $this->ListingTimes = ListingTimePeer::doSelect($c);
-    }
+        $this->pager = new sfPropelPager(
+                        'ListingTime',
+                        sfConfig::get('app_items_on_page')
+        );
+        $this->pager->setCriteria($c);
+        $this->pager->setPage($request->getParameter('page', 1));
+        $this->pager->init();
+        $this->page_url = 'payment/index';
 
+    }
 
     public function executeConfirm(sfWebRequest $request) {
         //$this->forward404Unless($request->isMethod(sfRequest::POST));
@@ -50,25 +57,25 @@ class paymentActions extends sfActions {
 
             if ($this->form->isValid()) {
 
-                /**********************************************
+                /*                 * ********************************************
                  *  PUT CODE HERE FOR PAYPAL PAYMENT PROCESSING
-                 *********************************************/
+                 * ******************************************* */
 
 
                 // call the save method on the form which will update the payment status
                 $this->receiptObject = $this->form->save();
-				
-				// send an email to the user with the receipt details
-				$email = Swift_Message::newInstance()
-						 ->setFrom(sfContext::get('app_from_email'))
-						 ->setTo($this->getUser()->getProfile()->getEmailAddress())
-						 ->setSubject(sfContext::get('app_app_name').' - Payment details')
-						 ->setBody($this->getPartial('reciept', array(
-								'receiptObject' => $this->receiptObject
-								)));
-						 
-				$this->getMailer()->send($email);
-								
+
+                // send an email to the user with the receipt details
+                $email = Swift_Message::newInstance()
+                                ->setFrom(sfContext::get('app_from_email'))
+                                ->setTo($this->getUser()->getProfile()->getEmailAddress())
+                                ->setSubject(sfContext::get('app_app_name') . ' - Payment details')
+                                ->setBody($this->getPartial('reciept', array(
+                                            'receiptObject' => $this->receiptObject
+                                        )));
+
+                $this->getMailer()->send($email);
+
                 // once successful then redirect to the receipt page
                 $this->setTemplate('receipt');
             }

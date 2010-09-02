@@ -119,3 +119,13 @@ table.search_listing {
     padding-bottom: 5px;
     padding-top: 5px;
 }
+
+.notice p {
+
+    background-color: #a4ed14;
+    padding-right: 3px;
+    padding-left: 3px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    color: #fafafa;
+}
