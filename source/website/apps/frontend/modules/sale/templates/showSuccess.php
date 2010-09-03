@@ -1,35 +1,10 @@
-<table>
-    <tbody>
-        <tr>
-            <th>Property type:</th>
-            <td><?php echo $Listing->getPropertyType()->getName(); ?></td>
-        </tr>
-        <tr>
-            <th>Address:</th>
-            <td><?php echo $Listing->getAddress() ?></td>
-        </tr>
-        <tr>
-            <th>Name:</th>
-            <td><?php echo $Listing->getName() ?></td>
-        </tr>
-        <tr>
-            <th>Description:</th>
-            <td><?php echo $Listing->getDescription() ?></td>
-        </tr>
-        <tr>
-            <th>Bedrooms:</th>
-            <td><?php echo $Listing->getBedrooms() ?></td>
-        </tr>
-        <tr>
-            <th>Bathrooms:</th>
-            <td><?php echo $Listing->getBathrooms() ?></td>
-        </tr>
-        <tr>
-            <th>Car spaces:</th>
-            <td><?php echo $Listing->getCarSpaces() ?></td>
-        </tr>
-    </tbody>
-</table>
+<p><a href="<?php echo url_for('search/sale').'?'.$sf_user->getFlash('last_url'); ?>">Back to search results</a></p>
+<div class="single_listing">
+    <h2 class="title"><?php echo $Listing->getName(); ?></h2>
+    <p class="rooms">ba: <?php echo $Listing->getBathrooms(); ?> be: <?php echo $Listing->getBedrooms(); ?> ca: <?php echo $Listing->getCarSpaces(); ?></p>
+    <p class="address"><?php echo $Listing->getAddress(); ?></p>
+    <p class="description"><?php echo $Listing->getDescription(); ?></p>
+</div>
 
 <hr />
 
@@ -45,10 +20,11 @@
 
 <?php if ($sf_user->getProfile()->hasInterestIn($Listing->getId())) : ?>
 
-                You have registered your interest in this listing.
+                
                 <form action="<?php echo url_for('sale/withdraw') ?>" method="post">
 
                     <input type="hidden" name="listing_id" value="<?php echo $Listing->getId(); ?>" />
+                    You have registered your interest in this listing.
                     <input type="submit" value="Withdraw your interest." />
 
                 </form>

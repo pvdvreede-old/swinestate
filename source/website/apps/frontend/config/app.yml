@@ -6,7 +6,7 @@ all:
   # Name of application
   app_name: SwinEstate
   # Amount of items for pagination
-  items_on_page: 20
+  items_on_page: 15
   # Amount of items in a search result
   search_items_on_page: 5
   # Cost of the adds

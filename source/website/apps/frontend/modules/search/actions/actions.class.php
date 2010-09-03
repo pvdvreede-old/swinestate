@@ -23,7 +23,6 @@ class searchActions extends sfActions {
 
     public function executeSale(sfWebRequest $request) {
 
-
         $this->form = new SearchForm();
         $this->listing_type = 'sale';
 
@@ -82,6 +81,9 @@ class searchActions extends sfActions {
                 $this->module_link = 'sale';
                 $this->page_url = 'search/sale';
                 $this->get_string = $this->buildPaginateString($request);
+
+                // remember the current url to put as a link back to the search results
+                $this->getUser()->setFlash('last_url', $this->get_string.'page='.$this->pager->getPage());
             }
         }
 

@@ -16,6 +16,7 @@
       <th>Listing status</th>
       <th>View status</th>
       <th>Payment history</th>
+      <th>Interests</th>
     </tr>
   </thead>
   <tbody>
@@ -28,6 +29,7 @@
       <td><?php echo $Listing->getListingStatus()->getName() ?></td>
       <td><?php echo html_entity_decode($Listing->getViewStatus()); ?></td>
       <td><?php echo ($Listing->getPaymentHistory() ? link_to('Click here', 'payment/index?id='.$Listing->getId()) : 'None'); ?></td>
+      <td><?php echo $Listing->getInterestsCount(); ?></td>
     </tr>
     <?php endforeach; ?>
   </tbody>

@@ -87,6 +87,17 @@ class Listing extends BaseListing {
 
     }
 
+    public function getInterestsCount() {
+
+        // get the interests for the listing but double check to make sure its for the logged in user
+        $c = new Criteria();
+
+        $c->add(InterestPeer::LISTING_ID, $this->getId());
+
+        return InterestPeer::doCount($c);
+
+    }
+
 }
 
 // Listing
