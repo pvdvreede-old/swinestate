@@ -14,7 +14,9 @@ generator:
     config:
       actions: ~
       fields:  ~
-      list:    ~
+      list:
+        max_per_page: 15
+        display: [id, =name, bedrooms, bathrooms, car_spaces, created_at, updated_at]
       filter:  ~
       form:    ~
       edit:    ~

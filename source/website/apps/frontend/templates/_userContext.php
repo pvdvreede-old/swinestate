@@ -6,6 +6,9 @@
         <?php echo link_to('Profile', 'user/show'); ?> |
         <?php echo link_to('Listings', 'listing/index'); ?> |
 	<?php echo link_to('Alerts', 'alert/index'); ?> |
+        <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) : ?>
+        <a href="backend.php">Administration</a> |
+        <?php endif; ?>
 	<?php echo link_to('Log out', '@sf_guard_signout'); ?> 
 
 <?php else : ?>

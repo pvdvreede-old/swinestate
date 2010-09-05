@@ -129,5 +129,6 @@ propel:
     listing_id: { type: integer, required: true, foreignTable: listing, foreignReference: id }
     user_id: { type: integer, required: true, foreignTable: sf_guard_user, foreignReference: id }
     interest_status: { type: varchar(10), default: Pending }
+    new_marker: boolean
     created_at: ~
     updated_at: ~

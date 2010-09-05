@@ -19,22 +19,21 @@
 <?php else: ?>
 
 <?php if ($sf_user->getProfile()->hasInterestIn($Listing->getId())) : ?>
-
-                
-                <form action="<?php echo url_for('sale/withdraw') ?>" method="post">
+          
+                <form action="<?php echo url_for('interest/withdraw') ?>" method="post">
 
                     <input type="hidden" name="listing_id" value="<?php echo $Listing->getId(); ?>" />
                     You have registered your interest in this listing.
-                    <input type="submit" value="Withdraw your interest." />
+                    <input type="submit" value="Withdraw your interest" />
 
                 </form>
 
 <?php else : ?>
 
-                    <form action="<?php echo url_for('sale/interest') ?>" method="post">
+                    <form action="<?php echo url_for('interest/new') ?>" method="post">
 
                         <input type="hidden" name="listing_id" value="<?php echo $Listing->getId(); ?>" />
-                        <input type="submit" value="Notify Seller of your interest." />
+                        <input type="submit" value="Notify Seller of your interest" />
 
                     </form>
 

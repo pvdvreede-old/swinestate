@@ -1,5 +1,17 @@
 <h2>User's Listings</h2>
 
+<p>
+
+  <a href="<?php echo url_for('sale/new') ?>">New Sale Listing</a> |
+
+  <a href="<?php echo url_for('rent/new') ?>">New Rental Listing</a> |
+
+  <?php echo link_to('See all listing payments', 'payment/index'); ?> |
+
+  <?php echo link_to('See all listing interests', 'interest/index'); ?>
+
+</p>
+
 <?php if ($pager->count() == 0) : ?>
 
 <p>You do not have any listings. Create a new one below.</p>
@@ -29,7 +41,7 @@
       <td><?php echo $Listing->getListingStatus()->getName() ?></td>
       <td><?php echo html_entity_decode($Listing->getViewStatus()); ?></td>
       <td><?php echo ($Listing->getPaymentHistory() ? link_to('Click here', 'payment/index?id='.$Listing->getId()) : 'None'); ?></td>
-      <td><?php echo $Listing->getInterestsCount(); ?></td>
+      <td><?php echo ($Listing->getInterestsCount() > 0 ? link_to($Listing->getInterestsCount(), 'interest/index?id='.$Listing->getId()) : $Listing->getInterestsCount()); ?></td>
     </tr>
     <?php endforeach; ?>
   </tbody>
@@ -42,8 +54,4 @@
 
 <?php endif; ?>
 
-  <a href="<?php echo url_for('sale/new') ?>">New Sale Listing</a>
 
-  <a href="<?php echo url_for('rent/new') ?>">New Rental Listing</a>
-
-  <?php echo link_to('See payment history for all listings', 'payment/index'); ?>
