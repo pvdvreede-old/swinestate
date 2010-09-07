@@ -6,6 +6,8 @@ propel:
     property_type_id: { type: integer, required: true, foreignTable: property_type, foreignReference: id }
     listing_status_id: { type: integer, required: true, foreignTable: listing_status, foreignReference: id }
     address_id: { type: integer, required: true, foreignTable: address, foreignReference: id }
+    sale_details_id: { type: integer, required: false, foreignTable: sale_details, foreignReference: id }
+    rent_details_id: { type: integer, required: false, foreignTable: rent_details, foreignReference: id }
     name: { type: varchar(255), required: true }
     description: { type: longvarchar, required: true }
     bedrooms: { type: integer, default: 0 }
@@ -29,26 +31,6 @@ propel:
   listing_status:
     id: ~
     name: { type: varchar(255), required: true }
-    created_at: ~
-    updated_at: ~
-
-  listing_metadata_column:
-    id: ~
-    listing_type_id: { type: integer, required: true, foreignTable: listing_type, foreignReference: id }
-    code: { type: varchar(25), required: true }
-    label: { type: varchar(255), required: true }
-    value_type: { type: varchar(10), required: true }
-    required: boolean
-    min_length: integer
-    max_length: integer
-    created_at: ~
-    updated_at: ~
-
-  listing_metadata_value:
-    id: ~
-    metadata_column_id: { type: integer, required: true, foreignTable: listing_metadata_column, foreignReference: id }
-    listing_id: { type: integer, required: true, foreignTable: listing, foreignReference: id }
-    value: { type: varchar(2000), required: true }
     created_at: ~
     updated_at: ~
 
@@ -107,6 +89,22 @@ propel:
     last_name:   varchar(50)
     email_address: { type: varchar(355), index: unique, required: true }
     phone_number: varchar(20)
+    created_at: ~
+    updated_at: ~
+
+  sale_details:
+    id: ~
+    asking_price: { type: float }
+    actual_price: { type: float }
+    auction_date: timestamp
+    created_at: ~
+    updated_at: ~
+
+  rent_details:
+    id: ~
+    lease_period_until: timestamp
+    amount_month_price: { type: float }
+    renting_date: timestamp
     created_at: ~
     updated_at: ~
 

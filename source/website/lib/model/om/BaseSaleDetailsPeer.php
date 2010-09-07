@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Base static class for performing query and update operations on the 'listing_photos' table.
+ * Base static class for performing query and update operations on the 'sale_details' table.
  *
  * 
  *
@@ -11,52 +11,55 @@
  *
  * @package    lib.model.om
  */
-abstract class BaseListingPhotosPeer {
+abstract class BaseSaleDetailsPeer {
 
 	/** the default database name for this class */
 	const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'listing_photos';
+	const TABLE_NAME = 'sale_details';
 
 	/** the related Propel class for this table */
-	const OM_CLASS = 'ListingPhotos';
+	const OM_CLASS = 'SaleDetails';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.ListingPhotos';
+	const CLASS_DEFAULT = 'lib.model.SaleDetails';
 
 	/** the related TableMap class for this table */
-	const TM_CLASS = 'ListingPhotosTableMap';
+	const TM_CLASS = 'SaleDetailsTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 6;
+	const NUM_COLUMNS = 7;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
-	const ID = 'listing_photos.ID';
+	const ID = 'sale_details.ID';
 
 	/** the column name for the LISTING_ID field */
-	const LISTING_ID = 'listing_photos.LISTING_ID';
+	const LISTING_ID = 'sale_details.LISTING_ID';
 
-	/** the column name for the PATH field */
-	const PATH = 'listing_photos.PATH';
+	/** the column name for the ASKING_PRICE field */
+	const ASKING_PRICE = 'sale_details.ASKING_PRICE';
 
-	/** the column name for the CAPTION field */
-	const CAPTION = 'listing_photos.CAPTION';
+	/** the column name for the ACTUAL_PRICE field */
+	const ACTUAL_PRICE = 'sale_details.ACTUAL_PRICE';
+
+	/** the column name for the AUCTION_DATE field */
+	const AUCTION_DATE = 'sale_details.AUCTION_DATE';
 
 	/** the column name for the CREATED_AT field */
-	const CREATED_AT = 'listing_photos.CREATED_AT';
+	const CREATED_AT = 'sale_details.CREATED_AT';
 
 	/** the column name for the UPDATED_AT field */
-	const UPDATED_AT = 'listing_photos.UPDATED_AT';
+	const UPDATED_AT = 'sale_details.UPDATED_AT';
 
 	/**
-	 * An identiy map to hold any loaded instances of ListingPhotos objects.
+	 * An identiy map to hold any loaded instances of SaleDetails objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
 	 * queries.
-	 * @var        array ListingPhotos[]
+	 * @var        array SaleDetails[]
 	 */
 	public static $instances = array();
 
@@ -75,11 +78,11 @@ abstract class BaseListingPhotosPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'ListingId', 'Path', 'Caption', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'listingId', 'path', 'caption', 'createdAt', 'updatedAt', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::LISTING_ID, self::PATH, self::CAPTION, self::CREATED_AT, self::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'listing_id', 'path', 'caption', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'ListingId', 'AskingPrice', 'ActualPrice', 'AuctionDate', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'listingId', 'askingPrice', 'actualPrice', 'auctionDate', 'createdAt', 'updatedAt', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::LISTING_ID, self::ASKING_PRICE, self::ACTUAL_PRICE, self::AUCTION_DATE, self::CREATED_AT, self::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'listing_id', 'asking_price', 'actual_price', 'auction_date', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -89,11 +92,11 @@ abstract class BaseListingPhotosPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ListingId' => 1, 'Path' => 2, 'Caption' => 3, 'CreatedAt' => 4, 'UpdatedAt' => 5, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'listingId' => 1, 'path' => 2, 'caption' => 3, 'createdAt' => 4, 'updatedAt' => 5, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::LISTING_ID => 1, self::PATH => 2, self::CAPTION => 3, self::CREATED_AT => 4, self::UPDATED_AT => 5, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'listing_id' => 1, 'path' => 2, 'caption' => 3, 'created_at' => 4, 'updated_at' => 5, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ListingId' => 1, 'AskingPrice' => 2, 'ActualPrice' => 3, 'AuctionDate' => 4, 'CreatedAt' => 5, 'UpdatedAt' => 6, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'listingId' => 1, 'askingPrice' => 2, 'actualPrice' => 3, 'auctionDate' => 4, 'createdAt' => 5, 'updatedAt' => 6, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::LISTING_ID => 1, self::ASKING_PRICE => 2, self::ACTUAL_PRICE => 3, self::AUCTION_DATE => 4, self::CREATED_AT => 5, self::UPDATED_AT => 6, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'listing_id' => 1, 'asking_price' => 2, 'actual_price' => 3, 'auction_date' => 4, 'created_at' => 5, 'updated_at' => 6, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -142,12 +145,12 @@ abstract class BaseListingPhotosPeer {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. ListingPhotosPeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. SaleDetailsPeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(ListingPhotosPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(SaleDetailsPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -163,12 +166,13 @@ abstract class BaseListingPhotosPeer {
 	 */
 	public static function addSelectColumns(Criteria $criteria)
 	{
-		$criteria->addSelectColumn(ListingPhotosPeer::ID);
-		$criteria->addSelectColumn(ListingPhotosPeer::LISTING_ID);
-		$criteria->addSelectColumn(ListingPhotosPeer::PATH);
-		$criteria->addSelectColumn(ListingPhotosPeer::CAPTION);
-		$criteria->addSelectColumn(ListingPhotosPeer::CREATED_AT);
-		$criteria->addSelectColumn(ListingPhotosPeer::UPDATED_AT);
+		$criteria->addSelectColumn(SaleDetailsPeer::ID);
+		$criteria->addSelectColumn(SaleDetailsPeer::LISTING_ID);
+		$criteria->addSelectColumn(SaleDetailsPeer::ASKING_PRICE);
+		$criteria->addSelectColumn(SaleDetailsPeer::ACTUAL_PRICE);
+		$criteria->addSelectColumn(SaleDetailsPeer::AUCTION_DATE);
+		$criteria->addSelectColumn(SaleDetailsPeer::CREATED_AT);
+		$criteria->addSelectColumn(SaleDetailsPeer::UPDATED_AT);
 	}
 
 	/**
@@ -187,26 +191,26 @@ abstract class BaseListingPhotosPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(ListingPhotosPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(SaleDetailsPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			ListingPhotosPeer::addSelectColumns($criteria);
+			SaleDetailsPeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 		$criteria->setDbName(self::DATABASE_NAME); // Set the correct dbName
 
 		if ($con === null) {
-			$con = Propel::getConnection(ListingPhotosPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(SaleDetailsPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BaseListingPhotosPeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseSaleDetailsPeer', $criteria, $con);
 		}
 
 		// BasePeer returns a PDOStatement
@@ -225,7 +229,7 @@ abstract class BaseListingPhotosPeer {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      PropelPDO $con
-	 * @return     ListingPhotos
+	 * @return     SaleDetails
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -233,7 +237,7 @@ abstract class BaseListingPhotosPeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = ListingPhotosPeer::doSelect($critcopy, $con);
+		$objects = SaleDetailsPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -250,7 +254,7 @@ abstract class BaseListingPhotosPeer {
 	 */
 	public static function doSelect(Criteria $criteria, PropelPDO $con = null)
 	{
-		return ListingPhotosPeer::populateObjects(ListingPhotosPeer::doSelectStmt($criteria, $con));
+		return SaleDetailsPeer::populateObjects(SaleDetailsPeer::doSelectStmt($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -268,12 +272,12 @@ abstract class BaseListingPhotosPeer {
 	public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(ListingPhotosPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(SaleDetailsPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		if (!$criteria->hasSelectClause()) {
 			$criteria = clone $criteria;
-			ListingPhotosPeer::addSelectColumns($criteria);
+			SaleDetailsPeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -281,7 +285,7 @@ abstract class BaseListingPhotosPeer {
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BaseListingPhotosPeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseSaleDetailsPeer', $criteria, $con);
 		}
 
 
@@ -297,10 +301,10 @@ abstract class BaseListingPhotosPeer {
 	 * to the cache in order to ensure that the same objects are always returned by doSelect*()
 	 * and retrieveByPK*() calls.
 	 *
-	 * @param      ListingPhotos $value A ListingPhotos object.
+	 * @param      SaleDetails $value A SaleDetails object.
 	 * @param      string $key (optional) key to use for instance map (for performance boost if key was already calculated externally).
 	 */
-	public static function addInstanceToPool(ListingPhotos $obj, $key = null)
+	public static function addInstanceToPool(SaleDetails $obj, $key = null)
 	{
 		if (Propel::isInstancePoolingEnabled()) {
 			if ($key === null) {
@@ -318,18 +322,18 @@ abstract class BaseListingPhotosPeer {
 	 * methods in your stub classes -- you may need to explicitly remove objects
 	 * from the cache in order to prevent returning objects that no longer exist.
 	 *
-	 * @param      mixed $value A ListingPhotos object or a primary key value.
+	 * @param      mixed $value A SaleDetails object or a primary key value.
 	 */
 	public static function removeInstanceFromPool($value)
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
-			if (is_object($value) && $value instanceof ListingPhotos) {
+			if (is_object($value) && $value instanceof SaleDetails) {
 				$key = (string) $value->getId();
 			} elseif (is_scalar($value)) {
 				// assume we've been passed a primary key
 				$key = (string) $value;
 			} else {
-				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or ListingPhotos object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or SaleDetails object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
 				throw $e;
 			}
 
@@ -344,7 +348,7 @@ abstract class BaseListingPhotosPeer {
 	 * a multi-column primary key, a serialize()d version of the primary key will be returned.
 	 *
 	 * @param      string $key The key (@see getPrimaryKeyHash()) for this instance.
-	 * @return     ListingPhotos Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+	 * @return     SaleDetails Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
 	 * @see        getPrimaryKeyHash()
 	 */
 	public static function getInstanceFromPool($key)
@@ -368,7 +372,7 @@ abstract class BaseListingPhotosPeer {
 	}
 	
 	/**
-	 * Method to invalidate the instance pool of all tables related to listing_photos
+	 * Method to invalidate the instance pool of all tables related to sale_details
 	 * by a foreign key with ON DELETE CASCADE
 	 */
 	public static function clearRelatedInstancePool()
@@ -406,11 +410,11 @@ abstract class BaseListingPhotosPeer {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = ListingPhotosPeer::getOMClass(false);
+		$cls = SaleDetailsPeer::getOMClass(false);
 		// populate the object(s)
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key = ListingPhotosPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj = ListingPhotosPeer::getInstanceFromPool($key))) {
+			$key = SaleDetailsPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj = SaleDetailsPeer::getInstanceFromPool($key))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj->hydrate($row, 0, true); // rehydrate
@@ -419,7 +423,7 @@ abstract class BaseListingPhotosPeer {
 				$obj = new $cls();
 				$obj->hydrate($row);
 				$results[] = $obj;
-				ListingPhotosPeer::addInstanceToPool($obj, $key);
+				SaleDetailsPeer::addInstanceToPool($obj, $key);
 			} // if key exists
 		}
 		$stmt->closeCursor();
@@ -443,14 +447,14 @@ abstract class BaseListingPhotosPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(ListingPhotosPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(SaleDetailsPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			ListingPhotosPeer::addSelectColumns($criteria);
+			SaleDetailsPeer::addSelectColumns($criteria);
 		}
 		
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
@@ -459,15 +463,15 @@ abstract class BaseListingPhotosPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(ListingPhotosPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(SaleDetailsPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(ListingPhotosPeer::LISTING_ID, ListingPeer::ID, $join_behavior);
+		$criteria->addJoin(SaleDetailsPeer::LISTING_ID, ListingPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BaseListingPhotosPeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseSaleDetailsPeer', $criteria, $con);
 		}
 
 		$stmt = BasePeer::doCount($criteria, $con);
@@ -483,11 +487,11 @@ abstract class BaseListingPhotosPeer {
 
 
 	/**
-	 * Selects a collection of ListingPhotos objects pre-filled with their Listing objects.
+	 * Selects a collection of SaleDetails objects pre-filled with their Listing objects.
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of ListingPhotos objects.
+	 * @return     array Array of SaleDetails objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -500,34 +504,34 @@ abstract class BaseListingPhotosPeer {
 			$criteria->setDbName(self::DATABASE_NAME);
 		}
 
-		ListingPhotosPeer::addSelectColumns($criteria);
-		$startcol = (ListingPhotosPeer::NUM_COLUMNS - ListingPhotosPeer::NUM_LAZY_LOAD_COLUMNS);
+		SaleDetailsPeer::addSelectColumns($criteria);
+		$startcol = (SaleDetailsPeer::NUM_COLUMNS - SaleDetailsPeer::NUM_LAZY_LOAD_COLUMNS);
 		ListingPeer::addSelectColumns($criteria);
 
-		$criteria->addJoin(ListingPhotosPeer::LISTING_ID, ListingPeer::ID, $join_behavior);
+		$criteria->addJoin(SaleDetailsPeer::LISTING_ID, ListingPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BaseListingPhotosPeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseSaleDetailsPeer', $criteria, $con);
 		}
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = ListingPhotosPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = ListingPhotosPeer::getInstanceFromPool($key1))) {
+			$key1 = SaleDetailsPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = SaleDetailsPeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
 
-				$cls = ListingPhotosPeer::getOMClass(false);
+				$cls = SaleDetailsPeer::getOMClass(false);
 
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				ListingPhotosPeer::addInstanceToPool($obj1, $key1);
+				SaleDetailsPeer::addInstanceToPool($obj1, $key1);
 			} // if $obj1 already loaded
 
 			$key2 = ListingPeer::getPrimaryKeyHashFromRow($row, $startcol);
@@ -542,8 +546,8 @@ abstract class BaseListingPhotosPeer {
 					ListingPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
 				
-				// Add the $obj1 (ListingPhotos) to $obj2 (Listing)
-				$obj2->addListingPhotos($obj1);
+				// Add the $obj1 (SaleDetails) to $obj2 (Listing)
+				$obj2->addSaleDetails($obj1);
 
 			} // if joined row was not null
 
@@ -571,14 +575,14 @@ abstract class BaseListingPhotosPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(ListingPhotosPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(SaleDetailsPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			ListingPhotosPeer::addSelectColumns($criteria);
+			SaleDetailsPeer::addSelectColumns($criteria);
 		}
 		
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
@@ -587,15 +591,15 @@ abstract class BaseListingPhotosPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(ListingPhotosPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(SaleDetailsPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(ListingPhotosPeer::LISTING_ID, ListingPeer::ID, $join_behavior);
+		$criteria->addJoin(SaleDetailsPeer::LISTING_ID, ListingPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BaseListingPhotosPeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseSaleDetailsPeer', $criteria, $con);
 		}
 
 		$stmt = BasePeer::doCount($criteria, $con);
@@ -610,12 +614,12 @@ abstract class BaseListingPhotosPeer {
 	}
 
 	/**
-	 * Selects a collection of ListingPhotos objects pre-filled with all related objects.
+	 * Selects a collection of SaleDetails objects pre-filled with all related objects.
 	 *
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of ListingPhotos objects.
+	 * @return     array Array of SaleDetails objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -628,35 +632,35 @@ abstract class BaseListingPhotosPeer {
 			$criteria->setDbName(self::DATABASE_NAME);
 		}
 
-		ListingPhotosPeer::addSelectColumns($criteria);
-		$startcol2 = (ListingPhotosPeer::NUM_COLUMNS - ListingPhotosPeer::NUM_LAZY_LOAD_COLUMNS);
+		SaleDetailsPeer::addSelectColumns($criteria);
+		$startcol2 = (SaleDetailsPeer::NUM_COLUMNS - SaleDetailsPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		ListingPeer::addSelectColumns($criteria);
 		$startcol3 = $startcol2 + (ListingPeer::NUM_COLUMNS - ListingPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		$criteria->addJoin(ListingPhotosPeer::LISTING_ID, ListingPeer::ID, $join_behavior);
+		$criteria->addJoin(SaleDetailsPeer::LISTING_ID, ListingPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BaseListingPhotosPeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseSaleDetailsPeer', $criteria, $con);
 		}
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = ListingPhotosPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = ListingPhotosPeer::getInstanceFromPool($key1))) {
+			$key1 = SaleDetailsPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = SaleDetailsPeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
-				$cls = ListingPhotosPeer::getOMClass(false);
+				$cls = SaleDetailsPeer::getOMClass(false);
 
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				ListingPhotosPeer::addInstanceToPool($obj1, $key1);
+				SaleDetailsPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
 			// Add objects for joined Listing rows
@@ -673,8 +677,8 @@ abstract class BaseListingPhotosPeer {
 					ListingPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 loaded
 
-				// Add the $obj1 (ListingPhotos) to the collection in $obj2 (Listing)
-				$obj2->addListingPhotos($obj1);
+				// Add the $obj1 (SaleDetails) to the collection in $obj2 (Listing)
+				$obj2->addSaleDetails($obj1);
 			} // if joined row not null
 
 			$results[] = $obj1;
@@ -700,10 +704,10 @@ abstract class BaseListingPhotosPeer {
 	 */
 	public static function buildTableMap()
 	{
-	  $dbMap = Propel::getDatabaseMap(BaseListingPhotosPeer::DATABASE_NAME);
-	  if (!$dbMap->hasTable(BaseListingPhotosPeer::TABLE_NAME))
+	  $dbMap = Propel::getDatabaseMap(BaseSaleDetailsPeer::DATABASE_NAME);
+	  if (!$dbMap->hasTable(BaseSaleDetailsPeer::TABLE_NAME))
 	  {
-	    $dbMap->addTableObject(new ListingPhotosTableMap());
+	    $dbMap->addTableObject(new SaleDetailsTableMap());
 	  }
 	}
 
@@ -720,13 +724,13 @@ abstract class BaseListingPhotosPeer {
 	 */
 	public static function getOMClass($withPrefix = true)
 	{
-		return $withPrefix ? ListingPhotosPeer::CLASS_DEFAULT : ListingPhotosPeer::OM_CLASS;
+		return $withPrefix ? SaleDetailsPeer::CLASS_DEFAULT : SaleDetailsPeer::OM_CLASS;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a ListingPhotos or Criteria object.
+	 * Method perform an INSERT on the database, given a SaleDetails or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or ListingPhotos object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or SaleDetails object containing data that is used to create the INSERT statement.
 	 * @param      PropelPDO $con the PropelPDO connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -735,26 +739,26 @@ abstract class BaseListingPhotosPeer {
 	public static function doInsert($values, PropelPDO $con = null)
 	{
     // symfony_behaviors behavior
-    foreach (sfMixer::getCallables('BaseListingPhotosPeer:doInsert:pre') as $sf_hook)
+    foreach (sfMixer::getCallables('BaseSaleDetailsPeer:doInsert:pre') as $sf_hook)
     {
-      if (false !== $sf_hook_retval = call_user_func($sf_hook, 'BaseListingPhotosPeer', $values, $con))
+      if (false !== $sf_hook_retval = call_user_func($sf_hook, 'BaseSaleDetailsPeer', $values, $con))
       {
         return $sf_hook_retval;
       }
     }
 
 		if ($con === null) {
-			$con = Propel::getConnection(ListingPhotosPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(SaleDetailsPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from ListingPhotos object
+			$criteria = $values->buildCriteria(); // build Criteria from SaleDetails object
 		}
 
-		if ($criteria->containsKey(ListingPhotosPeer::ID) && $criteria->keyContainsValue(ListingPhotosPeer::ID) ) {
-			throw new PropelException('Cannot insert a value for auto-increment primary key ('.ListingPhotosPeer::ID.')');
+		if ($criteria->containsKey(SaleDetailsPeer::ID) && $criteria->keyContainsValue(SaleDetailsPeer::ID) ) {
+			throw new PropelException('Cannot insert a value for auto-increment primary key ('.SaleDetailsPeer::ID.')');
 		}
 
 
@@ -773,18 +777,18 @@ abstract class BaseListingPhotosPeer {
 		}
 
     // symfony_behaviors behavior
-    foreach (sfMixer::getCallables('BaseListingPhotosPeer:doInsert:post') as $sf_hook)
+    foreach (sfMixer::getCallables('BaseSaleDetailsPeer:doInsert:post') as $sf_hook)
     {
-      call_user_func($sf_hook, 'BaseListingPhotosPeer', $values, $con, $pk);
+      call_user_func($sf_hook, 'BaseSaleDetailsPeer', $values, $con, $pk);
     }
 
 		return $pk;
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a ListingPhotos or Criteria object.
+	 * Method perform an UPDATE on the database, given a SaleDetails or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or ListingPhotos object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or SaleDetails object containing data that is used to create the UPDATE statement.
 	 * @param      PropelPDO $con The connection to use (specify PropelPDO connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -793,16 +797,16 @@ abstract class BaseListingPhotosPeer {
 	public static function doUpdate($values, PropelPDO $con = null)
 	{
     // symfony_behaviors behavior
-    foreach (sfMixer::getCallables('BaseListingPhotosPeer:doUpdate:pre') as $sf_hook)
+    foreach (sfMixer::getCallables('BaseSaleDetailsPeer:doUpdate:pre') as $sf_hook)
     {
-      if (false !== $sf_hook_retval = call_user_func($sf_hook, 'BaseListingPhotosPeer', $values, $con))
+      if (false !== $sf_hook_retval = call_user_func($sf_hook, 'BaseSaleDetailsPeer', $values, $con))
       {
         return $sf_hook_retval;
       }
     }
 
 		if ($con === null) {
-			$con = Propel::getConnection(ListingPhotosPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(SaleDetailsPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		$selectCriteria = new Criteria(self::DATABASE_NAME);
@@ -810,10 +814,10 @@ abstract class BaseListingPhotosPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(ListingPhotosPeer::ID);
-			$selectCriteria->add(ListingPhotosPeer::ID, $criteria->remove(ListingPhotosPeer::ID), $comparison);
+			$comparison = $criteria->getComparison(SaleDetailsPeer::ID);
+			$selectCriteria->add(SaleDetailsPeer::ID, $criteria->remove(SaleDetailsPeer::ID), $comparison);
 
-		} else { // $values is ListingPhotos object
+		} else { // $values is SaleDetails object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -824,35 +828,35 @@ abstract class BaseListingPhotosPeer {
 		$ret = BasePeer::doUpdate($selectCriteria, $criteria, $con);
 
     // symfony_behaviors behavior
-    foreach (sfMixer::getCallables('BaseListingPhotosPeer:doUpdate:post') as $sf_hook)
+    foreach (sfMixer::getCallables('BaseSaleDetailsPeer:doUpdate:post') as $sf_hook)
     {
-      call_user_func($sf_hook, 'BaseListingPhotosPeer', $values, $con, $ret);
+      call_user_func($sf_hook, 'BaseSaleDetailsPeer', $values, $con, $ret);
     }
 
     return $ret;
 	}
 
 	/**
-	 * Method to DELETE all rows from the listing_photos table.
+	 * Method to DELETE all rows from the sale_details table.
 	 *
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 */
 	public static function doDeleteAll($con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(ListingPhotosPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(SaleDetailsPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		$affectedRows = 0; // initialize var to track total num of affected rows
 		try {
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->beginTransaction();
-			$affectedRows += BasePeer::doDeleteAll(ListingPhotosPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(SaleDetailsPeer::TABLE_NAME, $con);
 			// Because this db requires some delete cascade/set null emulation, we have to
 			// clear the cached instance *after* the emulation has happened (since
 			// instances get re-added by the select statement contained therein).
-			ListingPhotosPeer::clearInstancePool();
-			ListingPhotosPeer::clearRelatedInstancePool();
+			SaleDetailsPeer::clearInstancePool();
+			SaleDetailsPeer::clearRelatedInstancePool();
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -862,9 +866,9 @@ abstract class BaseListingPhotosPeer {
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a ListingPhotos or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a SaleDetails or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or ListingPhotos object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or SaleDetails object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      PropelPDO $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -875,27 +879,27 @@ abstract class BaseListingPhotosPeer {
 	 public static function doDelete($values, PropelPDO $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(ListingPhotosPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(SaleDetailsPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			// invalidate the cache for all objects of this type, since we have no
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
-			ListingPhotosPeer::clearInstancePool();
+			SaleDetailsPeer::clearInstancePool();
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof ListingPhotos) { // it's a model object
+		} elseif ($values instanceof SaleDetails) { // it's a model object
 			// invalidate the cache for this single object
-			ListingPhotosPeer::removeInstanceFromPool($values);
+			SaleDetailsPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
 		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(ListingPhotosPeer::ID, (array) $values, Criteria::IN);
+			$criteria->add(SaleDetailsPeer::ID, (array) $values, Criteria::IN);
 			// invalidate the cache for this object(s)
 			foreach ((array) $values as $singleval) {
-				ListingPhotosPeer::removeInstanceFromPool($singleval);
+				SaleDetailsPeer::removeInstanceFromPool($singleval);
 			}
 		}
 
@@ -910,7 +914,7 @@ abstract class BaseListingPhotosPeer {
 			$con->beginTransaction();
 			
 			$affectedRows += BasePeer::doDelete($criteria, $con);
-			ListingPhotosPeer::clearRelatedInstancePool();
+			SaleDetailsPeer::clearRelatedInstancePool();
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -920,24 +924,24 @@ abstract class BaseListingPhotosPeer {
 	}
 
 	/**
-	 * Validates all modified columns of given ListingPhotos object.
+	 * Validates all modified columns of given SaleDetails object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      ListingPhotos $obj The object to validate.
+	 * @param      SaleDetails $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(ListingPhotos $obj, $cols = null)
+	public static function doValidate(SaleDetails $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(ListingPhotosPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(ListingPhotosPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(SaleDetailsPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(SaleDetailsPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -953,7 +957,7 @@ abstract class BaseListingPhotosPeer {
 
 		}
 
-		return BasePeer::doValidate(ListingPhotosPeer::DATABASE_NAME, ListingPhotosPeer::TABLE_NAME, $columns);
+		return BasePeer::doValidate(SaleDetailsPeer::DATABASE_NAME, SaleDetailsPeer::TABLE_NAME, $columns);
 	}
 
 	/**
@@ -961,23 +965,23 @@ abstract class BaseListingPhotosPeer {
 	 *
 	 * @param      int $pk the primary key.
 	 * @param      PropelPDO $con the connection to use
-	 * @return     ListingPhotos
+	 * @return     SaleDetails
 	 */
 	public static function retrieveByPK($pk, PropelPDO $con = null)
 	{
 
-		if (null !== ($obj = ListingPhotosPeer::getInstanceFromPool((string) $pk))) {
+		if (null !== ($obj = SaleDetailsPeer::getInstanceFromPool((string) $pk))) {
 			return $obj;
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(ListingPhotosPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(SaleDetailsPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria = new Criteria(ListingPhotosPeer::DATABASE_NAME);
-		$criteria->add(ListingPhotosPeer::ID, $pk);
+		$criteria = new Criteria(SaleDetailsPeer::DATABASE_NAME);
+		$criteria->add(SaleDetailsPeer::ID, $pk);
 
-		$v = ListingPhotosPeer::doSelect($criteria, $con);
+		$v = SaleDetailsPeer::doSelect($criteria, $con);
 
 		return !empty($v) > 0 ? $v[0] : null;
 	}
@@ -993,16 +997,16 @@ abstract class BaseListingPhotosPeer {
 	public static function retrieveByPKs($pks, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(ListingPhotosPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(SaleDetailsPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		$objs = null;
 		if (empty($pks)) {
 			$objs = array();
 		} else {
-			$criteria = new Criteria(ListingPhotosPeer::DATABASE_NAME);
-			$criteria->add(ListingPhotosPeer::ID, $pks, Criteria::IN);
-			$objs = ListingPhotosPeer::doSelect($criteria, $con);
+			$criteria = new Criteria(SaleDetailsPeer::DATABASE_NAME);
+			$criteria->add(SaleDetailsPeer::ID, $pks, Criteria::IN);
+			$objs = SaleDetailsPeer::doSelect($criteria, $con);
 		}
 		return $objs;
 	}
@@ -1034,15 +1038,15 @@ abstract class BaseListingPhotosPeer {
 	{
 	  if (preg_match('/^do(Select|Count)(Join(All(Except)?)?|Stmt)?/', $method, $match))
 	  {
-	    return sprintf('BaseListingPhotosPeer:%s:%1$s', 'Count' == $match[1] ? 'doCount' : $match[0]);
+	    return sprintf('BaseSaleDetailsPeer:%s:%1$s', 'Count' == $match[1] ? 'doCount' : $match[0]);
 	  }
 	
 	  throw new LogicException(sprintf('Unrecognized function "%s"', $method));
 	}
 
-} // BaseListingPhotosPeer
+} // BaseSaleDetailsPeer
 
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-BaseListingPhotosPeer::buildTableMap();
+BaseSaleDetailsPeer::buildTableMap();
 

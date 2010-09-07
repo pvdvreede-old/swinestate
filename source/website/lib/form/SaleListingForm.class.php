@@ -14,12 +14,27 @@ class SaleListingForm extends ListingForm
 
       parent::configure();
 
-      // meta data form
-      $metaForm = new ListingMetadataColumnForm();
+      // add in the sale details form from scratch if new
+      if ($this->getObject()->isNew()) {
 
-      // add meta data for the type
-      $this->embedForm('sale_details', $metaForm);
-      
+          $details = new SaleDetails();
+
+      } else {
+
+          $c = new Criteria();
+
+          $c->add(SaleDetailsPeer::LISTING_ID, $this->getObject()->getId());
+
+          $details = SaleDetailsPeer::doSelectOne($c);
+
+      }
+
+      $this->getObject()->addSaleDetails($details);
+
+      // create the sale details form
+      $details_form = new SaleDetailsForm();
+
+      $this->embedForm('sale_details', $details_form);
 
   }
 

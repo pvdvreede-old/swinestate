@@ -18,6 +18,7 @@ abstract class BaseInterestForm extends BaseFormPropel
       'listing_id'      => new sfWidgetFormPropelChoice(array('model' => 'Listing', 'add_empty' => false)),
       'user_id'         => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => false)),
       'interest_status' => new sfWidgetFormInputText(),
+      'new_marker'      => new sfWidgetFormInputCheckbox(),
       'created_at'      => new sfWidgetFormDateTime(),
       'updated_at'      => new sfWidgetFormDateTime(),
     ));
@@ -27,6 +28,7 @@ abstract class BaseInterestForm extends BaseFormPropel
       'listing_id'      => new sfValidatorPropelChoice(array('model' => 'Listing', 'column' => 'id')),
       'user_id'         => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id')),
       'interest_status' => new sfValidatorString(array('max_length' => 10, 'required' => false)),
+      'new_marker'      => new sfValidatorBoolean(array('required' => false)),
       'created_at'      => new sfValidatorDateTime(array('required' => false)),
       'updated_at'      => new sfValidatorDateTime(array('required' => false)),
     ));

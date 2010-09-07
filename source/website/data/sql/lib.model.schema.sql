@@ -97,58 +97,6 @@ CREATE TABLE `listing_status`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- listing_metadata_column
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `listing_metadata_column`;
-
-
-CREATE TABLE `listing_metadata_column`
-(
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`listing_type_id` INTEGER  NOT NULL,
-	`code` VARCHAR(25)  NOT NULL,
-	`label` VARCHAR(255)  NOT NULL,
-	`value_type` VARCHAR(10)  NOT NULL,
-	`required` TINYINT,
-	`min_length` INTEGER,
-	`max_length` INTEGER,
-	`created_at` DATETIME,
-	`updated_at` DATETIME,
-	PRIMARY KEY (`id`),
-	INDEX `listing_metadata_column_FI_1` (`listing_type_id`),
-	CONSTRAINT `listing_metadata_column_FK_1`
-		FOREIGN KEY (`listing_type_id`)
-		REFERENCES `listing_type` (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- listing_metadata_value
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `listing_metadata_value`;
-
-
-CREATE TABLE `listing_metadata_value`
-(
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`metadata_column_id` INTEGER  NOT NULL,
-	`listing_id` INTEGER  NOT NULL,
-	`value` VARCHAR(2000)  NOT NULL,
-	`created_at` DATETIME,
-	`updated_at` DATETIME,
-	PRIMARY KEY (`id`),
-	INDEX `listing_metadata_value_FI_1` (`metadata_column_id`),
-	CONSTRAINT `listing_metadata_value_FK_1`
-		FOREIGN KEY (`metadata_column_id`)
-		REFERENCES `listing_metadata_column` (`id`),
-	INDEX `listing_metadata_value_FI_2` (`listing_id`),
-	CONSTRAINT `listing_metadata_value_FK_2`
-		FOREIGN KEY (`listing_id`)
-		REFERENCES `listing` (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- address
 #-----------------------------------------------------------------------------
 
@@ -292,6 +240,29 @@ CREATE TABLE `user_profile`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- sale_details
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sale_details`;
+
+
+CREATE TABLE `sale_details`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`listing_id` INTEGER  NOT NULL,
+	`asking_price` FLOAT,
+	`actual_price` FLOAT,
+	`auction_date` DATETIME,
+	`created_at` DATETIME,
+	`updated_at` DATETIME,
+	PRIMARY KEY (`id`),
+	INDEX `sale_details_FI_1` (`listing_id`),
+	CONSTRAINT `sale_details_FK_1`
+		FOREIGN KEY (`listing_id`)
+		REFERENCES `listing` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- alert
 #-----------------------------------------------------------------------------
 
@@ -333,6 +304,7 @@ CREATE TABLE `interest`
 	`listing_id` INTEGER  NOT NULL,
 	`user_id` INTEGER  NOT NULL,
 	`interest_status` VARCHAR(10) default 'Pending',
+	`new_marker` TINYINT,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	PRIMARY KEY (`id`),
