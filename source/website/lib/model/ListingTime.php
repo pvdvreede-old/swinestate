@@ -26,19 +26,22 @@ class ListingTime extends BaseListingTime {
         
         $c->add(ListingTimePeer::START_DATE, $this->getStartDate(), Criteria::LESS_EQUAL);
         $c->add(ListingTimePeer::END_DATE, $this->getEndDate(), Criteria::GREATER_EQUAL);
+        $c->add(ListingTimePeer::LISTING_ID, $this->getListingId());
+        $c->add(ListingTimePeer::PAYMENT_STATUS, 'Paid');
 
         if (ListingTimePeer::doCount($c) > 0) {
-            return null;//throw new sfException('There is already a payment entry with those dates for this listing.', 500);
+            //return null;
+            throw new sfException('There is already a payment entry with those dates for this listing.', 500);
         }
 
         // if this is the first save attach the user id, and the listing status
         if ($this->isNew()) {
             try {
 
-                //$this->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
+                $this->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
 
                 // make the listing unpaid by default so the user has to pay to get it shown
-                //$this->setPaymentStatus('pending');
+                $this->setPaymentStatus('Pending');
 
             } catch (Exception $ex) {
                 // if there is an exception a user isnt logged in, so throw a 401 unauthorised exception.
@@ -63,6 +66,8 @@ class ListingTime extends BaseListingTime {
         return (($difference / 60) / 60) / 24;
 
     }
+
+
 
     public function getPaidTotalFromDays() {
 

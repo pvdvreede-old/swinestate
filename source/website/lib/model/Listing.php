@@ -30,7 +30,7 @@ class Listing extends BaseListing {
                 $this->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
 
                 // make the listing unpaid by default so the user has to pay to get it shown
-               $this->setListingStatusId(ListingStatusPeer::getIdFromName('Available'));
+                $this->setListingStatusId(ListingStatusPeer::getIdFromName('Available'));
 
         }
 

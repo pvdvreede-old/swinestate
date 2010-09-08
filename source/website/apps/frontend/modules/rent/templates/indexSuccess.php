@@ -21,7 +21,7 @@
   <tbody>
     <?php foreach ($Listings as $Listing): ?>
     <tr>
-      <td><a href="<?php echo url_for('sale/show?id='.$Listing->getId()) ?>"><?php echo $Listing->getId() ?></a></td>
+      <td><a href="<?php echo url_for('rent/show?id='.$Listing->getId()) ?>"><?php echo $Listing->getId() ?></a></td>
       <td><?php echo $Listing->getUserId() ?></td>
       <td><?php echo $Listing->getListingTypeId() ?></td>
       <td><?php echo $Listing->getPropertyTypeId() ?></td>
@@ -39,4 +39,4 @@
   </tbody>
 </table>
 
-  <a href="<?php echo url_for('sale/new') ?>">New</a>
+  <a href="<?php echo url_for('rent/new') ?>">New</a>

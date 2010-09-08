@@ -18,6 +18,8 @@ CREATE TABLE `listing`
 	`property_type_id` INTEGER  NOT NULL,
 	`listing_status_id` INTEGER  NOT NULL,
 	`address_id` INTEGER  NOT NULL,
+	`sale_details_id` INTEGER,
+	`rent_details_id` INTEGER,
 	`name` VARCHAR(255)  NOT NULL,
 	`description` TEXT  NOT NULL,
 	`bedrooms` INTEGER default 0,
@@ -45,7 +47,15 @@ CREATE TABLE `listing`
 	INDEX `listing_FI_5` (`address_id`),
 	CONSTRAINT `listing_FK_5`
 		FOREIGN KEY (`address_id`)
-		REFERENCES `address` (`id`)
+		REFERENCES `address` (`id`),
+	INDEX `listing_FI_6` (`sale_details_id`),
+	CONSTRAINT `listing_FK_6`
+		FOREIGN KEY (`sale_details_id`)
+		REFERENCES `sale_details` (`id`),
+	INDEX `listing_FI_7` (`rent_details_id`),
+	CONSTRAINT `listing_FK_7`
+		FOREIGN KEY (`rent_details_id`)
+		REFERENCES `rent_details` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -249,17 +259,30 @@ DROP TABLE IF EXISTS `sale_details`;
 CREATE TABLE `sale_details`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`listing_id` INTEGER  NOT NULL,
 	`asking_price` FLOAT,
 	`actual_price` FLOAT,
 	`auction_date` DATETIME,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
-	PRIMARY KEY (`id`),
-	INDEX `sale_details_FI_1` (`listing_id`),
-	CONSTRAINT `sale_details_FK_1`
-		FOREIGN KEY (`listing_id`)
-		REFERENCES `listing` (`id`)
+	PRIMARY KEY (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- rent_details
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `rent_details`;
+
+
+CREATE TABLE `rent_details`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`lease_period_until` DATETIME,
+	`amount_month_price` FLOAT,
+	`renting_date` DATETIME,
+	`created_at` DATETIME,
+	`updated_at` DATETIME,
+	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

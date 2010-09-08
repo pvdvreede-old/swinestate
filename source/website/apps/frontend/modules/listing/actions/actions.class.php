@@ -21,6 +21,8 @@ class listingActions extends sfActions {
 
         $c->add(ListingPeer::USER_ID, $this->getUser()->getGuardUser()->getId());
 
+        $c->addDescendingOrderByColumn(ListingPeer::UPDATED_AT);
+
         $this->pager = new sfPropelPager(
                         'Listing',
                         sfConfig::get('app_items_on_page')

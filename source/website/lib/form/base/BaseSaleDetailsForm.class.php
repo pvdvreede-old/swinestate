@@ -15,7 +15,6 @@ abstract class BaseSaleDetailsForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'id'           => new sfWidgetFormInputHidden(),
-      'listing_id'   => new sfWidgetFormPropelChoice(array('model' => 'Listing', 'add_empty' => false)),
       'asking_price' => new sfWidgetFormInputText(),
       'actual_price' => new sfWidgetFormInputText(),
       'auction_date' => new sfWidgetFormDateTime(),
@@ -25,7 +24,6 @@ abstract class BaseSaleDetailsForm extends BaseFormPropel
 
     $this->setValidators(array(
       'id'           => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
-      'listing_id'   => new sfValidatorPropelChoice(array('model' => 'Listing', 'column' => 'id')),
       'asking_price' => new sfValidatorNumber(array('required' => false)),
       'actual_price' => new sfValidatorNumber(array('required' => false)),
       'auction_date' => new sfValidatorDateTime(array('required' => false)),

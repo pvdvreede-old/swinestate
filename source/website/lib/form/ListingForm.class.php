@@ -19,10 +19,6 @@ class ListingForm extends BaseListingForm
           'config' =>'theme_advanced_disable: ""'
       ));
 
-      $this->widgetSchema['listing_type_id'] = new sfWidgetFormInputHidden(array(), array(
-          'value' => '1'
-      ));
-
       // when there is an edit we need to get the address from the db
       if (!$this->getObject()->isNew()) {
           $address = $this->getObject()->getAddress();

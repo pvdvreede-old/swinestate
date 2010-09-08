@@ -7,7 +7,7 @@
  * @subpackage form
  * @author     Your name here
  */
-class SaleListingForm extends ListingForm
+class RentListingForm extends ListingForm
 {
   public function configure()
   {
@@ -15,26 +15,26 @@ class SaleListingForm extends ListingForm
       parent::configure();
 
       $this->widgetSchema['listing_type_id'] = new sfWidgetFormInputHidden(array(), array(
-          'value' => '1'
+          'value' => '2'
       ));
-
+      
       // add in the sale details form from scratch if new
       if ($this->getObject()->isNew()) {
 
-          $details = new SaleDetails();
+          $details = new RentDetails();
 
       } else {
 
-          $details = $this->getObject()->getSaleDetails();
+          $details = $this->getObject()->getRentDetails();
 
       }
- 
+
       $details->addListing($this->getObject());
 
       // create the sale details form
-      $details_form = new SaleDetailsForm($details);
+      $details_form = new RentDetailsForm($details);
 
-      $this->embedForm('sale_details', $details_form);
+      $this->embedForm('rent_details', $details_form);
 
   }
 

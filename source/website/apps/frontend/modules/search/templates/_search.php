@@ -2,7 +2,7 @@
 <?php use_javascripts_for_form($form) ?>
 
 <div id='search'>
-    <form action="<?php echo url_for('search'.'/'.$listing_type) ?>" method="get" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+    <form action="<?php echo url_for('search'.'/'.$module_link) ?>" method="get" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
     <?php echo $form->renderGlobalErrors() ?>
     <p><?php echo $form['suburb']->renderLabel(); ?>: <?php echo $form['suburb']->render(); ?></p>
     <p>

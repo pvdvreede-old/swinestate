@@ -24,7 +24,15 @@ class searchActions extends sfActions {
     public function executeSale(sfWebRequest $request) {
 
         $this->form = new SearchForm();
-        $this->listing_type = 'sale';
+        $this->listing_type = 'Sale';
+        $this->module_link = 'sale';
+        $this->page_url = 'search/sale';
+
+        $this->buildSearchQuery($request);
+    }
+
+
+    protected function buildSearchQuery($request) {
 
         // deal with the search request when it comes in
         if ($request->hasParameter('search')) {
@@ -44,8 +52,14 @@ class searchActions extends sfActions {
                 $c->add(ListingTimePeer::END_DATE, time(), Criteria::GREATER_THAN);
                 $c->add(ListingTimePeer::PAYMENT_STATUS, 'Paid');
 
+                // set criteria that get listings that arent sold or rented
+                $c->add(ListingPeer::LISTING_STATUS_ID, array(
+                    ListingStatusPeer::getIdFromName('Sold'),
+                    ListingStatusPeer::getIdFromName('Rented')
+                    ), Criteria::NOT_IN);
+
                 // set the listing type as a selling property
-                $c->add(ListingPeer::LISTING_TYPE_ID, ListingTypePeer::getIdFromName('Sale'));
+                $c->add(ListingPeer::LISTING_TYPE_ID, ListingTypePeer::getIdFromName($this->listing_type));
 
                 if ($values['suburb'] != '') {
                     // create the join to the suburb to filter it
@@ -78,16 +92,13 @@ class searchActions extends sfActions {
                 $this->pager->init();
                 $this->page_url = 'alert/index';
                 $this->show_results = true;
-                $this->module_link = 'sale';
-                $this->page_url = 'search/sale';
                 $this->get_string = $this->buildPaginateString($request);
 
-                // remember the current url to put as a link back to the search results
-                $this->getUser()->setFlash('last_url', $this->get_string.'page='.$this->pager->getPage());
             }
         }
 
         $this->setTemplate('index');
+
     }
 
     protected function buildPaginateString($request) {
@@ -119,9 +130,11 @@ class searchActions extends sfActions {
 
     public function executeRent(sfWebRequest $request) {
         $this->form = new SearchForm();
-        $this->listing_type = 'rent';
+        $this->listing_type = 'Rent';
+        $this->module_link = 'rent';
+        $this->page_url = 'search/rent';
 
-        $this->setTemplate('index');
+        $this->buildSearchQuery($request);
     }
 
 }

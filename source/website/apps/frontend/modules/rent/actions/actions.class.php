@@ -13,5 +13,14 @@ require_once(dirname(__FILE__).'/../../sale/actions/actions.class.php');
 class rentActions extends saleActions
 {
 
+    public $_formObjectType = "RentListingForm";
+
+    public function executeIndex(sfWebRequest $request) {
+        parent::executeIndex($request);
+
+        $this->page_url = 'rent/index';
+
+    }
+
   
 }

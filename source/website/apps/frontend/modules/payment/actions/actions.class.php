@@ -88,7 +88,17 @@ class paymentActions extends sfActions {
     }
 
     public function executeNew(sfWebRequest $request) {
+        // create the payment model and put the listing id in
+        $payment = new ListingTime();
+        $payment->setListingId($request->getParameter('id'));
+        
+        
         $this->form = new ListingTimeForm();
+        
+        $this->form->getWidget('listing_id')->setDefault($request->getParameter('id'));
+
+
+
     }
 
     public function executeCreate(sfWebRequest $request) {

@@ -57,6 +57,6 @@
 
 <hr />
 
-<a href="<?php echo url_for('sale/edit?id='.$Listing->getId()) ?>">Edit</a>
+<a href="<?php echo url_for('rent/edit?id='.$Listing->getId()) ?>">Edit</a>
 &nbsp;
-<a href="<?php echo url_for('sale/index') ?>">List</a>
+<a href="<?php echo url_for('rent/index') ?>">List</a>

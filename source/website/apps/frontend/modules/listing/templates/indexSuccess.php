@@ -10,6 +10,8 @@
 
   <?php echo link_to('See all listing interests', 'interest/index'); ?>
 
+  <?php echo (ListingTimePeer::getPendingPaymentCount() > 0 ? '| '.link_to('You have '.ListingTimePeer::getPendingPaymentCount().' payment(s) pending', 'listing/index') : '') ?>
+
 </p>
 
 <?php if ($pager->count() == 0) : ?>

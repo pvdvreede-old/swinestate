@@ -7,12 +7,11 @@
       <tr>
         <td colspan="2">
           <?php echo $form->renderHiddenFields(false) ?>
-          <input type="submit" value="Save" />
+          <input type="submit" value="Confirm Payment" />
         </td>
       </tr>
     </tfoot>
     <tbody>
-      <?php echo $form->renderGlobalErrors() ?>
       <?php echo $form; ?>
     </tbody>
   </table>

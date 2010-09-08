@@ -1,7 +1,8 @@
 
 <?php include_partial('search', array(
     'form' => $form,
-    'listing_type' => $listing_type
+    'listing_type' => $listing_type,
+    'module_link' => $module_link
         )); ?>
 
 

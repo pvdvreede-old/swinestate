@@ -9,6 +9,8 @@
  */
 class saleActions extends sfActions {
 
+    public $_formObjectType = "SaleListingForm";
+
     public function executeIndex(sfWebRequest $request) {
         $this->pager = new sfPropelPager(
                         'Listing',
@@ -25,13 +27,13 @@ class saleActions extends sfActions {
     }
 
     public function executeNew(sfWebRequest $request) {
-        $this->form = new SaleListingForm();
+        $this->form = new $this->_formObjectType();
     }
 
     public function executeCreate(sfWebRequest $request) {
         $this->forward404Unless($request->isMethod(sfRequest::POST));
 
-        $this->form = new SaleListingForm();
+        $this->form = new $this->_formObjectType();
 
         $this->processForm($request, $this->form);
 
@@ -40,13 +42,13 @@ class saleActions extends sfActions {
 
     public function executeEdit(sfWebRequest $request) {
         $this->forward404Unless($Listing = ListingPeer::retrieveByPk($request->getParameter('id')), sprintf('Object Listing does not exist (%s).', $request->getParameter('id')));
-        $this->form = new SaleListingForm($Listing);
+        $this->form = new $this->_formObjectType($Listing);
     }
 
     public function executeUpdate(sfWebRequest $request) {
         $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
         $this->forward404Unless($Listing = ListingPeer::retrieveByPk($request->getParameter('id')), sprintf('Object Listing does not exist (%s).', $request->getParameter('id')));
-        $this->form = new SaleListingForm($Listing);
+        $this->form = new $this->_formObjectType($Listing);
 
         $this->processForm($request, $this->form);
 

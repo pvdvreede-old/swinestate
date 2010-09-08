@@ -18,4 +18,17 @@
  */
 class ListingTimePeer extends BaseListingTimePeer {
 
+        public static function getPendingPaymentCount() {
+
+            // get a count of any payments that are still 'pending'
+            $c = new Criteria();
+
+            $c->add(ListingTimePeer::USER_ID, sfContext::getInstance()->getUser()->getGuardUser()->getId());
+            $c->add(ListingTimePeer::PAYMENT_STATUS, 'Pending');
+
+            return self::doCount($c);
+
+        }
+
+
 } // ListingTimePeer

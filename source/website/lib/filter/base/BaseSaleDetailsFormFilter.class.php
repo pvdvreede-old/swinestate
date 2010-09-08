@@ -12,7 +12,6 @@ abstract class BaseSaleDetailsFormFilter extends BaseFormFilterPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'listing_id'   => new sfWidgetFormPropelChoice(array('model' => 'Listing', 'add_empty' => true)),
       'asking_price' => new sfWidgetFormFilterInput(),
       'actual_price' => new sfWidgetFormFilterInput(),
       'auction_date' => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
@@ -21,7 +20,6 @@ abstract class BaseSaleDetailsFormFilter extends BaseFormFilterPropel
     ));
 
     $this->setValidators(array(
-      'listing_id'   => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Listing', 'column' => 'id')),
       'asking_price' => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'actual_price' => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'auction_date' => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
@@ -45,7 +43,6 @@ abstract class BaseSaleDetailsFormFilter extends BaseFormFilterPropel
   {
     return array(
       'id'           => 'Number',
-      'listing_id'   => 'ForeignKey',
       'asking_price' => 'Number',
       'actual_price' => 'Number',
       'auction_date' => 'Date',
