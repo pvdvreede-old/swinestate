@@ -5,3 +5,5 @@
     'module_link' => 'sale',
     'back_to' => 'listing/index'
         )) ?>
+
+<?php link_to('Add photos to this listing', 'photos/new?id='.$form->getObject()->getId()); ?>

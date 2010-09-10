@@ -33,7 +33,14 @@ class ListingForm extends BaseListingForm
       $address_form = new AddressForm($address);
 
       $this->embedForm('address', $address_form);
-   
+
+      $photos_form = new PhotosCollectionForm(null, array(
+          'listing' => $this->getObject(),
+          'size' => 5
+      ));
+
+      $this->embedForm('photos', $photos_form);
+
       // only use certain fields for the form
       $this->useFields(array(
           'name',
@@ -43,8 +50,33 @@ class ListingForm extends BaseListingForm
           'bedrooms',
           'bathrooms',
           'car_spaces',
+          'photos'
       ));
 
+  }
+
+  public function saveEmbeddedForms($con = null, $forms = null) {
+
+      // if any of the photos arent filled in then dont insert them in the database
+      if ($forms === NULL) {
+
+          $photos = $this->getValue('photos');
+          $forms = $this->embeddedForms;
+
+          // loop through all the photo forms and if they are not filled in remove them from saving
+          foreach ($this->embeddedForms['photos'] as $name => $form) {
+
+              if (!isset($photos[$name])) {
+
+                  unset($forms['photos'][$name]);
+
+              }
+
+          }
+
+      }
+
+      return parent::saveEmbeddedForms($con, $forms);
   }
 
  

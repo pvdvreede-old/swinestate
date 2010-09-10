@@ -17,6 +17,8 @@ class RentListingForm extends ListingForm
       $this->widgetSchema['listing_type_id'] = new sfWidgetFormInputHidden(array(), array(
           'value' => '2'
       ));
+
+      $this->validatorSchema['listing_type_id'] = new sfValidatorInteger();
       
       // add in the sale details form from scratch if new
       if ($this->getObject()->isNew()) {

@@ -130,3 +130,10 @@ propel:
     new_marker: boolean
     created_at: ~
     updated_at: ~
+
+  # settings table for any and all data that doesnt belong in another table
+  settings:
+    id: ~
+    type: varchar(50)
+    name: varchar(50)
+    value: varchar(1000)
