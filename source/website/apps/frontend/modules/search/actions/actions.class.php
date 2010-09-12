@@ -90,7 +90,6 @@ class searchActions extends sfActions {
                 $this->pager->setCriteria($c);
                 $this->pager->setPage($request->getParameter('page', 1));
                 $this->pager->init();
-                $this->page_url = 'alert/index';
                 $this->show_results = true;
                 $this->get_string = $this->buildPaginateString($request);
 

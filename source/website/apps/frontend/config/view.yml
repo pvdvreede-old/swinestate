@@ -12,7 +12,7 @@ default:
     #language:     en
     #robots:       index, follow
 
-  stylesheets:    [main.css, menu/menu_style.css, smoothness/jquery-ui-1.8.4.custom.css]
+  stylesheets:    [main.css, menu/menu_style.css, redmond/jquery-ui-1.8.4.custom.css]
 
   javascripts:    [jquery-1.4.2.min.js, tiny_mce/tiny_mce.js, jquery-ui-1.8.2.custom.min.js]
 

@@ -3,7 +3,7 @@
     <h2 class="title"><?php echo $Listing->getName(); ?></h2>
     <p class="rooms">ba: <?php echo $Listing->getBathrooms(); ?> be: <?php echo $Listing->getBedrooms(); ?> ca: <?php echo $Listing->getCarSpaces(); ?></p>
     <p class="address"><?php echo $Listing->getAddress(); ?></p>
-    <p class="description"><?php echo $Listing->getDescription(); ?></p>
+    <p class="description"><?php echo html_entity_decode($Listing->getDescription()); ?></p>
 </div>
 
 <hr />

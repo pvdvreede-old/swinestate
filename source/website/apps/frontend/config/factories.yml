@@ -28,6 +28,14 @@ test:
 
 dev:
   mailer:
+    transport:
+      class: Swift_SmtpTransport
+      param:
+        host:       smtp.gmail.com
+        port:       465
+        encryption: ssl
+        username:   pvdvreede@gmail.com
+        password:   y6D3qrUZN
     param:
       delivery_strategy: none
 

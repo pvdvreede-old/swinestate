@@ -78,8 +78,6 @@ class userActions extends sfActions {
 
             $this->getMailer()->send($email);
 
-
-
             $this->redirect('user/show');
         }
     }

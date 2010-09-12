@@ -1,4 +1,4 @@
-<table>
+<table class="display">
   <tbody>
     <tr>
       <th>User name:</th>

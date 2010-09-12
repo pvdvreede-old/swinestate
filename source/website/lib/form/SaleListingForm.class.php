@@ -18,6 +18,8 @@ class SaleListingForm extends ListingForm
           'value' => '1'
       ));
 
+      $this->validatorSchema['listing_type_id'] = new sfValidatorInteger();
+
       // add in the sale details form from scratch if new
       if ($this->getObject()->isNew()) {
 

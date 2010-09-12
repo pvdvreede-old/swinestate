@@ -13,13 +13,13 @@ class ListingTimeForm extends BaseListingTimeForm
   {
 
       $this->widgetSchema['start_date'] = new sfWidgetFormJQueryDate(array(
-          'config' => '{minDate: +1}'
+          'config' => '{minDate: +0}'
       ));
       
       $this->widgetSchema['end_date'] = new sfWidgetFormJQueryDate(array(
-          'config' => '{minDate: +2}'
+          'config' => '{minDate: +1}'
       ));
-
+      
       $this->useFields(array(
               'listing_id',
               'start_date',

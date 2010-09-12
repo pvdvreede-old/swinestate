@@ -41,8 +41,7 @@ class ListingForm extends BaseListingForm
 
       $this->embedForm('photos', $photos_form);
 
-      // only use certain fields for the form
-      $this->useFields(array(
+      $fields = array(
           'name',
           'property_type_id',
           'description',
@@ -51,7 +50,18 @@ class ListingForm extends BaseListingForm
           'bathrooms',
           'car_spaces',
           'photos'
-      ));
+      );
+
+      // if its an update then add in the listing status to be changed
+      if (!$this->getObject()->isNew()) {
+
+          $fields[] = 'listing_status_id';
+
+      }
+
+      
+      // only use certain fields for the form
+      $this->useFields($fields);
 
   }
 

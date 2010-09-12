@@ -3,5 +3,6 @@
 <?php include_partial('global/form', array(
     'form' => $form,
     'module_link' => 'payment',
-    'back_to' => ''
+    'submitValue' => 'Create payment',
+    'back_to' => 'listing/index'
 ));

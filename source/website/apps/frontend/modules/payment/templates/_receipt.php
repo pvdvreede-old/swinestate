@@ -38,7 +38,7 @@
             Listing:
         </td>
         <td>
-            <?php echo $ListingTime->getListing(); ?>
+            <?php echo $receiptObject->getListing(); ?>
         </td>
     </tr>
     <tr>
@@ -46,7 +46,7 @@
             Start date:
         </td>
         <td>
-            <?php echo $ListingTime->getStartDate(); ?>
+            <?php echo $receiptObject->getStartDate(); ?>
         </td>
     </tr>
     <tr>
@@ -54,7 +54,7 @@
             End Date:
         </td>
         <td>
-            <?php echo $ListingTime->getEndDate(); ?>
+            <?php echo $receiptObject->getEndDate(); ?>
         </td>
     </tr>
     <tr>
@@ -62,7 +62,7 @@
             Total duration:
         </td>
         <td>
-            <?php echo $ListingTime->getTotalDays(); ?>
+            <?php echo $receiptObject->getTotalDays(); ?>
         </td>
     </tr>
     <tr>

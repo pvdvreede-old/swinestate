@@ -16,7 +16,7 @@ abstract class BaseListingTimeForm extends BaseFormPropel
     $this->setWidgets(array(
       'id'                 => new sfWidgetFormInputHidden(),
       'user_id'            => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => false)),
-      'listing_id'         => new sfWidgetFormPropelChoice(array('model' => 'Listing', 'add_empty' => false)),
+      'listing_id'         => new sfWidgetFormPropelChoice(array('model' => 'Listing', 'add_empty' => false, 'default' => 6)),
       'start_date'         => new sfWidgetFormDateTime(),
       'end_date'           => new sfWidgetFormDateTime(),
       'payment_status'     => new sfWidgetFormInputText(),

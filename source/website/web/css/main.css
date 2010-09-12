@@ -2,6 +2,7 @@ body {
 
     font-family: sans-serif;
 
+    
 }
 
 #user_context {
@@ -40,7 +41,9 @@ td.label {
 }
 
 table.index_list {
-    width: 98%
+    width: 98%;
+    
+    font-size: 13px;
 }
 
 table.index_list th {
@@ -63,13 +66,56 @@ table.form {
     width: 97%;
     vertical-align: top;
     text-align: left;
+    font-size: 12px;
 }
 
 table.form th {
     text-align: right;
     vertical-align: top;
-    background-color: #c2cccd;
+    
 }
+
+div.form_row {
+
+    
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+}
+
+div.form_part {
+
+    margin-right: 2px;
+    margin-left: 2px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+}
+
+.error_list {
+    color: #8f0d0d
+}
+
+input[type="text"], input[type="button"], input[type="password"], select {
+    padding-right: 1px;
+    padding-left: 1px;
+    padding-bottom: 1px;
+    padding-top: 1px;
+    border-right-color: #b7b7b7;
+    border-left-color: #b7b7b7;
+    border-bottom-color: #b7b7b7;
+    border-top-color: #b7b7b7;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-top-style: solid;
+    border-right-width: 1px;
+    border-left-width: 1px;
+    border-bottom-width: 1px;
+    border-top-width: 1px;
+    background-color: white;
+}
+
 
 div.listing {
     position: relative;
@@ -100,6 +146,12 @@ p.listing_count {
 
 }
 
+table.display th {
+
+    text-align: right;
+    vertical-align: top;
+}
+
 table.search_listing {
     width: 100%;
 }
@@ -122,10 +174,19 @@ table.search_listing {
 
 .notice p {
 
-    background-color: #a4ed14;
+    background-color: #14b8ed;
     padding-right: 3px;
     padding-left: 3px;
     padding-bottom: 3px;
     padding-top: 3px;
     color: #fafafa;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-top-style: solid;
+    border-right-color: #1305fc;
+    border-left-color: #1305fc;
+    border-bottom-color: #1305fc;
+    border-top-color: #1305fc;
+
 }

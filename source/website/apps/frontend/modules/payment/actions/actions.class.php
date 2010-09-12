@@ -57,7 +57,7 @@ class paymentActions extends sfActions {
 
             if ($this->form->isValid()) {
 
-                /*                 * ********************************************
+                /* ********************************************
                  *  PUT CODE HERE FOR PAYPAL PAYMENT PROCESSING
                  * ******************************************* */
 
@@ -67,10 +67,10 @@ class paymentActions extends sfActions {
 
                 // send an email to the user with the receipt details
                 $email = Swift_Message::newInstance()
-                                ->setFrom(sfContext::get('app_from_email'))
+                                ->setFrom(sfConfig::get('app_from_email'))
                                 ->setTo($this->getUser()->getProfile()->getEmailAddress())
-                                ->setSubject(sfContext::get('app_app_name') . ' - Payment details')
-                                ->setBody($this->getPartial('reciept', array(
+                                ->setSubject(sfConfig::get('app_app_name') . ' - Payment details')
+                                ->setBody($this->getPartial('receipt', array(
                                             'receiptObject' => $this->receiptObject
                                         )));
 
@@ -91,13 +91,12 @@ class paymentActions extends sfActions {
         // create the payment model and put the listing id in
         $payment = new ListingTime();
         $payment->setListingId($request->getParameter('id'));
-        
-        
+                
         $this->form = new ListingTimeForm();
         
-        $this->form->getWidget('listing_id')->setDefault($request->getParameter('id'));
-
-
+        $this->form->setDefault('listing_id',
+            $request->getParameter('id')
+        );
 
     }
 
