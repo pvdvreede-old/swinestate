@@ -3,6 +3,13 @@
     <h2 class="title"><?php echo $Listing->getName(); ?></h2>
     <p class="rooms">ba: <?php echo $Listing->getBathrooms(); ?> be: <?php echo $Listing->getBedrooms(); ?> ca: <?php echo $Listing->getCarSpaces(); ?></p>
     <p class="address"><?php echo $Listing->getAddress(); ?></p>
+    <?php if (count($Listing->getListingPhotoss()) > 0) : ?>
+    <p class="listing_photos">
+        <?php foreach($Listing->getListingPhotoss() as $photo) : ?>
+            <?php echo '<a rel="test_group" class="thickbox" href="http://localhost/swinestate2/web/uploads/listings/'.$photo->getPath().'"><img alt="'.$photo->getCaption().'" src="http://localhost/swinestate2/web/uploads/listings/'.$photo->getPath().'" /></a>'; ?>
+        <?php endforeach; ?>
+    </p>
+    <?php endif; ?>
     <p class="description"><?php echo html_entity_decode($Listing->getDescription()); ?></p>
 </div>
 

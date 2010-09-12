@@ -18,11 +18,24 @@ class PhotosCollectionForm extends sfForm
 
       }
 
-      // loop through and embed a ListingPhotos form into this one so users can upload more than one photo
-      for ($i = 1; $i < $this->getOption('size' + 1, 6); $i++) {
 
-          // create a new photo object and add it to the listing
-          $photo = new ListingPhotos();
+      if (!$listing->isNew()) {
+          $photos = $listing->getListingPhotoss();
+      }
+
+      // loop through and embed a ListingPhotos form into this one so users can upload more than one photo
+      for ($i = 0; $i < $this->getOption('size', 5); $i++) {
+
+          if ($listing->isNew()) {
+              
+              // create a new photo object and add it to the listing
+              $photo = new ListingPhotos();
+              
+          } else {
+
+              $photo = $photos[$i];
+              
+          }
 
           $photo->setListing($listing);
 
