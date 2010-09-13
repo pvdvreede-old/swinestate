@@ -13,6 +13,8 @@ body {
 }
 
 
+
+
 #wrap {
       width: 75% ;
       margin-left: auto ;
@@ -95,6 +97,34 @@ div.form_part {
 .error_list {
     color: #8f0d0d
 }
+
+#listing_form {
+
+    position: relative;
+}
+
+#main {
+    
+    float: left;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+#address {
+    
+}
+
+#photos {  
+   
+    
+}
+
+img.listing_img {
+    width: 100px;
+}
+
 
 input[type="text"], input[type="button"], input[type="password"], select {
     padding-right: 1px;

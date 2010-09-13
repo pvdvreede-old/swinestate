@@ -22,14 +22,19 @@ class ListingPhotosForm extends BaseListingPhotosForm {
                     'edit_mode' => !$this->isNew(),
                     'is_image' => true,
                     'with_delete' => true,
+                    'template'  => '<div>%file%<br />%input%<br />%delete% %delete_label%</div>'
+                ), array(
+                    'class' => 'listing_img'
                 )));
 
 
         $this->setValidator('path', new sfValidatorFile(array(
                     'mime_types' => 'web_images',
-                    'path' => '/uploads/listings/',
+                    'path' => sfConfig::get('sf_upload_dir').'/uploads/listings/',
                     'required' => false,
                 )));
+
+        $this->setValidator('path_delete', new sfValidatorBoolean());
     }
 
 }
