@@ -66,17 +66,17 @@ class ListingForm extends BaseListingForm
   }
 
   public function saveEmbeddedForms($con = null, $forms = null) {
-
+        throw new Exception('prin');
       // if any of the photos arent filled in then dont insert them in the database
       if ($forms === NULL) {
 
           $photos = $this->getValue('photos');
           $forms = $this->embeddedForms;
-
+          
           // loop through all the photo forms and if they are not filled in remove them from saving
           foreach ($this->embeddedForms['photos'] as $name => $form) {
 
-              if (!isset($photos[$name])) {
+              if (!isset($photos[$name]) || $photos[$name]['path'] == '') {
 
                   unset($forms['photos'][$name]);
 

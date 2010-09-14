@@ -15,7 +15,7 @@ class PhotoValidatorSchema extends sfValidatorSchema
   protected function doClean($values)
   {
     $errorSchema = new sfValidatorErrorSchema($this);
- 
+
     foreach($values as $key => $value)
     {
       $errorSchemaLocal = new sfValidatorErrorSchema($this);

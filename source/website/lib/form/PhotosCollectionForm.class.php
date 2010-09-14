@@ -7,47 +7,42 @@
  * @subpackage form
  * @author     Paul Van de Vreede
  */
-class PhotosCollectionForm extends sfForm
-{
-  public function configure()
-  {
-      // must provide a listing object with the form
-      if (!$listing = $this->getOption('listing')) {
+class PhotosCollectionForm extends sfForm {
 
-          throw new InvalidArgumentException('You must provide a listing to this form');
+    public function configure() {
+        // must provide a listing object with the form
+        if (!$listing = $this->getOption('listing')) {
 
-      }
+            throw new InvalidArgumentException('You must provide a listing to this form');
+        }
 
 
-      if (!$listing->isNew()) {
-          $photos = $listing->getListingPhotoss();
-      }
+        if (!$listing->isNew()) {
+            $photos = $listing->getListingPhotoss();
+        }
 
-      // loop through and embed a ListingPhotos form into this one so users can upload more than one photo
-      for ($i = 0; $i < $this->getOption('size', 5); $i++) {
+        // loop through and embed a ListingPhotos form into this one so users can upload more than one photo
+        for ($i = 0; $i < $this->getOption('size', 5); $i++) {
 
-          if ($listing->isNew() || !isset($photos[$i])) {
-              
-              // create a new photo object and add it to the listing
-              $photo = new ListingPhotos();
-              
-          } else {
+            if ($listing->isNew() || !isset($photos[$i])) {
 
-              $photo = $photos[$i];
-              
-          }
+                // create a new photo object and add it to the listing
+                $photo = new ListingPhotos();
+            } else {
 
-          $photo->setListing($listing);
+                $photo = $photos[$i];
+            }
 
-          // create a new listing form and add the photo object to it for saving later
-          $form = new ListingPhotosForm($photo);
+            $photo->setListing($listing);
 
-          // embed the single form into this
-          $this->embedForm('photo_'.$i, $form);
-      }
-	  
-	  $this->mergePostValidator(new PhotoValidatorSchema());
+            // create a new listing form and add the photo object to it for saving later
+            $form = new ListingPhotosForm($photo);
 
-  }
+            // embed the single form into this
+            $this->embedForm('photo_' . $i, $form);
+        }
+
+        $this->mergePostValidator(new PhotoValidatorSchema());
+    }
 
 }

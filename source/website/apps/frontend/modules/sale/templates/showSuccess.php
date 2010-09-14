@@ -1,3 +1,5 @@
+<?php $sf_context->getConfiguration()->loadHelpers(array('Url')); ?>
+
 <p><a href="<?php echo url_for('search/sale').'?'.$sf_user->getFlash('last_url'); ?>">Back to search results</a></p>
 <div class="single_listing">
     <h2 class="title"><?php echo $Listing->getName(); ?></h2>
@@ -6,7 +8,7 @@
     <?php if (count($Listing->getListingPhotoss()) > 0) : ?>
     <p class="listing_photos">
         <?php foreach($Listing->getListingPhotoss() as $photo) : ?>
-            <?php echo '<a rel="test_group" class="thickbox" href="http://localhost/swinestate2/web/uploads/listings/'.$photo->getPath().'"><img alt="'.$photo->getCaption().'" src="http://localhost/swinestate2/web/uploads/listings/'.$photo->getPath().'" /></a>'; ?>
+            <?php echo '<img src="'.$sf_request->getUriPrefix().$sf_request->getRelativeUrlRoot().'/uploads/listings/'.$photo->getPath().'" />' ?>
         <?php endforeach; ?>
     </p>
     <?php endif; ?>

@@ -16,9 +16,11 @@ class ListingPhotosForm extends BaseListingPhotosForm {
             'path'
         ));
 
+        //$this->getWidget('caption')->setOption('required', true);
+
         // set the validator to be a file
         $this->setWidget('path', new sfWidgetFormInputFileEditable(array(
-                    'file_src' => 'http://localhost/swinestate2/web/uploads/listings/' . $this->getObject()->getPath(),
+                    'file_src' => sfContext::getInstance()->getRequest()->getUriPrefix().sfContext::getInstance()->getRequest()->getRelativeUrlRoot().'/uploads/listings/'. $this->getObject()->getPath(),
                     'edit_mode' => !$this->isNew(),
                     'is_image' => true,
                     'with_delete' => true,
@@ -30,7 +32,7 @@ class ListingPhotosForm extends BaseListingPhotosForm {
 
         $this->setValidator('path', new sfValidatorFile(array(
                     'mime_types' => 'web_images',
-                    'path' => sfConfig::get('sf_upload_dir').'/uploads/listings/',
+                    'path' => sfConfig::get('sf_upload_dir').'/listings/',
                     'required' => false,
                 )));
 
