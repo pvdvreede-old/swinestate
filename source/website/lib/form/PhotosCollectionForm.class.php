@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ListingPhotos form.
+ * Collection of listing photos form.
  *
  * @package    SWINESTATE
  * @subpackage form
@@ -45,30 +45,9 @@ class PhotosCollectionForm extends sfForm
           // embed the single form into this
           $this->embedForm('photo_'.$i, $form);
       }
+	  
+	  $this->mergePostValidator(new PhotoValidatorSchema());
 
   }
 
-   public function saveEmbeddedForms($con = null, $forms = null) {
-
-      // if any of the photos arent filled in then dont insert them in the database
-      if ($forms === NULL) {
-
-          //$photos = $this->getValue('photos');
-          $forms = $this->embeddedForms;
-
-          // loop through all the photo forms and if they are not filled in remove them from saving
-          foreach ($this->embeddedForms as $name => $form) {
-
-              if (!$this->getValue($name)) {
-
-                  unset($forms[$name]);
-
-              }
-
-          }
-
-      }
-
-      return parent::saveEmbeddedForms($con, $forms);
-  }
 }

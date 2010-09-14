@@ -76,7 +76,7 @@ class ListingForm extends BaseListingForm
           // loop through all the photo forms and if they are not filled in remove them from saving
           foreach ($this->embeddedForms['photos'] as $name => $form) {
 
-              if (!isset($photos[$name]) || empty($photos[$name]) || $photos[$name]['caption'] == '') {
+              if (!isset($photos[$name])) {
 
                   unset($forms['photos'][$name]);
 
