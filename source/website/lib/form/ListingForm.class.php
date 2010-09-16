@@ -22,9 +22,12 @@ class ListingForm extends BaseListingForm
       // when there is an edit we need to get the address from the db
       if (!$this->getObject()->isNew()) {
           $address = $this->getObject()->getAddress();
+		  $videos = $this->getObject()->getListingVideos();
+		  $video = $videos[0];
       } else {
          // create an address database object and link to the form
           $address = new Address();
+		  $video = new ListingVideo();
       }
       
       $address->addListing($this->getObject());
@@ -40,7 +43,11 @@ class ListingForm extends BaseListingForm
       ));
 
       $this->embedForm('photos', $photos_form);
-
+	
+	  // embed video form to put in listing, there is only one link to you tube
+	  $video_form = new ListingVideosForm($video);
+	  $this->embedForm('video', $video_form);
+	
       $fields = array(
           'name',
           'property_type_id',
@@ -49,7 +56,8 @@ class ListingForm extends BaseListingForm
           'bedrooms',
           'bathrooms',
           'car_spaces',
-          'photos'
+          'photos',
+		  'video'
       );
 
       // if its an update then add in the listing status to be changed

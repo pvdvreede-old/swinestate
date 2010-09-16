@@ -31,6 +31,10 @@ endif; ?>
         <div id="photos">
             <?php echo $form['photos']->renderRow(); ?>
         </div>
+		
+		<div id="video">
+            <?php echo $form['video']->renderRow(); ?>
+        </div>
         </div>
 
     <?php echo $form->renderHiddenFields(false) ?>

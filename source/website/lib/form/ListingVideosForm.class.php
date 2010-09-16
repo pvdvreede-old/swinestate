@@ -11,5 +11,10 @@ class ListingVideosForm extends BaseListingVideosForm
 {
   public function configure()
   {
+	$this->useFields(array(
+            'caption',
+            'url'
+        ));
+  
   }
 }
