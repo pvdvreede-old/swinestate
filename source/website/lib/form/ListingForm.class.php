@@ -7,95 +7,134 @@
  * @subpackage form
  * @author     Your name here
  */
-class ListingForm extends BaseListingForm
-{
-  public function configure()
-  {
+class ListingForm extends BaseListingForm {
 
-      // set the widget for the description to the text editor
-      $this->widgetSchema['description'] = new sfWidgetFormTextareaTinyMCE(array(
-          'width' => 550,
-          'height' => 300,
-          'config' =>'theme_advanced_disable: ""'
-      ));
+    public function configure() {
 
-      // when there is an edit we need to get the address from the db
-      if (!$this->getObject()->isNew()) {
-          $address = $this->getObject()->getAddress();
-		  $videos = $this->getObject()->getListingVideos();
-		  $video = $videos[0];
-      } else {
-         // create an address database object and link to the form
-          $address = new Address();
-		  $video = new ListingVideo();
-      }
-      
-      $address->addListing($this->getObject());
+        // set the widget for the description to the text editor
+        $this->widgetSchema['description'] = new sfWidgetFormTextareaTinyMCE(array(
+                    'width' => 550,
+                    'height' => 300,
+                    'config' => 'theme_advanced_disable: ""'
+                ));
 
-      // create address form to embed in this form
-      $address_form = new AddressForm($address);
+        // when there is an edit we need to get the address from the db
+        if (!$this->getObject()->isNew()) {
+            $address = $this->getObject()->getAddress();
+            $videos = $this->getObject()->getListingVideos();
+            $video = $videos[0];
+        } else {
+            // create an address database object and link to the form
+            $address = new Address();
+            $video = new ListingVideos();
+        }
 
-      $this->embedForm('address', $address_form);
+        $address->addListing($this->getObject());
 
-      $photos_form = new PhotosCollectionForm(null, array(
-          'listing' => $this->getObject(),
-          'size' => 5
-      ));
+        // create address form to embed in this form
+        $address_form = new AddressForm($address);
 
-      $this->embedForm('photos', $photos_form);
-	
-	  // embed video form to put in listing, there is only one link to you tube
-	  $video_form = new ListingVideosForm($video);
-	  $this->embedForm('video', $video_form);
-	
-      $fields = array(
-          'name',
-          'property_type_id',
-          'description',
-          'address',
-          'bedrooms',
-          'bathrooms',
-          'car_spaces',
-          'photos',
-		  'video'
-      );
+        $this->embedForm('address', $address_form);
 
-      // if its an update then add in the listing status to be changed
-      if (!$this->getObject()->isNew()) {
+        $photos_form = new PhotosCollectionForm(null, array(
+                    'listing' => $this->getObject(),
+                    'size' => 5
+                ));
 
-          $fields[] = 'listing_status_id';
+        $this->embedForm('photos', $photos_form);
 
-      }
+        // embed video form to put in listing, there is only one link to you tube
+        $video_form = new ListingVideosForm($video);
+        $this->embedForm('video', $video_form);
 
-      
-      // only use certain fields for the form
-      $this->useFields($fields);
+        $fields = array(
+            'name',
+            'property_type_id',
+            'description',
+            'address',
+            'bedrooms',
+            'bathrooms',
+            'car_spaces',
+            'photos',
+            'video'
+        );
 
-  }
+        // if its an update then add in the listing status to be changed
+        if (!$this->getObject()->isNew()) {
 
-  public function saveEmbeddedForms($con = null, $forms = null) {
-        throw new Exception('prin');
-      // if any of the photos arent filled in then dont insert them in the database
-      if ($forms === NULL) {
+            $fields[] = 'listing_status_id';
+        }
 
-          $photos = $this->getValue('photos');
-          $forms = $this->embeddedForms;
-          
-          // loop through all the photo forms and if they are not filled in remove them from saving
-          foreach ($this->embeddedForms['photos'] as $name => $form) {
+        // only use certain fields for the form
+        $this->useFields($fields);
 
-              if (!isset($photos[$name]) || $photos[$name]['path'] == '') {
+    }
 
-                  unset($forms['photos'][$name]);
+    public function save($con = null) {
 
-              }
+        $photos = $this->getValue('photos');
+            $forms = $this->embeddedForms;
 
-          }
+            // loop through all the photo forms and if they are not filled in remove them from saving
+            foreach ($this->embeddedForms['photos'] as $name => $form) {
+                sfContext::getInstance()->getLogger()->info($name);
+                if (!isset($photos[$name])) {
 
-      }
+                    unset($forms['photos'][$name]);
+                    sfContext::getInstance()->getLogger()->info('unset');
+                }
+            }
 
-      return parent::saveEmbeddedForms($con, $forms);
-  }
+           
 
- 
+            parent::save($con);
+
+    }
+
+    protected function doSave($con = null) {
+
+
+        $photos = $this->getValue('photos');
+            $forms = $this->embeddedForms;
+
+            // loop through all the photo forms and if they are not filled in remove them from saving
+            foreach ($this->embeddedForms['photos'] as $name => $form) {
+                sfContext::getInstance()->getLogger()->info($name);
+                if (!isset($photos[$name])) {
+
+                    unset($forms['photos'][$name]);
+                    sfContext::getInstance()->getLogger()->info('unset');
+                }
+            }
+
+        sfContext::getInstance()->getLogger()->info('before');
+        parent::doSave($con);
+        sfContext::getInstance()->getLogger()->info('after');
+
+    }
+
+    public function saveEmbeddedForms($con = null, $forms = null) {
+
+        // if any of the photos arent filled in then dont insert them in the database
+        if ($forms === NULL) {
+
+            $photos = $this->getValue('photos');
+            $forms = $this->embeddedForms;
+
+            // loop through all the photo forms and if they are not filled in remove them from saving
+            foreach ($this->embeddedForms['photos'] as $name => $form) {
+                sfContext::getInstance()->getLogger()->info($name);
+                if (!isset($photos[$name])) {
+
+                    unset($forms['photos'][$name]);
+                    sfContext::getInstance()->getLogger()->info('unset');
+                }
+            }
+
+           
+        }
+
+        return parent::saveEmbeddedForms($con, $forms);
+    }
+
 }

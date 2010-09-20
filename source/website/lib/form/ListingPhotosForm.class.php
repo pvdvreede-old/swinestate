@@ -39,4 +39,5 @@ class ListingPhotosForm extends BaseListingPhotosForm {
         $this->setValidator('path_delete', new sfValidatorBoolean());
     }
 
+
 }

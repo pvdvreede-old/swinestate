@@ -28,6 +28,7 @@ class PhotosCollectionForm extends sfForm {
 
                 // create a new photo object and add it to the listing
                 $photo = new ListingPhotos();
+
             } else {
 
                 $photo = $photos[$i];

@@ -15,7 +15,7 @@ class PhotoValidatorSchema extends sfValidatorSchema
   protected function doClean($values)
   {
     $errorSchema = new sfValidatorErrorSchema($this);
-
+    
     foreach($values as $key => $value)
     {
       $errorSchemaLocal = new sfValidatorErrorSchema($this);
@@ -31,11 +31,17 @@ class PhotoValidatorSchema extends sfValidatorSchema
       {
         $errorSchemaLocal->addError(new sfValidatorError($this, 'required'), 'filename');
       }
- 
+
+      sfContext::getInstance()->getLogger()->info($value['path']);
+      sfContext::getInstance()->getLogger()->info($value['caption']);
+      
       // no caption and no filename, remove the empty values
       if (!$value['path'] && !$value['caption'])
       {
-        unset($values[$key]);
+        $keys[] = $key;
+
+//unset($values[$key]);
+        sfContext::getInstance()->getLogger()->info('unset in validator '.$key);
       }
  
       // some error for this embedded-form
@@ -44,13 +50,23 @@ class PhotoValidatorSchema extends sfValidatorSchema
         $errorSchema->addError($errorSchemaLocal, (string) $key);
       }
     }
+
+    if (!empty($keys)) {
+
+        foreach($keys as $k) {
+
+            unset($values[$k]);
+            
+        }
+
+    }
  
     // throws the error for the main form
     if (count($errorSchema))
     {
       throw new sfValidatorErrorSchema($this, $errorSchema);
     }
- 
+   
     return $values;
   }
 }
