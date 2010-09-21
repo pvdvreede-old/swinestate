@@ -341,5 +341,21 @@ CREATE TABLE `interest`
 		REFERENCES `sf_guard_user` (`id`)
 )Type=InnoDB;
 
+#-----------------------------------------------------------------------------
+#-- settings
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `settings`;
+
+
+CREATE TABLE `settings`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`type` VARCHAR(50),
+	`name` VARCHAR(50),
+	`value` VARCHAR(1000),
+	PRIMARY KEY (`id`)
+)Type=InnoDB;
+
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

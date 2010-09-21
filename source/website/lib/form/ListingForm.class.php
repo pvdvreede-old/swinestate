@@ -21,7 +21,7 @@ class ListingForm extends BaseListingForm {
         // when there is an edit we need to get the address from the db
         if (!$this->getObject()->isNew()) {
             $address = $this->getObject()->getAddress();
-            $videos = $this->getObject()->getListingVideos();
+            $videos = $this->getObject()->getListingVideoss();
             $video = $videos[0];
         } else {
             // create an address database object and link to the form
@@ -30,7 +30,7 @@ class ListingForm extends BaseListingForm {
         }
 
         $address->addListing($this->getObject());
-
+        $video->setListing($this->getObject());
         // create address form to embed in this form
         $address_form = new AddressForm($address);
 
@@ -70,7 +70,7 @@ class ListingForm extends BaseListingForm {
 
     }
 
-    public function save($con = null) {
+    public function save768($con = null) {
 
         $photos = $this->getValue('photos');
             $forms = $this->embeddedForms;
@@ -91,7 +91,7 @@ class ListingForm extends BaseListingForm {
 
     }
 
-    protected function doSave($con = null) {
+    protected function doSave687($con = null) {
 
 
         $photos = $this->getValue('photos');

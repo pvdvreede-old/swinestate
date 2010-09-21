@@ -24,7 +24,7 @@ class ListingPhotosForm extends BaseListingPhotosForm {
                     'edit_mode' => !$this->isNew(),
                     'is_image' => true,
                     'with_delete' => true,
-                    'template'  => '<div>%file%<br />%input%<br />%delete% %delete_label%</div>'
+                    'template'  => '<div>%file%<br />%input%<br />%delete% %delete_label%</div>'                    
                 ), array(
                     'class' => 'listing_img'
                 )));
@@ -34,6 +34,7 @@ class ListingPhotosForm extends BaseListingPhotosForm {
                     'mime_types' => 'web_images',
                     'path' => sfConfig::get('sf_upload_dir').'/listings/',
                     'required' => false,
+                    'validated_file_class' => 'MultiFileValidatorSchema'
                 )));
 
         $this->setValidator('path_delete', new sfValidatorBoolean());

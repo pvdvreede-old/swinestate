@@ -12,5 +12,6 @@ class ProjectConfiguration extends sfProjectConfiguration
     $this->enablePlugins('sfGuardPlugin');
     $this->enablePlugins('sfFormExtraPlugin');
    // sfWidgetFormSchema::setDefaultFormFormatterName('Div');
+    $this->enablePlugins('sfThumbnailPlugin');
   }
 }

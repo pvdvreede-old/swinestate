@@ -5,10 +5,11 @@
     <h2 class="title"><?php echo $Listing->getName(); ?></h2>
     <p class="rooms">ba: <?php echo $Listing->getBathrooms(); ?> be: <?php echo $Listing->getBedrooms(); ?> ca: <?php echo $Listing->getCarSpaces(); ?></p>
     <p class="address"><?php echo $Listing->getAddress(); ?></p>
-    <?php if (count($Listing->getListingPhotoss()) > 0) : ?>
-    <p class="listing_photos">
+    <?php if (count($photos = $Listing->getListingPhotoss()) > 0) : ?>
+    <p id="photo_main"><img src="<?php echo $sf_request->getUriPrefix().$sf_request->getRelativeUrlRoot().'/uploads/listings/med/'.$photos[0]->getPath(); ?>" /></p>
+    <p class="listing_photos11">
         <?php foreach($Listing->getListingPhotoss() as $photo) : ?>
-            <?php echo '<img src="'.$sf_request->getUriPrefix().$sf_request->getRelativeUrlRoot().'/uploads/listings/'.$photo->getPath().'" />' ?>
+            <?php echo '<img src="'.$sf_request->getUriPrefix().$sf_request->getRelativeUrlRoot().'/uploads/listings/thumb/'.$photo->getPath().'" onclick="changePhoto(\''.$sf_request->getUriPrefix().$sf_request->getRelativeUrlRoot().'/uploads/listings/med/'.$photo->getPath().'\');" />' ?>
         <?php endforeach; ?>
     </p>
     <?php endif; ?>
@@ -48,3 +49,5 @@
 
 <?php endif; ?>
 <?php endif; ?>
+
+<?php echo javascript_include_tag('change_image'); ?>
