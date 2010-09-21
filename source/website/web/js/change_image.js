@@ -7,9 +7,18 @@
  * Function called to change the main photo to the one clicked on
  */
 
-function changePhoto(filename) {
+function changePhoto(filename, magnify) {
 
-    $('#photo_main img').attr({ src: filename});
+    var p = $('#photo_main img');
+    
+    $('#photo_main').attr({
+        src: filename
+    });
+
+    MojoMagnify.makeMagnifiable(
+        document.getElementById('photo_main'),
+        magnify
+        );
 
 }
 

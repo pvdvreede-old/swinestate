@@ -1,4 +1,9 @@
-<?php $sf_context->getConfiguration()->loadHelpers(array('Url')); ?>
+<?php $sf_context->getConfiguration()->loadHelpers(array('Url'));
+
+      // include the jss and css for the image magnify library
+      $sf_response->addStylesheet('mojomagnify');
+      $sf_response->addJavascript('mojomagnify');
+?>
 
 <p><a href="<?php echo url_for('search/sale').'?'.$sf_user->getFlash('last_url'); ?>">Back to search results</a></p>
 <div class="single_listing">
@@ -6,10 +11,10 @@
     <p class="rooms">ba: <?php echo $Listing->getBathrooms(); ?> be: <?php echo $Listing->getBedrooms(); ?> ca: <?php echo $Listing->getCarSpaces(); ?></p>
     <p class="address"><?php echo $Listing->getAddress(); ?></p>
     <?php if (count($photos = $Listing->getListingPhotoss()) > 0) : ?>
-    <p id="photo_main"><img src="<?php echo $sf_request->getUriPrefix().$sf_request->getRelativeUrlRoot().'/uploads/listings/med/'.$photos[0]->getPath(); ?>" /></p>
+    <p><img data-magnifysrc="<?php echo $sf_request->getUriPrefix().$sf_request->getRelativeUrlRoot().'/uploads/listings/'.$photos[0]->getPath(); ?>" id="photo_main" src="<?php echo $sf_request->getUriPrefix().$sf_request->getRelativeUrlRoot().'/uploads/listings/med/'.$photos[0]->getPath(); ?>" /></p>
     <p class="listing_photos11">
         <?php foreach($Listing->getListingPhotoss() as $photo) : ?>
-            <?php echo '<img src="'.$sf_request->getUriPrefix().$sf_request->getRelativeUrlRoot().'/uploads/listings/thumb/'.$photo->getPath().'" onclick="changePhoto(\''.$sf_request->getUriPrefix().$sf_request->getRelativeUrlRoot().'/uploads/listings/med/'.$photo->getPath().'\');" />' ?>
+               <?php echo '<img src="'.$sf_request->getUriPrefix().$sf_request->getRelativeUrlRoot().'/uploads/listings/thumb/'.$photo->getPath().'" onclick="changePhoto(\''.$sf_request->getUriPrefix().$sf_request->getRelativeUrlRoot().'/uploads/listings/med/'.$photo->getPath().'\',\''.$sf_request->getUriPrefix().$sf_request->getRelativeUrlRoot().'/uploads/listings/'.$photo->getPath().'\');" />' ?>
         <?php endforeach; ?>
     </p>
     <?php endif; ?>

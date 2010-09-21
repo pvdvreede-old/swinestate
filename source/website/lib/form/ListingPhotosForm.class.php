@@ -20,7 +20,7 @@ class ListingPhotosForm extends BaseListingPhotosForm {
 
         // set the validator to be a file
         $this->setWidget('path', new sfWidgetFormInputFileEditable(array(
-                    'file_src' => sfContext::getInstance()->getRequest()->getUriPrefix().sfContext::getInstance()->getRequest()->getRelativeUrlRoot().'/uploads/listings/'. $this->getObject()->getPath(),
+                    'file_src' => sfContext::getInstance()->getRequest()->getUriPrefix().sfContext::getInstance()->getRequest()->getRelativeUrlRoot().'/uploads/listings/thumb/'. $this->getObject()->getPath(),
                     'edit_mode' => !$this->isNew(),
                     'is_image' => true,
                     'with_delete' => true,
