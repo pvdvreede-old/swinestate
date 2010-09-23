@@ -13,17 +13,19 @@ class MultiFileValidatorSchema extends sfValidatedFile {
         $thumb_dir = sfConfig::get('sf_upload_dir') . '/listings/thumb/';
         $med_dir = sfConfig::get('sf_upload_dir') . '/listings/med/';
 
-        if (!is_writable($med_dir) || !is_writable($thumb_dir)) {
+        if (!is_writable($med_dir)) {
             // the directory isn't writable
-            throw new Exception(sprintf('File upload path "%s" is not writable.', $directory));
+            throw new Exception(sprintf('File upload path "%s" is not writable.', $med_dir));
+        }
+
+        if (!is_writable($thumb_dir)) {
+            // the directory isn't writable
+            throw new Exception(sprintf('File upload path "%s" is not writable.', $thumb_dir));
         }
 
 
         $return_value = parent::save($file, $fileMode, $create, $dirMode);
         sfContext::getInstance()->getLogger()->info($full_dir . $return_value);
-
-
-
 
         // create thumbnail size
         $thumb = new sfThumbnail(120);
