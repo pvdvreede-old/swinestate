@@ -18,4 +18,8 @@
  */
 class SaleDetails extends BaseSaleDetails {
 
+    public function  __toString() {
+        return '';
+    }
+
 } // SaleDetails

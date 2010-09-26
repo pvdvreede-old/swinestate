@@ -18,4 +18,8 @@
  */
 class RentDetails extends BaseRentDetails {
 
+    public function  __toString() {
+        return '';
+    }
+
 } // RentDetails

@@ -7,7 +7,7 @@
         <?php echo link_to('Listings', 'listing/index'); ?> |
 	<?php echo link_to('Alerts', 'alert/index'); ?> |
         <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) : ?>
-        <a href="backend.php">Administration</a> |
+        <a href="<?php echo $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot().'/backend.php'; ?>">Administration</a> |
         <?php endif; ?>
 	<?php echo link_to('Log out', '@sf_guard_signout'); ?> 
 
