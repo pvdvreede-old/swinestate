@@ -1,5 +1,7 @@
 <?php use_stylesheets_for_form($form) ?>
-<?php use_javascripts_for_form($form) ?>
+<?php use_javascripts_for_form($form);
+      $sf_response->addJavascript('tiny_mce/tiny_mce.js');
+?>
 
 <?php if (!isset($submitValue)) : $submitValue = 'Save'; endif; ?>
 

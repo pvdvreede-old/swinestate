@@ -1,4 +1,4 @@
-<h1>Listings List</h1>
+<h2>Listings List</h2>
 
 <table>
   <thead>
@@ -19,9 +19,9 @@
     </tr>
   </thead>
   <tbody>
-    <?php foreach ($Listings as $Listing): ?>
+    <?php foreach ($pager->getResults() as $Listing): ?>
     <tr>
-      <td><a href="<?php echo url_for('rent/show?id='.$Listing->getId()) ?>"><?php echo $Listing->getId() ?></a></td>
+      <td><a href="<?php echo url_for('sale/show?id='.$Listing->getId()) ?>"><?php echo $Listing->getId() ?></a></td>
       <td><?php echo $Listing->getUserId() ?></td>
       <td><?php echo $Listing->getListingTypeId() ?></td>
       <td><?php echo $Listing->getPropertyTypeId() ?></td>
@@ -39,4 +39,9 @@
   </tbody>
 </table>
 
-  <a href="<?php echo url_for('rent/new') ?>">New</a>
+<?php    include_partial('global/pagination', array(
+    'pager' => $pager,
+    'page_url' => $page_url
+)); ?>
+
+  <a href="<?php echo url_for('sale/new') ?>">New</a>

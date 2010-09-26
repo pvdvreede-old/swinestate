@@ -1,6 +1,7 @@
-<h1>New Listing</h1>
+<h2>New Listing</h2>
 
 <?php include_partial('global/form', array(
     'form' => $form,
-    'module_link' => 'rent'
+    'module_link' => 'sale',
+    'back_to' => 'listing/index'
         )) ?>

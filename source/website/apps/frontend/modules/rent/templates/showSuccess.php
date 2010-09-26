@@ -1,62 +1,79 @@
-<table>
-  <tbody>
-    <tr>
-      <th>Id:</th>
-      <td><?php echo $Listing->getId() ?></td>
-    </tr>
-    <tr>
-      <th>User:</th>
-      <td><?php echo $Listing->getUserId() ?></td>
-    </tr>
-    <tr>
-      <th>Listing type:</th>
-      <td><?php echo $Listing->getListingTypeId() ?></td>
-    </tr>
-    <tr>
-      <th>Property type:</th>
-      <td><?php echo $Listing->getPropertyTypeId() ?></td>
-    </tr>
-    <tr>
-      <th>Listing status:</th>
-      <td><?php echo $Listing->getListingStatusId() ?></td>
-    </tr>
-    <tr>
-      <th>Address:</th>
-      <td><?php echo $Listing->getAddressId() ?></td>
-    </tr>
-    <tr>
-      <th>Name:</th>
-      <td><?php echo $Listing->getName() ?></td>
-    </tr>
-    <tr>
-      <th>Description:</th>
-      <td><?php echo $Listing->getDescription() ?></td>
-    </tr>
-    <tr>
-      <th>Bedrooms:</th>
-      <td><?php echo $Listing->getBedrooms() ?></td>
-    </tr>
-    <tr>
-      <th>Bathrooms:</th>
-      <td><?php echo $Listing->getBathrooms() ?></td>
-    </tr>
-    <tr>
-      <th>Car spaces:</th>
-      <td><?php echo $Listing->getCarSpaces() ?></td>
-    </tr>
-    <tr>
-      <th>Created at:</th>
-      <td><?php echo $Listing->getCreatedAt() ?></td>
-    </tr>
-    <tr>
-      <th>Updated at:</th>
-      <td><?php echo $Listing->getUpdatedAt() ?></td>
-    </tr>
-  </tbody>
-</table>
+<?php
+$sf_context->getConfiguration()->loadHelpers(array('Url'));
 
-<hr />
+// include the jss and css for the image magnify library
+$sf_response->addStylesheet('mojomagnify');
+$sf_response->addJavascript('mojomagnify');
 
-<a href="<?php echo url_for('rent/edit?id='.$Listing->getId()) ?>">Edit</a>
-&nbsp;
-<a href="<?php echo url_for('rent/index') ?>">List</a>
+// include the javascript for the google maps
+$sf_response->addJavascript('http://maps.google.com/maps/api/js?sensor=false');
+$sf_response->addJavascript('gmapaddress');
+?>
+
+<p><a href="<?php echo url_for('search/sale') . '?' . $sf_user->getFlash('last_url'); ?>">Back to search results</a></p>
+<div class="single_listing">
+    <h2 class="title"><?php echo $Listing->getName(); ?></h2>
+    <p class="rooms">ba: <?php echo $Listing->getBathrooms(); ?> be: <?php echo $Listing->getBedrooms(); ?> ca: <?php echo $Listing->getCarSpaces(); ?></p>
+    <p class="address"><?php echo $Listing->getAddress(); ?></p>
+    <?php if (count($photos = $Listing->getListingPhotoss()) > 0) : ?>
+        <p><img data-magnifysrc="<?php echo $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/' . $photos[0]->getPath(); ?>" id="photo_main" src="<?php echo $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/med/' . $photos[0]->getPath(); ?>" /></p>
+        <p class="listing_photos11">
+        <?php foreach ($Listing->getListingPhotoss() as $photo) : ?>
+        <?php echo '<img src="' . $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/thumb/' . $photo->getPath() . '" onclick="changePhoto(\'' . $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/med/' . $photo->getPath() . '\',\'' . $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/' . $photo->getPath() . '\');" />' ?>
+        <?php endforeach; ?>
+        </p>
+    <?php endif; ?>
+            <p>
+        <?php
+            $gmap = new sfWidgetFormGMapAddress();
+            echo $gmap->render('user[location][address]', array(
+                'address' => $Listing->getAddress(),
+                'longitude' => '2.294359',
+                'latitude' => '48.858205'
+            ));
+        ?>
+        </p>
+<?php if (count($video = $Listing->getListingVideoss()) == 1) : ?>
+                <p class="video">
+<?php echo html_entity_decode($video[0]->getUrl()); ?>
+            </p>
+            <p><?php echo $video[0]->getCaption(); ?></p>
+<?php endif; ?>
+                <p class="description"><?php echo html_entity_decode($Listing->getDescription()); ?></p>
+            </div>
+
+            <hr />
+
+<?php if ($sf_user->isAuthenticated() && $Listing->getUserId() == $sf_user->getGuardUser()->getId()) : ?>
+
+                    You are the creator of this listing and can <a href="<?php echo url_for('sale/edit?id=' . $Listing->getId()) ?>">edit</a> it.
+
+<?php elseif (!$sf_user->isAuthenticated()) : ?>
+
+                        If you are interested in this house, you must <?php echo link_to('Register', 'user/new'); ?> or <?php echo link_to('Log in', '@sf_guard_signin'); ?> to notify the seller of your interest.
+
+<?php else: ?>
+
+<?php if ($sf_user->getProfile()->hasInterestIn($Listing->getId())) : ?>
+
+                                <form action="<?php echo url_for('interest/withdraw') ?>" method="post">
+
+                                    <input type="hidden" name="listing_id" value="<?php echo $Listing->getId(); ?>" />
+                                    You have registered your interest in this listing.
+                                    <input type="submit" value="Withdraw your interest" />
+
+                                </form>
+
+<?php else : ?>
+
+                                    <form action="<?php echo url_for('interest/new') ?>" method="post">
+
+                                        <input type="hidden" name="listing_id" value="<?php echo $Listing->getId(); ?>" />
+                                        <input type="submit" value="Notify Seller of your interest" />
+
+                                    </form>
+
+<?php endif; ?>
+<?php endif; ?>
+
+<?php echo javascript_include_tag('change_image'); ?>

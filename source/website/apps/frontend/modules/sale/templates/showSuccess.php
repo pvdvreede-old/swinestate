@@ -4,6 +4,10 @@ $sf_context->getConfiguration()->loadHelpers(array('Url'));
 // include the jss and css for the image magnify library
 $sf_response->addStylesheet('mojomagnify');
 $sf_response->addJavascript('mojomagnify');
+
+// include the javascript for the google maps
+$sf_response->addJavascript('http://maps.google.com/maps/api/js?sensor=false');
+$sf_response->addJavascript('gmapaddress');
 ?>
 
 <p><a href="<?php echo url_for('search/sale') . '?' . $sf_user->getFlash('last_url'); ?>">Back to search results</a></p>
@@ -11,19 +15,29 @@ $sf_response->addJavascript('mojomagnify');
     <h2 class="title"><?php echo $Listing->getName(); ?></h2>
     <p class="rooms">ba: <?php echo $Listing->getBathrooms(); ?> be: <?php echo $Listing->getBedrooms(); ?> ca: <?php echo $Listing->getCarSpaces(); ?></p>
     <p class="address"><?php echo $Listing->getAddress(); ?></p>
-<?php if (count($photos = $Listing->getListingPhotoss()) > 0) : ?>
-    <p><img data-magnifysrc="<?php echo $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/' . $photos[0]->getPath(); ?>" id="photo_main" src="<?php echo $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/med/' . $photos[0]->getPath(); ?>" /></p>
-    <p class="listing_photos11">
+    <?php if (count($photos = $Listing->getListingPhotoss()) > 0) : ?>
+        <p><img data-magnifysrc="<?php echo $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/' . $photos[0]->getPath(); ?>" id="photo_main" src="<?php echo $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/med/' . $photos[0]->getPath(); ?>" /></p>
+        <p class="listing_photos11">
         <?php foreach ($Listing->getListingPhotoss() as $photo) : ?>
         <?php echo '<img src="' . $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/thumb/' . $photo->getPath() . '" onclick="changePhoto(\'' . $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/med/' . $photo->getPath() . '\',\'' . $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/' . $photo->getPath() . '\');" />' ?>
-<?php endforeach; ?>
+        <?php endforeach; ?>
         </p>
     <?php endif; ?>
+            <p>
+        <?php
+            //$gmap = new sfWidgetFormGMapAddress();
+//            echo $gmap->render('user[location][address]', array(
+//                'address' => $Listing->getAddress(),
+//                'longitude' => '2.294359',
+//                'latitude' => '48.858205'
+//            ));
+        ?>
+        </p>
 <?php if (count($video = $Listing->getListingVideoss()) == 1) : ?>
                 <p class="video">
-                    <?php echo html_entity_decode($video[0]->getUrl()); ?>
-                </p>
-                <p><?php echo $video[0]->getCaption(); ?></p>
+<?php echo html_entity_decode($video[0]->getUrl()); ?>
+            </p>
+            <p><?php echo $video[0]->getCaption(); ?></p>
 <?php endif; ?>
                 <p class="description"><?php echo html_entity_decode($Listing->getDescription()); ?></p>
             </div>
