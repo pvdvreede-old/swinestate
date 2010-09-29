@@ -34,6 +34,13 @@ propel:
     created_at: ~
     updated_at: ~
 
+  country:
+    iso: { type: varchar(2) }
+    name: { type: varchar(80) }
+    display_name: { type: varchar(80) }
+    iso3: { type: varchar(3) }
+    numcode: { type: integer }
+
   address:
     id: ~
     suburb_id: { type: integer, required: true, foreignTable: suburb, foreignReference: id }
@@ -48,7 +55,7 @@ propel:
     name: { type: varchar(100), required: true }
     postcode: { type: integer, required: true }
     state: { type: varchar(3), required: true }
-    country: { type: varchar(100), required: true }
+    country_id: { type: varchar(2), required: true, foreignTable: country, foreignReference: iso }
     created_at: ~
     updated_at: ~
 

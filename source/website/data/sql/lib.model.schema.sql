@@ -107,6 +107,25 @@ CREATE TABLE `listing_status`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- country
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `country`;
+
+
+CREATE TABLE `country`
+(
+	`iso` VARCHAR(2),
+	`name` VARCHAR(80),
+	`display_name` VARCHAR(80),
+	`iso3` VARCHAR(3),
+	`numcode` INTEGER,
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`id`),
+	INDEX `I_referenced_suburb_FK_1_1` (`iso`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- address
 #-----------------------------------------------------------------------------
 
@@ -142,10 +161,14 @@ CREATE TABLE `suburb`
 	`name` VARCHAR(100)  NOT NULL,
 	`postcode` INTEGER  NOT NULL,
 	`state` VARCHAR(3)  NOT NULL,
-	`country` VARCHAR(100)  NOT NULL,
+	`country_id` VARCHAR(2)  NOT NULL,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+	INDEX `suburb_FI_1` (`country_id`),
+	CONSTRAINT `suburb_FK_1`
+		FOREIGN KEY (`country_id`)
+		REFERENCES `country` (`iso`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

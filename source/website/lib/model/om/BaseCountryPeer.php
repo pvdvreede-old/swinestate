@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Base static class for performing query and update operations on the 'property_type' table.
+ * Base static class for performing query and update operations on the 'country' table.
  *
  * 
  *
@@ -11,46 +11,52 @@
  *
  * @package    lib.model.om
  */
-abstract class BasePropertyTypePeer {
+abstract class BaseCountryPeer {
 
 	/** the default database name for this class */
 	const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'property_type';
+	const TABLE_NAME = 'country';
 
 	/** the related Propel class for this table */
-	const OM_CLASS = 'PropertyType';
+	const OM_CLASS = 'Country';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.PropertyType';
+	const CLASS_DEFAULT = 'lib.model.Country';
 
 	/** the related TableMap class for this table */
-	const TM_CLASS = 'PropertyTypeTableMap';
+	const TM_CLASS = 'CountryTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 6;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
-	/** the column name for the ID field */
-	const ID = 'property_type.ID';
+	/** the column name for the ISO field */
+	const ISO = 'country.ISO';
 
 	/** the column name for the NAME field */
-	const NAME = 'property_type.NAME';
+	const NAME = 'country.NAME';
 
-	/** the column name for the CREATED_AT field */
-	const CREATED_AT = 'property_type.CREATED_AT';
+	/** the column name for the DISPLAY_NAME field */
+	const DISPLAY_NAME = 'country.DISPLAY_NAME';
 
-	/** the column name for the UPDATED_AT field */
-	const UPDATED_AT = 'property_type.UPDATED_AT';
+	/** the column name for the ISO3 field */
+	const ISO3 = 'country.ISO3';
+
+	/** the column name for the NUMCODE field */
+	const NUMCODE = 'country.NUMCODE';
+
+	/** the column name for the ID field */
+	const ID = 'country.ID';
 
 	/**
-	 * An identiy map to hold any loaded instances of PropertyType objects.
+	 * An identiy map to hold any loaded instances of Country objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
 	 * queries.
-	 * @var        array PropertyType[]
+	 * @var        array Country[]
 	 */
 	public static $instances = array();
 
@@ -69,11 +75,11 @@ abstract class BasePropertyTypePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', 'createdAt', 'updatedAt', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::NAME, self::CREATED_AT, self::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Iso', 'Name', 'DisplayName', 'Iso3', 'Numcode', 'Id', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('iso', 'name', 'displayName', 'iso3', 'numcode', 'id', ),
+		BasePeer::TYPE_COLNAME => array (self::ISO, self::NAME, self::DISPLAY_NAME, self::ISO3, self::NUMCODE, self::ID, ),
+		BasePeer::TYPE_FIELDNAME => array ('iso', 'name', 'display_name', 'iso3', 'numcode', 'id', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -83,11 +89,11 @@ abstract class BasePropertyTypePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'CreatedAt' => 2, 'UpdatedAt' => 3, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, 'createdAt' => 2, 'updatedAt' => 3, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::NAME => 1, self::CREATED_AT => 2, self::UPDATED_AT => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'created_at' => 2, 'updated_at' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Iso' => 0, 'Name' => 1, 'DisplayName' => 2, 'Iso3' => 3, 'Numcode' => 4, 'Id' => 5, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('iso' => 0, 'name' => 1, 'displayName' => 2, 'iso3' => 3, 'numcode' => 4, 'id' => 5, ),
+		BasePeer::TYPE_COLNAME => array (self::ISO => 0, self::NAME => 1, self::DISPLAY_NAME => 2, self::ISO3 => 3, self::NUMCODE => 4, self::ID => 5, ),
+		BasePeer::TYPE_FIELDNAME => array ('iso' => 0, 'name' => 1, 'display_name' => 2, 'iso3' => 3, 'numcode' => 4, 'id' => 5, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -136,12 +142,12 @@ abstract class BasePropertyTypePeer {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. PropertyTypePeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. CountryPeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(PropertyTypePeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(CountryPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -157,10 +163,12 @@ abstract class BasePropertyTypePeer {
 	 */
 	public static function addSelectColumns(Criteria $criteria)
 	{
-		$criteria->addSelectColumn(PropertyTypePeer::ID);
-		$criteria->addSelectColumn(PropertyTypePeer::NAME);
-		$criteria->addSelectColumn(PropertyTypePeer::CREATED_AT);
-		$criteria->addSelectColumn(PropertyTypePeer::UPDATED_AT);
+		$criteria->addSelectColumn(CountryPeer::ISO);
+		$criteria->addSelectColumn(CountryPeer::NAME);
+		$criteria->addSelectColumn(CountryPeer::DISPLAY_NAME);
+		$criteria->addSelectColumn(CountryPeer::ISO3);
+		$criteria->addSelectColumn(CountryPeer::NUMCODE);
+		$criteria->addSelectColumn(CountryPeer::ID);
 	}
 
 	/**
@@ -179,26 +187,26 @@ abstract class BasePropertyTypePeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(PropertyTypePeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(CountryPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			PropertyTypePeer::addSelectColumns($criteria);
+			CountryPeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 		$criteria->setDbName(self::DATABASE_NAME); // Set the correct dbName
 
 		if ($con === null) {
-			$con = Propel::getConnection(PropertyTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(CountryPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BasePropertyTypePeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseCountryPeer', $criteria, $con);
 		}
 
 		// BasePeer returns a PDOStatement
@@ -217,7 +225,7 @@ abstract class BasePropertyTypePeer {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      PropelPDO $con
-	 * @return     PropertyType
+	 * @return     Country
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -225,7 +233,7 @@ abstract class BasePropertyTypePeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = PropertyTypePeer::doSelect($critcopy, $con);
+		$objects = CountryPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -242,7 +250,7 @@ abstract class BasePropertyTypePeer {
 	 */
 	public static function doSelect(Criteria $criteria, PropelPDO $con = null)
 	{
-		return PropertyTypePeer::populateObjects(PropertyTypePeer::doSelectStmt($criteria, $con));
+		return CountryPeer::populateObjects(CountryPeer::doSelectStmt($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -260,12 +268,12 @@ abstract class BasePropertyTypePeer {
 	public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(PropertyTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(CountryPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		if (!$criteria->hasSelectClause()) {
 			$criteria = clone $criteria;
-			PropertyTypePeer::addSelectColumns($criteria);
+			CountryPeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -273,7 +281,7 @@ abstract class BasePropertyTypePeer {
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BasePropertyTypePeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseCountryPeer', $criteria, $con);
 		}
 
 
@@ -289,10 +297,10 @@ abstract class BasePropertyTypePeer {
 	 * to the cache in order to ensure that the same objects are always returned by doSelect*()
 	 * and retrieveByPK*() calls.
 	 *
-	 * @param      PropertyType $value A PropertyType object.
+	 * @param      Country $value A Country object.
 	 * @param      string $key (optional) key to use for instance map (for performance boost if key was already calculated externally).
 	 */
-	public static function addInstanceToPool(PropertyType $obj, $key = null)
+	public static function addInstanceToPool(Country $obj, $key = null)
 	{
 		if (Propel::isInstancePoolingEnabled()) {
 			if ($key === null) {
@@ -310,18 +318,18 @@ abstract class BasePropertyTypePeer {
 	 * methods in your stub classes -- you may need to explicitly remove objects
 	 * from the cache in order to prevent returning objects that no longer exist.
 	 *
-	 * @param      mixed $value A PropertyType object or a primary key value.
+	 * @param      mixed $value A Country object or a primary key value.
 	 */
 	public static function removeInstanceFromPool($value)
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
-			if (is_object($value) && $value instanceof PropertyType) {
+			if (is_object($value) && $value instanceof Country) {
 				$key = (string) $value->getId();
 			} elseif (is_scalar($value)) {
 				// assume we've been passed a primary key
 				$key = (string) $value;
 			} else {
-				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or PropertyType object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Country object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
 				throw $e;
 			}
 
@@ -336,7 +344,7 @@ abstract class BasePropertyTypePeer {
 	 * a multi-column primary key, a serialize()d version of the primary key will be returned.
 	 *
 	 * @param      string $key The key (@see getPrimaryKeyHash()) for this instance.
-	 * @return     PropertyType Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+	 * @return     Country Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
 	 * @see        getPrimaryKeyHash()
 	 */
 	public static function getInstanceFromPool($key)
@@ -360,7 +368,7 @@ abstract class BasePropertyTypePeer {
 	}
 	
 	/**
-	 * Method to invalidate the instance pool of all tables related to property_type
+	 * Method to invalidate the instance pool of all tables related to country
 	 * by a foreign key with ON DELETE CASCADE
 	 */
 	public static function clearRelatedInstancePool()
@@ -380,10 +388,10 @@ abstract class BasePropertyTypePeer {
 	public static function getPrimaryKeyHashFromRow($row, $startcol = 0)
 	{
 		// If the PK cannot be derived from the row, return NULL.
-		if ($row[$startcol] === null) {
+		if ($row[$startcol + 5] === null) {
 			return null;
 		}
-		return (string) $row[$startcol];
+		return (string) $row[$startcol + 5];
 	}
 
 	/**
@@ -398,11 +406,11 @@ abstract class BasePropertyTypePeer {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = PropertyTypePeer::getOMClass(false);
+		$cls = CountryPeer::getOMClass(false);
 		// populate the object(s)
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key = PropertyTypePeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj = PropertyTypePeer::getInstanceFromPool($key))) {
+			$key = CountryPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj = CountryPeer::getInstanceFromPool($key))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj->hydrate($row, 0, true); // rehydrate
@@ -411,7 +419,7 @@ abstract class BasePropertyTypePeer {
 				$obj = new $cls();
 				$obj->hydrate($row);
 				$results[] = $obj;
-				PropertyTypePeer::addInstanceToPool($obj, $key);
+				CountryPeer::addInstanceToPool($obj, $key);
 			} // if key exists
 		}
 		$stmt->closeCursor();
@@ -434,10 +442,10 @@ abstract class BasePropertyTypePeer {
 	 */
 	public static function buildTableMap()
 	{
-	  $dbMap = Propel::getDatabaseMap(BasePropertyTypePeer::DATABASE_NAME);
-	  if (!$dbMap->hasTable(BasePropertyTypePeer::TABLE_NAME))
+	  $dbMap = Propel::getDatabaseMap(BaseCountryPeer::DATABASE_NAME);
+	  if (!$dbMap->hasTable(BaseCountryPeer::TABLE_NAME))
 	  {
-	    $dbMap->addTableObject(new PropertyTypeTableMap());
+	    $dbMap->addTableObject(new CountryTableMap());
 	  }
 	}
 
@@ -454,13 +462,13 @@ abstract class BasePropertyTypePeer {
 	 */
 	public static function getOMClass($withPrefix = true)
 	{
-		return $withPrefix ? PropertyTypePeer::CLASS_DEFAULT : PropertyTypePeer::OM_CLASS;
+		return $withPrefix ? CountryPeer::CLASS_DEFAULT : CountryPeer::OM_CLASS;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a PropertyType or Criteria object.
+	 * Method perform an INSERT on the database, given a Country or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or PropertyType object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or Country object containing data that is used to create the INSERT statement.
 	 * @param      PropelPDO $con the PropelPDO connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -469,26 +477,26 @@ abstract class BasePropertyTypePeer {
 	public static function doInsert($values, PropelPDO $con = null)
 	{
     // symfony_behaviors behavior
-    foreach (sfMixer::getCallables('BasePropertyTypePeer:doInsert:pre') as $sf_hook)
+    foreach (sfMixer::getCallables('BaseCountryPeer:doInsert:pre') as $sf_hook)
     {
-      if (false !== $sf_hook_retval = call_user_func($sf_hook, 'BasePropertyTypePeer', $values, $con))
+      if (false !== $sf_hook_retval = call_user_func($sf_hook, 'BaseCountryPeer', $values, $con))
       {
         return $sf_hook_retval;
       }
     }
 
 		if ($con === null) {
-			$con = Propel::getConnection(PropertyTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(CountryPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from PropertyType object
+			$criteria = $values->buildCriteria(); // build Criteria from Country object
 		}
 
-		if ($criteria->containsKey(PropertyTypePeer::ID) && $criteria->keyContainsValue(PropertyTypePeer::ID) ) {
-			throw new PropelException('Cannot insert a value for auto-increment primary key ('.PropertyTypePeer::ID.')');
+		if ($criteria->containsKey(CountryPeer::ID) && $criteria->keyContainsValue(CountryPeer::ID) ) {
+			throw new PropelException('Cannot insert a value for auto-increment primary key ('.CountryPeer::ID.')');
 		}
 
 
@@ -507,18 +515,18 @@ abstract class BasePropertyTypePeer {
 		}
 
     // symfony_behaviors behavior
-    foreach (sfMixer::getCallables('BasePropertyTypePeer:doInsert:post') as $sf_hook)
+    foreach (sfMixer::getCallables('BaseCountryPeer:doInsert:post') as $sf_hook)
     {
-      call_user_func($sf_hook, 'BasePropertyTypePeer', $values, $con, $pk);
+      call_user_func($sf_hook, 'BaseCountryPeer', $values, $con, $pk);
     }
 
 		return $pk;
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a PropertyType or Criteria object.
+	 * Method perform an UPDATE on the database, given a Country or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or PropertyType object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or Country object containing data that is used to create the UPDATE statement.
 	 * @param      PropelPDO $con The connection to use (specify PropelPDO connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -527,16 +535,16 @@ abstract class BasePropertyTypePeer {
 	public static function doUpdate($values, PropelPDO $con = null)
 	{
     // symfony_behaviors behavior
-    foreach (sfMixer::getCallables('BasePropertyTypePeer:doUpdate:pre') as $sf_hook)
+    foreach (sfMixer::getCallables('BaseCountryPeer:doUpdate:pre') as $sf_hook)
     {
-      if (false !== $sf_hook_retval = call_user_func($sf_hook, 'BasePropertyTypePeer', $values, $con))
+      if (false !== $sf_hook_retval = call_user_func($sf_hook, 'BaseCountryPeer', $values, $con))
       {
         return $sf_hook_retval;
       }
     }
 
 		if ($con === null) {
-			$con = Propel::getConnection(PropertyTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(CountryPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		$selectCriteria = new Criteria(self::DATABASE_NAME);
@@ -544,10 +552,10 @@ abstract class BasePropertyTypePeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(PropertyTypePeer::ID);
-			$selectCriteria->add(PropertyTypePeer::ID, $criteria->remove(PropertyTypePeer::ID), $comparison);
+			$comparison = $criteria->getComparison(CountryPeer::ID);
+			$selectCriteria->add(CountryPeer::ID, $criteria->remove(CountryPeer::ID), $comparison);
 
-		} else { // $values is PropertyType object
+		} else { // $values is Country object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -558,35 +566,35 @@ abstract class BasePropertyTypePeer {
 		$ret = BasePeer::doUpdate($selectCriteria, $criteria, $con);
 
     // symfony_behaviors behavior
-    foreach (sfMixer::getCallables('BasePropertyTypePeer:doUpdate:post') as $sf_hook)
+    foreach (sfMixer::getCallables('BaseCountryPeer:doUpdate:post') as $sf_hook)
     {
-      call_user_func($sf_hook, 'BasePropertyTypePeer', $values, $con, $ret);
+      call_user_func($sf_hook, 'BaseCountryPeer', $values, $con, $ret);
     }
 
     return $ret;
 	}
 
 	/**
-	 * Method to DELETE all rows from the property_type table.
+	 * Method to DELETE all rows from the country table.
 	 *
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 */
 	public static function doDeleteAll($con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(PropertyTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(CountryPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		$affectedRows = 0; // initialize var to track total num of affected rows
 		try {
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->beginTransaction();
-			$affectedRows += BasePeer::doDeleteAll(PropertyTypePeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(CountryPeer::TABLE_NAME, $con);
 			// Because this db requires some delete cascade/set null emulation, we have to
 			// clear the cached instance *after* the emulation has happened (since
 			// instances get re-added by the select statement contained therein).
-			PropertyTypePeer::clearInstancePool();
-			PropertyTypePeer::clearRelatedInstancePool();
+			CountryPeer::clearInstancePool();
+			CountryPeer::clearRelatedInstancePool();
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -596,9 +604,9 @@ abstract class BasePropertyTypePeer {
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a PropertyType or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a Country or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or PropertyType object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or Country object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      PropelPDO $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -609,27 +617,27 @@ abstract class BasePropertyTypePeer {
 	 public static function doDelete($values, PropelPDO $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(PropertyTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(CountryPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			// invalidate the cache for all objects of this type, since we have no
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
-			PropertyTypePeer::clearInstancePool();
+			CountryPeer::clearInstancePool();
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof PropertyType) { // it's a model object
+		} elseif ($values instanceof Country) { // it's a model object
 			// invalidate the cache for this single object
-			PropertyTypePeer::removeInstanceFromPool($values);
+			CountryPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
 		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(PropertyTypePeer::ID, (array) $values, Criteria::IN);
+			$criteria->add(CountryPeer::ID, (array) $values, Criteria::IN);
 			// invalidate the cache for this object(s)
 			foreach ((array) $values as $singleval) {
-				PropertyTypePeer::removeInstanceFromPool($singleval);
+				CountryPeer::removeInstanceFromPool($singleval);
 			}
 		}
 
@@ -644,7 +652,7 @@ abstract class BasePropertyTypePeer {
 			$con->beginTransaction();
 			
 			$affectedRows += BasePeer::doDelete($criteria, $con);
-			PropertyTypePeer::clearRelatedInstancePool();
+			CountryPeer::clearRelatedInstancePool();
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -654,24 +662,24 @@ abstract class BasePropertyTypePeer {
 	}
 
 	/**
-	 * Validates all modified columns of given PropertyType object.
+	 * Validates all modified columns of given Country object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      PropertyType $obj The object to validate.
+	 * @param      Country $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(PropertyType $obj, $cols = null)
+	public static function doValidate(Country $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(PropertyTypePeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(PropertyTypePeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(CountryPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(CountryPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -687,7 +695,7 @@ abstract class BasePropertyTypePeer {
 
 		}
 
-		return BasePeer::doValidate(PropertyTypePeer::DATABASE_NAME, PropertyTypePeer::TABLE_NAME, $columns);
+		return BasePeer::doValidate(CountryPeer::DATABASE_NAME, CountryPeer::TABLE_NAME, $columns);
 	}
 
 	/**
@@ -695,23 +703,23 @@ abstract class BasePropertyTypePeer {
 	 *
 	 * @param      int $pk the primary key.
 	 * @param      PropelPDO $con the connection to use
-	 * @return     PropertyType
+	 * @return     Country
 	 */
 	public static function retrieveByPK($pk, PropelPDO $con = null)
 	{
 
-		if (null !== ($obj = PropertyTypePeer::getInstanceFromPool((string) $pk))) {
+		if (null !== ($obj = CountryPeer::getInstanceFromPool((string) $pk))) {
 			return $obj;
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(PropertyTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(CountryPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria = new Criteria(PropertyTypePeer::DATABASE_NAME);
-		$criteria->add(PropertyTypePeer::ID, $pk);
+		$criteria = new Criteria(CountryPeer::DATABASE_NAME);
+		$criteria->add(CountryPeer::ID, $pk);
 
-		$v = PropertyTypePeer::doSelect($criteria, $con);
+		$v = CountryPeer::doSelect($criteria, $con);
 
 		return !empty($v) > 0 ? $v[0] : null;
 	}
@@ -727,16 +735,16 @@ abstract class BasePropertyTypePeer {
 	public static function retrieveByPKs($pks, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(PropertyTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(CountryPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		$objs = null;
 		if (empty($pks)) {
 			$objs = array();
 		} else {
-			$criteria = new Criteria(PropertyTypePeer::DATABASE_NAME);
-			$criteria->add(PropertyTypePeer::ID, $pks, Criteria::IN);
-			$objs = PropertyTypePeer::doSelect($criteria, $con);
+			$criteria = new Criteria(CountryPeer::DATABASE_NAME);
+			$criteria->add(CountryPeer::ID, $pks, Criteria::IN);
+			$objs = CountryPeer::doSelect($criteria, $con);
 		}
 		return $objs;
 	}
@@ -768,15 +776,15 @@ abstract class BasePropertyTypePeer {
 	{
 	  if (preg_match('/^do(Select|Count)(Join(All(Except)?)?|Stmt)?/', $method, $match))
 	  {
-	    return sprintf('BasePropertyTypePeer:%s:%1$s', 'Count' == $match[1] ? 'doCount' : $match[0]);
+	    return sprintf('BaseCountryPeer:%s:%1$s', 'Count' == $match[1] ? 'doCount' : $match[0]);
 	  }
 	
 	  throw new LogicException(sprintf('Unrecognized function "%s"', $method));
 	}
 
-} // BasePropertyTypePeer
+} // BaseCountryPeer
 
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-BasePropertyTypePeer::buildTableMap();
+BaseCountryPeer::buildTableMap();
 

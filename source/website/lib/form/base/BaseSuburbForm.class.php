@@ -18,7 +18,7 @@ abstract class BaseSuburbForm extends BaseFormPropel
       'name'       => new sfWidgetFormInputText(),
       'postcode'   => new sfWidgetFormInputText(),
       'state'      => new sfWidgetFormInputText(),
-      'country'    => new sfWidgetFormInputText(),
+      'country_id' => new sfWidgetFormPropelChoice(array('model' => 'Country', 'add_empty' => false, 'key_method' => 'getIso')),
       'created_at' => new sfWidgetFormDateTime(),
       'updated_at' => new sfWidgetFormDateTime(),
     ));
@@ -28,7 +28,7 @@ abstract class BaseSuburbForm extends BaseFormPropel
       'name'       => new sfValidatorString(array('max_length' => 100)),
       'postcode'   => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647)),
       'state'      => new sfValidatorString(array('max_length' => 3)),
-      'country'    => new sfValidatorString(array('max_length' => 100)),
+      'country_id' => new sfValidatorPropelChoice(array('model' => 'Country', 'column' => 'iso')),
       'created_at' => new sfValidatorDateTime(array('required' => false)),
       'updated_at' => new sfValidatorDateTime(array('required' => false)),
     ));

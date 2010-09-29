@@ -16,7 +16,7 @@ class SuburbForm extends BaseSuburbForm {
             'name',
             'postcode',
             'state',
-            'country'
+            'country_id'
         ));
 
         // Add *  to our required fields
