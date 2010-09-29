@@ -42,9 +42,9 @@ abstract class BaseListingForm extends BaseFormPropel
       'rent_details_id'   => new sfValidatorPropelChoice(array('model' => 'RentDetails', 'column' => 'id', 'required' => false)),
       'name'              => new sfValidatorString(array('max_length' => 255)),
       'description'       => new sfValidatorString(),
-      'bedrooms'          => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
-      'bathrooms'         => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
-      'car_spaces'        => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
+      'bedrooms'          => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647)),
+      'bathrooms'         => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647)),
+      'car_spaces'        => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647)),
       'created_at'        => new sfValidatorDateTime(array('required' => false)),
       'updated_at'        => new sfValidatorDateTime(array('required' => false)),
     ));

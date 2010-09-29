@@ -18,6 +18,10 @@ class ListingVideosForm extends BaseListingVideosForm {
             'rows' => 6
         ));
 
+        $this->validatorSchema['url'] = new sfValidatorString(array(
+            'required' => false
+        ));
+
         $this->useFields(array(
             'caption',
             'url'

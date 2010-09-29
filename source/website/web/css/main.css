@@ -12,9 +12,6 @@ body {
     right: 5px;
 }
 
-
-
-
 #wrap {
       width: 75% ;
       margin-left: auto ;
@@ -126,7 +123,7 @@ img.listing_img {
 }
 
 
-input[type="text"], input[type="button"], input[type="password"], select {
+input[type="text"], input[type="button"], input[type="password"], textarea, select {
     padding-right: 1px;
     padding-left: 1px;
     padding-bottom: 1px;

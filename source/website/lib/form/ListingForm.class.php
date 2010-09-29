@@ -68,49 +68,54 @@ class ListingForm extends BaseListingForm {
         // only use certain fields for the form
         $this->useFields($fields);
 
+        // Add *  to our required fields
+        foreach ($this->getFormFieldSchema()->getWidget()->getFields() as $key => $object) {
+            $label = $this->getFormFieldSchema()->offsetGet($key)->renderLabelName();
+            if ($this->validatorSchema[$key]->getOption('required') == true) {
+                $this->widgetSchema->setLabel($key, $label . " *");
+            }
+        }
     }
 
     public function save768($con = null) {
 
         $photos = $this->getValue('photos');
-            $forms = $this->embeddedForms;
+        $forms = $this->embeddedForms;
 
-            // loop through all the photo forms and if they are not filled in remove them from saving
-            foreach ($this->embeddedForms['photos'] as $name => $form) {
-                sfContext::getInstance()->getLogger()->info($name);
-                if (!isset($photos[$name])) {
+        // loop through all the photo forms and if they are not filled in remove them from saving
+        foreach ($this->embeddedForms['photos'] as $name => $form) {
+            sfContext::getInstance()->getLogger()->info($name);
+            if (!isset($photos[$name])) {
 
-                    unset($forms['photos'][$name]);
-                    sfContext::getInstance()->getLogger()->info('unset');
-                }
+                unset($forms['photos'][$name]);
+                sfContext::getInstance()->getLogger()->info('unset');
             }
+        }
 
-           
 
-            parent::save($con);
 
+        parent::save($con);
     }
 
     protected function doSave687($con = null) {
 
 
         $photos = $this->getValue('photos');
-            $forms = $this->embeddedForms;
+        $forms = $this->embeddedForms;
 
-            // loop through all the photo forms and if they are not filled in remove them from saving
-            foreach ($this->embeddedForms['photos'] as $name => $form) {
-                sfContext::getInstance()->getLogger()->info($name);
-                if (!isset($photos[$name])) {
+        // loop through all the photo forms and if they are not filled in remove them from saving
+        foreach ($this->embeddedForms['photos'] as $name => $form) {
+            sfContext::getInstance()->getLogger()->info($name);
+            if (!isset($photos[$name])) {
 
-                    unset($forms['photos'][$name]);
-                    sfContext::getInstance()->getLogger()->info('unset');
-                }
+                unset($forms['photos'][$name]);
+                sfContext::getInstance()->getLogger()->info('unset');
             }
+        }
 
         sfContext::getInstance()->getLogger()->info('before');
         parent::doSave($con);
         sfContext::getInstance()->getLogger()->info('after');
-
     }
 
     public function saveEmbeddedForms($con = null, $forms = null) {
@@ -130,8 +135,6 @@ class ListingForm extends BaseListingForm {
                     sfContext::getInstance()->getLogger()->info('unset');
                 }
             }
-
-           
         }
 
         return parent::saveEmbeddedForms($con, $forms);

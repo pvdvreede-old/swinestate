@@ -4,7 +4,7 @@
 ?>
 
 <?php if (!isset($submitValue)) : $submitValue = 'Save'; endif; ?>
-
+<p>Fields marked with a '*' are required fields.</p>
 <form action="<?php echo url_for($module_link.'/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
 <?php if (!$form->getObject()->isNew()) : ?>
 <input type="hidden" name="sf_method" value="put" />

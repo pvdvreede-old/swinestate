@@ -66,7 +66,7 @@ class paymentActions extends sfActions {
                 $this->receiptObject = $this->form->save();
 
                 // send an email to the user with the receipt details
-                $email = Swift_Message::newInstance()
+                $email = Swift_Message::newInstance()->setContentType('text/html')
                                 ->setFrom(sfConfig::get('app_from_email'))
                                 ->setTo($this->getUser()->getProfile()->getEmailAddress())
                                 ->setSubject(sfConfig::get('app_app_name') . ' - Payment details')

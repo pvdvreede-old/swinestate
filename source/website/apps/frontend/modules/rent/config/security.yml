@@ -1,0 +1,7 @@
+## YAML Template.
+---
+default:
+  is_secure: true
+
+show:
+  is_secure: false

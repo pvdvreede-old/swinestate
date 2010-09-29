@@ -20,8 +20,8 @@
     <?php foreach ($pager->getResults() as $Interest) : ?>
     <tr>
       <?php echo (!$singleListing ? '<td>'.$Interest->getListing().'</td>' : ''); ?>
-      <td><?php echo $Interest->getUserId() ?></td>
-      <td>Put email here.</td>
+      <td><?php echo $Interest->getUserNameForInterest(); ?></td>
+      <td><?php echo $Interest->getUserEmailForInterest(); ?></td>
       <td><?php echo $Interest->getCreatedAt(); ?></td>
     </tr>
     <?php endforeach; ?>

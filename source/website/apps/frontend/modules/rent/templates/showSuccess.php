@@ -25,12 +25,12 @@ $sf_response->addJavascript('gmapaddress');
     <?php endif; ?>
             <p>
         <?php
-            $gmap = new sfWidgetFormGMapAddress();
-            echo $gmap->render('user[location][address]', array(
-                'address' => $Listing->getAddress(),
-                'longitude' => '2.294359',
-                'latitude' => '48.858205'
-            ));
+//            $gmap = new sfWidgetFormGMapAddress();
+//            echo $gmap->render('user[location][address]', array(
+//                'address' => $Listing->getAddress(),
+//                'longitude' => '2.294359',
+//                'latitude' => '48.858205'
+//            ));
         ?>
         </p>
 <?php if (count($video = $Listing->getListingVideoss()) == 1) : ?>

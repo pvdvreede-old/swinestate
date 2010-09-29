@@ -10,9 +10,9 @@ propel:
     rent_details_id: { type: integer, required: false, foreignTable: rent_details, foreignReference: id }
     name: { type: varchar(255), required: true }
     description: { type: longvarchar, required: true }
-    bedrooms: { type: integer, default: 0 }
-    bathrooms: { type: integer, default: 0 }
-    car_spaces: { type: integer, default: 0 }
+    bedrooms: { type: integer, required: true }
+    bathrooms: { type: integer, required: true }
+    car_spaces: { type: integer, required: true }
     created_at: ~
     updated_at: ~
 

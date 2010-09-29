@@ -26,7 +26,7 @@ class Listing extends BaseListing {
         // if this is the first save attach the user id, and the listing status
         if ($this->isNew()) {
            
-                
+                // set the listing to the logged in user
                 $this->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
 
                 // make the listing unpaid by default so the user has to pay to get it shown

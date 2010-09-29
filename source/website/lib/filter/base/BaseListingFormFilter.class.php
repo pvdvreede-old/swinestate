@@ -21,9 +21,9 @@ abstract class BaseListingFormFilter extends BaseFormFilterPropel
       'rent_details_id'   => new sfWidgetFormPropelChoice(array('model' => 'RentDetails', 'add_empty' => true)),
       'name'              => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'description'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'bedrooms'          => new sfWidgetFormFilterInput(),
-      'bathrooms'         => new sfWidgetFormFilterInput(),
-      'car_spaces'        => new sfWidgetFormFilterInput(),
+      'bedrooms'          => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'bathrooms'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'car_spaces'        => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'created_at'        => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'updated_at'        => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
     ));
