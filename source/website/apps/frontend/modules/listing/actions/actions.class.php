@@ -18,9 +18,7 @@ class listingActions extends sfActions {
     public function executeIndex(sfWebRequest $request) {
 
         $c = new Criteria();
-
         $c->add(ListingPeer::USER_ID, $this->getUser()->getGuardUser()->getId());
-
         $c->addDescendingOrderByColumn(ListingPeer::UPDATED_AT);
 
         $this->pager = new sfPropelPager(
@@ -29,6 +27,7 @@ class listingActions extends sfActions {
         );
         $this->pager->setCriteria($c);
         $this->pager->setPage($request->getParameter('page', 1));
+        $this->pager->setPeerMethod('doSelectJoinAllExceptsfGuardUser');
         $this->pager->init();
         $this->page_url = 'listing/index';
         $this->show_results = true;
