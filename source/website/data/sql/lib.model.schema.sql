@@ -259,7 +259,7 @@ CREATE TABLE `user_profile`
 	`user_id` INTEGER  NOT NULL,
 	`first_name` VARCHAR(50),
 	`last_name` VARCHAR(50),
-	`email_address` VARCHAR(355)  NOT NULL,
+	`email_address` VARCHAR(255)  NOT NULL,
 	`phone_number` VARCHAR(20),
 	`created_at` DATETIME,
 	`updated_at` DATETIME,

@@ -40,15 +40,24 @@ class SearchForm extends sfForm {
             )),
             'bathrooms' => new sfWidgetFormChoice(array(
                 'choices' => self::$bathroom_choices
-            ))
+            )),
+            'min_price' => new sfWidgetFormInputText(),
+            'max_price' => new sfWidgetFormInputText()
         ));
 
         $this->setValidators(array(
             'suburb' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
             'property_type' => new sfValidatorPropelChoice(array('model' => 'PropertyType', 'column' => 'id', 'required' => false, 'multiple' => 'true')),
             'bedrooms' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false)),
-            'bathrooms' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false))         
+            'bathrooms' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false)),
+            'min_price' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false)),
+            'max_price' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false))
         ));
+
+        // check that the user types in a max price that is greater than the min if they are both there
+        $this->validatorSchema->setPostValidator(
+                new sfValidatorSchemaCompare('max_price', '>=', 'min_price', array(), array())
+        );
 
         $this->widgetSchema->setNameFormat('search[%s]');
 

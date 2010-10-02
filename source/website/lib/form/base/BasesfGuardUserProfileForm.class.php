@@ -29,7 +29,7 @@ abstract class BasesfGuardUserProfileForm extends BaseFormPropel
       'user_id'       => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id')),
       'first_name'    => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'last_name'     => new sfValidatorString(array('max_length' => 50, 'required' => false)),
-      'email_address' => new sfValidatorString(array('max_length' => 355)),
+      'email_address' => new sfValidatorString(array('max_length' => 255)),
       'phone_number'  => new sfValidatorString(array('max_length' => 20, 'required' => false)),
       'created_at'    => new sfValidatorDateTime(array('required' => false)),
       'updated_at'    => new sfValidatorDateTime(array('required' => false)),

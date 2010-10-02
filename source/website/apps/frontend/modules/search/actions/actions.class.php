@@ -83,6 +83,40 @@ class searchActions extends sfActions {
                     $c->add(ListingPeer::PROPERTY_TYPE_ID, $values['property_type'], Criteria::IN);
                 }
 
+                if (isset($values['min_price'])) {
+
+                    // need to check whether its a sale or rent search for which table to check
+                    if ($this->listing_type == 'Sale') {
+
+                        $c->addJoin(ListingPeer::SALE_DETAILS_ID, SaleDetailsPeer::ID);
+                        $c->add(SaleDetailsPeer::ASKING_PRICE, $values['min_price'], Criteria::GREATER_EQUAL);
+
+                    } elseif ($this->listing_type == 'Rent') {
+
+                        $c->addJoin(ListingPeer::RENT_DETAILS_ID, RentDetailsPeer::ID);
+                        $c->add(RentDetailsPeer::AMOUNT_MONTH_PRICE, $values['min_price'], Criteria::GREATER_EQUAL);
+
+                    }
+
+                }
+
+                if (isset($values['max_price'])) {
+
+                    // need to check whether its a sale or rent search for which table to check
+                    if ($this->listing_type == 'Sale') {
+
+                        $c->addJoin(ListingPeer::SALE_DETAILS_ID, SaleDetailsPeer::ID);
+                        $c->add(SaleDetailsPeer::ASKING_PRICE, $values['max_price'], Criteria::LESS_EQUAL);
+
+                    } elseif ($this->listing_type == 'Rent') {
+
+                        $c->addJoin(ListingPeer::RENT_DETAILS_ID, RentDetailsPeer::ID);
+                        $c->add(RentDetailsPeer::AMOUNT_MONTH_PRICE, $values['max_price'], Criteria::LESS_EQUAL);
+
+                    }
+
+                }
+
                 $this->pager = new sfPropelPager(
                                 'Listing',
                                 sfConfig::get('app_search_items_on_page')
