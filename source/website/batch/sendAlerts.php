@@ -15,9 +15,9 @@ define('SF_DEBUG', true);
 require_once(dirname(__FILE__) . '/../config/ProjectConfiguration.class.php');
 
 $configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'dev', true);
-sfContext::createInstance($configuration);//->dispatch();
+sfContext::createInstance($configuration); //->dispatch();
 
-sfContext::getInstance();
+$instance = sfContext::getInstance();
 
 // get all the listings that are available for view from today
 $c = new Criteria();
@@ -28,11 +28,16 @@ $c->addJoin(ListingPeer::ID, ListingTimePeer::LISTING_ID);
 $c->add(ListingTimePeer::START_DATE, time(), Criteria::LESS_THAN);
 $c->add(ListingTimePeer::PAYMENT_STATUS, 'Paid');
 
+// only get listings that havent been alerted
+$c->add(ListingPeer::ALERT_ACTIVATED, false);
+
 $listings = ListingPeer::doSelect($c);
 
 if (!empty($listings)) {
 
-// for each new listing do a query to see if any alerts match them
+    print_r($listings);
+
+    // for each new listing do a query to see if any alerts match them
     foreach ($listings as $listing) {
 
         $c = new Criteria();
@@ -43,14 +48,16 @@ if (!empty($listings)) {
 
         $c->add(AlertPeer::CAR_SPACES, $listing->getCarSpaces());
 
+        // add in the post code with an or for being empty
+
         // make sure to only get the active alerts!!!
         $c->add(AlertPeer::ACTIVE, true);
 
         $alerts = AlertPeer::doSelect($c);
 
         // if there is a match then loop through all the matching alerts
-        if (!$alerts) {
-
+        if (!empty($alerts)) {
+            print_r($alerts);
             // for each alert get the user
             foreach ($alerts as $alert) {
 
@@ -64,8 +71,14 @@ if (!empty($listings)) {
                                 ->setSubject(sfConfig::get('app_app_name') . ' - Listing Alert Activated')
                                 ->setBody(include('alertEmail.php'));
 
-                $this->getMailer()->send($email);
+                try {
 
+                    $instance->getMailer()->send($email);
+                    
+                } catch (Swift_TransportException $ex) {
+
+                    echo 'Error when sending email';
+                }
                 // mark that alert as having been activated
                 $alert->setAmountAlerted($alert->getAmountAlerted() + 1);
 
@@ -73,6 +86,9 @@ if (!empty($listings)) {
                 $alert->save();
             }
         }
+
+        // set the listing as having been alerted so it isnt alerted the next time
+        $listing->setAlertActivated(1);
     }
 }
 ?>

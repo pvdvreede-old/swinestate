@@ -31,11 +31,10 @@ dev:
     transport:
       class: Swift_SmtpTransport
       param:
-        host:       smtp.gmail.com
-        port:       465
-        encryption: ssl
-        username:   pvdvreede@gmail.com
-        password:   y6D3qrUZN
+        host:       mail.vdvreede.net
+        port:       25
+        username:   general@vdvreede.com
+        password:   paulrocks
     param:
       delivery_strategy: none
 

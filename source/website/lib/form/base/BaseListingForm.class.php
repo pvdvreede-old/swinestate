@@ -27,6 +27,7 @@ abstract class BaseListingForm extends BaseFormPropel
       'bedrooms'          => new sfWidgetFormInputText(),
       'bathrooms'         => new sfWidgetFormInputText(),
       'car_spaces'        => new sfWidgetFormInputText(),
+      'alert_activated'   => new sfWidgetFormInputCheckbox(),
       'created_at'        => new sfWidgetFormDateTime(),
       'updated_at'        => new sfWidgetFormDateTime(),
     ));
@@ -45,6 +46,7 @@ abstract class BaseListingForm extends BaseFormPropel
       'bedrooms'          => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647)),
       'bathrooms'         => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647)),
       'car_spaces'        => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647)),
+      'alert_activated'   => new sfValidatorBoolean(array('required' => false)),
       'created_at'        => new sfValidatorDateTime(array('required' => false)),
       'updated_at'        => new sfValidatorDateTime(array('required' => false)),
     ));

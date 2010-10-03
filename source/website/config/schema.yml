@@ -13,6 +13,7 @@ propel:
     bedrooms: { type: integer, required: true }
     bathrooms: { type: integer, required: true }
     car_spaces: { type: integer, required: true }
+    alert_activated: { type: boolean, default: false }
     created_at: ~
     updated_at: ~
 

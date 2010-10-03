@@ -10,7 +10,6 @@ $sf_response->addJavascript('http://maps.google.com/maps/api/js?sensor=false');
 $sf_response->addJavascript('gmapaddress');
 ?>
 
-<p><a href="<?php echo url_for('search/sale') . '?' . $sf_user->getFlash('last_url'); ?>">Back to search results</a></p>
 <div class="single_listing">
     <h2 class="title"><?php echo $Listing->getName(); ?></h2>
     <p class="rooms">ba: <?php echo $Listing->getBathrooms(); ?> be: <?php echo $Listing->getBedrooms(); ?> ca: <?php echo $Listing->getCarSpaces(); ?></p>

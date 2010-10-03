@@ -25,6 +25,7 @@ CREATE TABLE `listing`
 	`bedrooms` INTEGER  NOT NULL,
 	`bathrooms` INTEGER  NOT NULL,
 	`car_spaces` INTEGER  NOT NULL,
+	`alert_activated` TINYINT default 0,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	PRIMARY KEY (`id`),

@@ -24,6 +24,7 @@ abstract class BaseListingFormFilter extends BaseFormFilterPropel
       'bedrooms'          => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'bathrooms'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'car_spaces'        => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'alert_activated'   => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'created_at'        => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'updated_at'        => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
     ));
@@ -41,6 +42,7 @@ abstract class BaseListingFormFilter extends BaseFormFilterPropel
       'bedrooms'          => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'bathrooms'         => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'car_spaces'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'alert_activated'   => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'created_at'        => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'updated_at'        => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
     ));
@@ -73,6 +75,7 @@ abstract class BaseListingFormFilter extends BaseFormFilterPropel
       'bedrooms'          => 'Number',
       'bathrooms'         => 'Number',
       'car_spaces'        => 'Number',
+      'alert_activated'   => 'Boolean',
       'created_at'        => 'Date',
       'updated_at'        => 'Date',
     );

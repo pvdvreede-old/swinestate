@@ -98,6 +98,20 @@ class Listing extends BaseListing {
 
     }
 
+    public function getListingTypeName() {
+
+        if ($this->getRentDetailsId() == null) {
+
+            return 'sale';
+
+        } else {
+
+            return 'rent';
+
+        }
+
+    }
+
 }
 
 // Listing

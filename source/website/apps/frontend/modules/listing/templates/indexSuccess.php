@@ -31,6 +31,7 @@
       <th>View status</th>
       <th>Payment history</th>
       <th>Interests</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -44,6 +45,7 @@
       <td><?php echo html_entity_decode($Listing->getViewStatus()); ?></td>
       <td><?php echo ($Listing->getPaymentHistory() ? link_to('Click here', 'payment/index?id='.$Listing->getId()) : 'None'); ?></td>
       <td><?php echo ($Listing->getInterestsCount() > 0 ? link_to($Listing->getInterestsCount(), 'interest/index?id='.$Listing->getId()) : $Listing->getInterestsCount()); ?></td>
+      <td><?php echo link_to('Preview', $Listing->getListingTypeName().'/show?id='.$Listing->getId()); ?></td>
     </tr>
     <?php endforeach; ?>
   </tbody>
