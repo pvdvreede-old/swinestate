@@ -18,8 +18,10 @@ $sf_response->addJavascript('gmapaddress');
         <p><img data-magnifysrc="<?php echo $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/' . $photos[0]->getPath(); ?>" id="photo_main" src="<?php echo $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/med/' . $photos[0]->getPath(); ?>" /></p>
         <p class="listing_photos11">
         <?php foreach ($Listing->getListingPhotoss() as $photo) : ?>
+		<?php if ($photo->getPath() != '') : ?>
         <?php echo '<img src="' . $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/thumb/' . $photo->getPath() . '" onclick="changePhoto(\'' . $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/med/' . $photo->getPath() . '\',\'' . $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/' . $photo->getPath() . '\');" />' ?>
-        <?php endforeach; ?>
+        <?php endif; ?>
+		<?php endforeach; ?>
         </p>
     <?php endif; ?>
             <p>
