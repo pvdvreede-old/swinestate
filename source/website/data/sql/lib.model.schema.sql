@@ -283,7 +283,7 @@ DROP TABLE IF EXISTS `sale_details`;
 CREATE TABLE `sale_details`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`asking_price` FLOAT,
+	`asking_price` FLOAT  NOT NULL,
 	`actual_price` FLOAT,
 	`auction_date` DATETIME,
 	`created_at` DATETIME,
@@ -302,7 +302,7 @@ CREATE TABLE `rent_details`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`lease_period_until` DATETIME,
-	`amount_month_price` FLOAT,
+	`amount_month_price` FLOAT  NOT NULL,
 	`renting_date` DATETIME,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,

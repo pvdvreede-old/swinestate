@@ -17,21 +17,20 @@
  */
 class Listing extends BaseListing {
 
-    public function  __toString() {
-        return $this->getName().' - '.$this->getAddress();
+    public function __toString() {
+        return $this->getName() . ' - ' . $this->getAddress();
     }
 
     public function save(PropelPDO $con = null) {
 
         // if this is the first save attach the user id, and the listing status
         if ($this->isNew()) {
-           
-                // set the listing to the logged in user
-                $this->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
 
-                // make the listing unpaid by default so the user has to pay to get it shown
-                $this->setListingStatusId(ListingStatusPeer::getIdFromName('Available'));
+            // set the listing to the logged in user
+            $this->setUserId(sfContext::getInstance()->getUser()->getGuardUser()->getId());
 
+            // make the listing unpaid by default so the user has to pay to get it shown
+            $this->setListingStatusId(ListingStatusPeer::getIdFromName('Available'));
         }
 
         // call the parent to save
@@ -50,16 +49,15 @@ class Listing extends BaseListing {
             // create the new string and append '...' so people know it is continued
             $new_desc = substr($this->getDescription(), 0, $space_limit);
 
-            return $new_desc.'...';
+            return $new_desc . '...';
         }
 
         // if false then the whole thing is less than 30 words, so return the whole thing
         return $this->getDescription();
-
     }
-	
-	// function to return and print to the webpage the status of the listing and let the user pay to have it shown
-	// if it isnt already active
+
+    // function to return and print to the webpage the status of the listing and let the user pay to have it shown
+    // if it isnt already active
     public function getViewStatus() {
 
         if ($this->getListingStatus()->getName() == 'Sold') {
@@ -75,11 +73,11 @@ class Listing extends BaseListing {
         if (count($times) > 0) {
             return 'Active';
         } else {
-            return link_to('Click to make active', 'payment/new?id='.$this->getId());
+            return link_to('Click to make active', 'payment/new?id=' . $this->getId());
         }
     }
-	
-	// simple function to tell the view if there is any payment history for the listing
+
+    // simple function to tell the view if there is any payment history for the listing
     public function getPaymentHistory() {
 
         if (count($this->getListingTimes()) > 0) {
@@ -87,7 +85,6 @@ class Listing extends BaseListing {
         } else {
             return false;
         }
-
     }
 
     public function getInterestsCount() {
@@ -98,7 +95,6 @@ class Listing extends BaseListing {
         $c->add(InterestPeer::LISTING_ID, $this->getId());
 
         return InterestPeer::doCount($c);
-
     }
 
     public function getListingTypeName() {
@@ -106,29 +102,32 @@ class Listing extends BaseListing {
         if ($this->getRentDetailsId() == null) {
 
             return 'sale';
-
         } else {
 
             return 'rent';
+        }
+    }
+
+    // function to check security and see if the user should be able to view this listing
+    public function canView() {
+
+        if (sfContext::getInstance()->getUser()->isAuthenticated()) {
+
+            // if its the user's own listing then they can always view it
+            // if its not then we need to make sure there is a payment for the view that is current for today
+            if ($this->getUserId() == sfContext::getInstance()->getUser()->getGuardUser()->getId() || ListingTimePeer::isCurrentListing($this->getId())) {
+
+                return true;
+            }
+
+        } elseif (ListingTimePeer::isCurrentListing($this->getId())) {
+
+            return true;
 
         }
 
+        return false;
     }
-	
-	// function to check security and see if the user should be able to view this listing
-	public function canView() {
-	
-		// if its the user's own listing then they can always view it
-		// if its not then we need to make sure there is a payment for the view that is current for today
-		if ($this->getUserId() == sfContext::getInstance()->getUser()->getGuardUser()->getId() || ListingTimePeer::isCurrentListing($this->getId())) {
-		
-			return true;
-
-		} 
-		
-		return false;
-	
-	}
 
 }
 

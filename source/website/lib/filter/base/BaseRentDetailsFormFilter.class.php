@@ -13,7 +13,7 @@ abstract class BaseRentDetailsFormFilter extends BaseFormFilterPropel
   {
     $this->setWidgets(array(
       'lease_period_until' => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
-      'amount_month_price' => new sfWidgetFormFilterInput(),
+      'amount_month_price' => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'renting_date'       => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'created_at'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'updated_at'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),

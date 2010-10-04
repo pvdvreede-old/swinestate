@@ -15,13 +15,15 @@ $sf_response->addJavascript('gmapaddress');
     <p class="rooms">ba: <?php echo $Listing->getBathrooms(); ?> be: <?php echo $Listing->getBedrooms(); ?> ca: <?php echo $Listing->getCarSpaces(); ?></p>
     <p class="address"><?php echo $Listing->getAddress(); ?></p>
     <?php if (count($photos = $Listing->getListingPhotoss()) > 0) : ?>
+        <?php if ($photos[0]->getPath() != '') : ?>
         <p><img data-magnifysrc="<?php echo $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/' . $photos[0]->getPath(); ?>" id="photo_main" src="<?php echo $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/med/' . $photos[0]->getPath(); ?>" /></p>
         <p class="listing_photos11">
+        <?php endif; ?>
         <?php foreach ($Listing->getListingPhotoss() as $photo) : ?>
-		<?php if ($photo->getPath() != '') : ?>
+	<?php if ($photo->getPath() != '') : ?>
         <?php echo '<img src="' . $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/thumb/' . $photo->getPath() . '" onclick="changePhoto(\'' . $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/med/' . $photo->getPath() . '\',\'' . $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/' . $photo->getPath() . '\');" />' ?>
         <?php endif; ?>
-		<?php endforeach; ?>
+	<?php endforeach; ?>
         </p>
     <?php endif; ?>
             <p>

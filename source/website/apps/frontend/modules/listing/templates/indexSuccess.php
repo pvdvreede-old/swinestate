@@ -4,11 +4,11 @@
 
   <a href="<?php echo url_for('sale/new') ?>">New Sale Listing</a> |
 
-  <a href="<?php echo url_for('rent/new') ?>">New Rental Listing</a> |
+  <a href="<?php echo url_for('rent/new') ?>">New Rental Listing</a>
 
-  <?php echo link_to('See all listing payments', 'payment/index'); ?> |
+  <?php if (ListingTimePeer::hasPayments()) { echo ' | '.link_to('See all listing payments', 'payment/index'); } ?>
 
-  <?php echo link_to('See all listing interests', 'interest/index'); ?>
+  <?php if (InterestPeer::hasInterests()) { echo ' | '.link_to('See all interests', 'interest/index'); } ?>
 
   <?php echo (ListingTimePeer::getPendingPaymentCount() > 0 ? '| '.link_to('You have '.ListingTimePeer::getPendingPaymentCount().' payment(s) pending', 'listing/index') : '') ?>
 

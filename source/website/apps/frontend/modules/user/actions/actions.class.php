@@ -55,8 +55,6 @@ class userActions extends sfActions {
         $this->setTemplate('edit');
     }
 
-
-
     protected function processForm(sfWebRequest $request, sfForm $form) {
 
         $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
@@ -67,16 +65,20 @@ class userActions extends sfActions {
 
             $this->getUser()->signin($user, false);
 
-            // send an email to the user with their registration details
-            $email = Swift_Message::newInstance()->setContentType('text/html')
-                            ->setFrom(sfConfig::get('app_from_email'))
-                            ->setTo($this->getUser()->getProfile()->getEmailAddress())
-                            ->setSubject(sfConfig::get('app_app_name') . ' - Registration details')
-                            ->setBody($this->getPartial('profile', array(
-                                        'sf_user' => $this->getUser()
-                                    )));
+            // only send an email if its a new user
+            if ($user->isNew()) {
 
-            $this->getMailer()->send($email);
+                // send an email to the user with their registration details
+                $email = Swift_Message::newInstance()->setContentType('text/html')
+                                ->setFrom(sfConfig::get('app_from_email'))
+                                ->setTo($this->getUser()->getProfile()->getEmailAddress())
+                                ->setSubject(sfConfig::get('app_app_name') . ' - Registration details')
+                                ->setBody($this->getPartial('profile', array(
+                                            'sf_user' => $this->getUser()
+                                        )));
+
+                $this->getMailer()->send($email);
+            }
 
             $this->redirect('user/show');
         }

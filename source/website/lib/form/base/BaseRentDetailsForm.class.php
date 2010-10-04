@@ -25,7 +25,7 @@ abstract class BaseRentDetailsForm extends BaseFormPropel
     $this->setValidators(array(
       'id'                 => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
       'lease_period_until' => new sfValidatorDateTime(array('required' => false)),
-      'amount_month_price' => new sfValidatorNumber(array('required' => false)),
+      'amount_month_price' => new sfValidatorNumber(),
       'renting_date'       => new sfValidatorDateTime(array('required' => false)),
       'created_at'         => new sfValidatorDateTime(array('required' => false)),
       'updated_at'         => new sfValidatorDateTime(array('required' => false)),

@@ -4,7 +4,7 @@ generator:
     model_class:           Listing
     theme:                 admin
     non_verbose_templates: true
-    with_show:             false
+    with_show:             true
     singular:              Listing
     plural:                Listings
     route_prefix:          listing

@@ -24,7 +24,7 @@ abstract class BaseSaleDetailsForm extends BaseFormPropel
 
     $this->setValidators(array(
       'id'           => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
-      'asking_price' => new sfValidatorNumber(array('required' => false)),
+      'asking_price' => new sfValidatorNumber(),
       'actual_price' => new sfValidatorNumber(array('required' => false)),
       'auction_date' => new sfValidatorDateTime(array('required' => false)),
       'created_at'   => new sfValidatorDateTime(array('required' => false)),

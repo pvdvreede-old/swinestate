@@ -18,4 +18,23 @@
  */
 class InterestPeer extends BaseInterestPeer {
 
+    // function to check if a user has any interests
+    public static function hasInterests() {
+
+        $c = new Criteria();
+
+        $c->add(InterestPeer::USER_ID, sfContext::getInstance()->getUser()->getGuardUser()->getId());
+
+        $count = InterestPeer::doCount($c);
+
+        if ($count > 0) {
+
+            return true;
+
+        }
+
+        return false;
+
+    }
+
 } // InterestPeer

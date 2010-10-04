@@ -102,7 +102,7 @@ propel:
 
   sale_details:
     id: ~
-    asking_price: { type: float }
+    asking_price: { type: float, required: true }
     actual_price: { type: float }
     auction_date: timestamp
     created_at: ~
@@ -111,7 +111,7 @@ propel:
   rent_details:
     id: ~
     lease_period_until: timestamp
-    amount_month_price: { type: float }
+    amount_month_price: { type: float, required: true }
     renting_date: timestamp
     created_at: ~
     updated_at: ~

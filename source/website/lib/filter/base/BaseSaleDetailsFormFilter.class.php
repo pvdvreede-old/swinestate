@@ -12,7 +12,7 @@ abstract class BaseSaleDetailsFormFilter extends BaseFormFilterPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'asking_price' => new sfWidgetFormFilterInput(),
+      'asking_price' => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'actual_price' => new sfWidgetFormFilterInput(),
       'auction_date' => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'created_at'   => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),

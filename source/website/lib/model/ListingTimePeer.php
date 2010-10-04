@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Skeleton subclass for performing query and update operations on the 'listing_time' table.
  *
@@ -18,40 +17,57 @@
  */
 class ListingTimePeer extends BaseListingTimePeer {
 
-        public static function getPendingPaymentCount() {
+    public static function getPendingPaymentCount() {
 
-            // get a count of any payments that are still 'pending'
-            $c = new Criteria();
+        // get a count of any payments that are still 'pending'
+        $c = new Criteria();
 
-            $c->add(ListingTimePeer::USER_ID, sfContext::getInstance()->getUser()->getGuardUser()->getId());
-            $c->add(ListingTimePeer::PAYMENT_STATUS, 'Pending');
+        $c->add(ListingTimePeer::USER_ID, sfContext::getInstance()->getUser()->getGuardUser()->getId());
+        $c->add(ListingTimePeer::PAYMENT_STATUS, 'Pending');
 
-            return self::doCount($c);
+        return self::doCount($c);
+    }
 
+    // function to determine if there is a current view
+    public static function isCurrentListing($listing_id) {
+
+        $c = new Criteria();
+
+        $c->add(ListingTimePeer::LISTING_ID, $listing_id);
+        $c->add(ListingTimePeer::START_DATE, time(), Criteria::LESS_THAN);
+        $c->add(ListingTimePeer::END_DATE, time(), Criteria::GREATER_THAN);
+        $c->add(ListingTimePeer::PAYMENT_STATUS, 'Paid');
+
+        $count = ListingTimePeer::doCount($c);
+
+        // if there is a record then there is a payment
+        if ($count > 0) {
+
+            return true;
         }
-		
-		// function to determine if there is a current view
-		public static function isCurrentListing($listing_id) {
-		
-			$c = new Criteria();
-			
-			$c->add(ListingTimePeer::LISTING_ID, $listing_id);
-			$c->add(ListingTimePeer::START_DATE, time(), Criteria::LESS_THAN);
-			$c->add(ListingTimePeer::END_DATE, time(), Criteria::GREATER_THAN);
-			$c->add(ListingTimePeer::PAYMENT_STATUS, 'Paid');
-			
-			$count = ListingTimePeer::doCount($c);
-			
-			// if there is a record then there is a payment
-			if ($count > 0) {
-			
-				return true;
-			
-			} 
-			
-			return false;
-		
-		}
 
+        return false;
+    }
+    
+    // function to see if the user has any payments
+    public static function hasPayments() {
+        
+        $c = new Criteria();
+        
+        $c->add(ListingTimePeer::USER_ID, sfContext::getInstance()->getUser()->getGuardUser()->getId());
+        $c->add(ListingTimePeer::PAYMENT_STATUS, 'Paid');
+        
+        $count = ListingTimePeer::doCount($c);
+        
+        if ($count > 0) {
+            
+            return true;
+            
+        }
+        
+        return false;
+    }
 
-} // ListingTimePeer
+}
+
+// ListingTimePeer
