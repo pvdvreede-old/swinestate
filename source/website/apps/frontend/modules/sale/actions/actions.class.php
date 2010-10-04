@@ -24,6 +24,7 @@ class saleActions extends sfActions {
     public function executeShow(sfWebRequest $request) {
         $this->Listing = ListingPeer::retrieveByPk($request->getParameter('id'));
         $this->forward404Unless($this->Listing);
+		$this->forward404Unless($this->Listing->canView());
     }
 
     public function executeNew(sfWebRequest $request) {

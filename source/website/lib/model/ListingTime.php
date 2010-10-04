@@ -67,8 +67,6 @@ class ListingTime extends BaseListingTime {
 
     }
 
-
-
     public function getPaidTotalFromDays() {
 
         // get the total amount due from the difference in days

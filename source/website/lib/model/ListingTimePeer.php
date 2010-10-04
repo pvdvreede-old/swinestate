@@ -29,6 +29,29 @@ class ListingTimePeer extends BaseListingTimePeer {
             return self::doCount($c);
 
         }
+		
+		// function to determine if there is a current view
+		public static function isCurrentListing($listing_id) {
+		
+			$c = new Criteria();
+			
+			$c->add(ListingTimePeer::LISTING_ID, $listing_id);
+			$c->add(ListingTimePeer::START_DATE, time(), Criteria::LESS_THAN);
+			$c->add(ListingTimePeer::END_DATE, time(), Criteria::GREATER_THAN);
+			$c->add(ListingTimePeer::PAYMENT_STATUS, 'Paid');
+			
+			$count = ListingTimePeer::doCount($c);
+			
+			// if there is a record then there is a payment
+			if ($count > 0) {
+			
+				return true;
+			
+			} 
+			
+			return false;
+		
+		}
 
 
 } // ListingTimePeer

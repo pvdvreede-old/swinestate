@@ -57,7 +57,9 @@ class Listing extends BaseListing {
         return $this->getDescription();
 
     }
-
+	
+	// function to return and print to the webpage the status of the listing and let the user pay to have it shown
+	// if it isnt already active
     public function getViewStatus() {
 
         if ($this->getListingStatus()->getName() == 'Sold') {
@@ -76,7 +78,8 @@ class Listing extends BaseListing {
             return link_to('Click to make active', 'payment/new?id='.$this->getId());
         }
     }
-
+	
+	// simple function to tell the view if there is any payment history for the listing
     public function getPaymentHistory() {
 
         if (count($this->getListingTimes()) > 0) {
@@ -111,6 +114,21 @@ class Listing extends BaseListing {
         }
 
     }
+	
+	// function to check security and see if the user should be able to view this listing
+	public function canView() {
+	
+		// if its the user's own listing then they can always view it
+		// if its not then we need to make sure there is a payment for the view that is current for today
+		if ($this->getUserId() == sfContext::getInstance()->getUser()->getGuardUser()->getId() || ListingTimePeer::isCurrentListing($this->getId())) {
+		
+			return true;
+
+		} 
+		
+		return false;
+	
+	}
 
 }
 
