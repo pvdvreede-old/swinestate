@@ -36,40 +36,54 @@ class PaymentForm extends sfForm {
                 'model' => 'ListingTime',
                 'column' => 'id',
                 'criteria' => $listing_id_criteria
+            ), array(
+                'invalid' => 'The payment has already been processed.'
             ))
         ));
 
         $this->validatorSchema->setPostValidator(
-                new sfValidatorSchemaCompare('paypal_password', '==', 'paypal_password_again')
-                );
+                new sfValidatorSchemaCompare('paypal_password', '==', 'paypal_password_again', array(
+                    'left_field' => 'The passwords do not match',
+                    'right_field' => 'The passwords do not match'
+                ))
+        );
 
         $this->widgetSchema->setNameFormat('payment[%s]');
     }
 
     public function save(PropelPDO $con = null) {
 
-        // get the lising time row to confirm that payment against
-        $c = new Criteria();
+        $fail = false;
 
-        $c->add(ListingTimePeer::ID, $this->values['listing_time_id']);
+        // wrap in try catch for transaction
+        try {
+            // get the lising time row to confirm that payment against
+            $c = new Criteria();
 
-        $payment = ListingTimePeer::doSelectOne($c);
+            $c->add(ListingTimePeer::ID, $this->values['listing_time_id']);
 
-        // set the payment status to paid and save the object to the DB
-        $payment->setPaymentStatus('Paid');
+            $payment = ListingTimePeer::doSelectOne($c);
 
-        // save the date of the payment
-        $payment->setPaymentDate(time());
+            // set the payment status to paid and save the object to the DB
+            $payment->setPaymentStatus('Paid');
 
-        // save the paypal account name for auditing of suspicious behaviour
-        $payment->setPayerAccountName($this->values['paypal_name']);
+            // save the date of the payment
+            $payment->setPaymentDate(time());
 
-        // seralise the values to the db
-        $payment->save();
+            // save the paypal account name for auditing of suspicious behaviour
+            $payment->setPayerAccountName($this->values['paypal_name']);
+        } catch (Exception $ex) {
+            $fail = true;
+            
+            throw $ex;
+        }
+
+        if (!$fail) {
+            // seralise the values to the db
+            $payment->save();
+        }
 
         return $payment;
     }
-
-  
 
 }

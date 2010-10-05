@@ -22,17 +22,17 @@ class ListingTime extends BaseListingTime {
 
         // make sure that there is not another entry in the table which include part or all
         // the same date
-        $c = new Criteria();
-        
-        $c->add(ListingTimePeer::START_DATE, $this->getStartDate(), Criteria::LESS_EQUAL);
-        $c->add(ListingTimePeer::END_DATE, $this->getEndDate(), Criteria::GREATER_EQUAL);
-        $c->add(ListingTimePeer::LISTING_ID, $this->getListingId());
-        $c->add(ListingTimePeer::PAYMENT_STATUS, 'Paid');
-
-        if (ListingTimePeer::doCount($c) > 0) {
-            //return null;
-            throw new sfException('There is already a payment entry with those dates for this listing.', 500);
-        }
+//        $c = new Criteria();
+//
+//        $c->add(ListingTimePeer::START_DATE, $this->getStartDate(), Criteria::LESS_EQUAL);
+//        $c->add(ListingTimePeer::END_DATE, $this->getEndDate(), Criteria::GREATER_EQUAL);
+//        $c->add(ListingTimePeer::LISTING_ID, $this->getListingId());
+//        $c->add(ListingTimePeer::PAYMENT_STATUS, 'Paid');
+//
+//        if (ListingTimePeer::doCount($c) > 0) {
+//            //return null;
+//            throw new sfException('There is already a payment entry with those dates for this listing.', 500);
+//        }
 
         // if this is the first save attach the user id, and the listing status
         if ($this->isNew()) {

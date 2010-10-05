@@ -56,7 +56,7 @@ class SearchForm extends sfForm {
 
         // check that the user types in a max price that is greater than the min if they are both there
         $this->validatorSchema->setPostValidator(
-                new sfValidatorSchemaCompare('max_price', '>=', 'min_price', array(), array())
+                new MinMaxValidatorSchema('min_price', 'max_price', array(), array())
         );
 
         $this->widgetSchema->setNameFormat('search[%s]');

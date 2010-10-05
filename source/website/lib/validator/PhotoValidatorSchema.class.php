@@ -42,9 +42,6 @@ class PhotoValidatorSchema extends sfValidatorSchema {
             }
         }
 
-        $values['photos_3']['caption'] = 'testing shit';
-        sfContext::getInstance()->getLogger()->info($values['photos_3']['caption']);
-        
         // throws the error for the main form
         if (count($errorSchema)) {
             throw new sfValidatorErrorSchema($this, $errorSchema);

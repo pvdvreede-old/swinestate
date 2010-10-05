@@ -7,42 +7,54 @@
 
 class MinMaxValidatorSchema extends sfValidatorSchema {
 
+    public function __construct($leftField, $rightField, $options = array(), $messages = array()) {
+        $this->addOption('left_field', $leftField);
+        $this->addOption('right_field', $rightField);
+
+        $this->addOption('throw_global_error', false);
+
+        parent::__construct(null, $options, $messages);
+    }
+
+    protected function configure($options = array(), $messages = array()) {
+        $this->addMessage('left_field', 'The min is not set properly');
+        $this->addMessage('right_field', 'The max is not set properly.');
+    }
+
     protected function doClean($values) {
-        $errorSchema = new sfValidatorErrorSchema($this);
 
-        foreach ($values as $key => $value) {
-            $errorSchemaLocal = new sfValidatorErrorSchema($this);
+        $errorSchemaLocal = new sfValidatorErrorSchema($this);
 
-            // filename is filled but no caption
-            if ($value['path'] && !$value['caption']) {
-                $errorSchemaLocal->addError(new sfValidatorError($this, 'required'), 'caption');
-            }
-
-            // caption is filled but no filename
-//            if ($value['caption'] && !$value['path'] && $this->) {
-//                $errorSchemaLocal->addError(new sfValidatorError($this, 'required'), 'filename');
-//            }
-
-            sfContext::getInstance()->getLogger()->info($value['path']);
-            sfContext::getInstance()->getLogger()->info($value['caption']);
-
-            // no caption and no filename, remove the empty values
-            if (!$value['path'] && !$value['caption']) {
-                unset($values[$key]);
-            }
-
-            // some error for this embedded-form
-            if (count($errorSchemaLocal)) {
-                $errorSchema->addError($errorSchemaLocal, (string) $key);
-            }
+        if (null === $values) {
+            $values = array();
         }
 
-        $values['photos_3']['caption'] = 'testing shit';
-        sfContext::getInstance()->getLogger()->info($values['photos_3']['caption']);
+        if (!is_array($values)) {
+            throw new InvalidArgumentException('You must pass an array parameter to the clean() method');
+        }
+
+        $leftValue = isset($values[$this->getOption('left_field')]) ? $values[$this->getOption('left_field')] : null;
+        $rightValue = isset($values[$this->getOption('right_field')]) ? $values[$this->getOption('right_field')] : null;
+
+
+        if ($leftValue != null || ($rightValue != null)) {
+
+            if ($rightValue != null && $leftValue > $rightValue) {
+
+                $errorSchemaLocal->addError(new sfValidatorError($this, 'The min price cannot be smaller than the max price'), 'left_field');
+
+            }
+
+        } else {
+
+            unset($values[$this->getOption('right_field')]);
+            unset($values[$this->getOption('left_field')]);
+
+        }
 
         // throws the error for the main form
-        if (count($errorSchema)) {
-            throw new sfValidatorErrorSchema($this, $errorSchema);
+        if (count($errorSchemaLocal)) {
+            throw new sfValidatorErrorSchema($this, $errorSchemaLocal);
         }
 
         return $values;

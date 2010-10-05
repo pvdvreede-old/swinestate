@@ -7,7 +7,7 @@ class ProjectConfiguration extends sfProjectConfiguration
 {
   public function setup()
   {
-
+    date_default_timezone_set('Australia/Melbourne');
     $this->enablePlugins('sfPropelPlugin');
     $this->enablePlugins('sfGuardPlugin');
     $this->enablePlugins('sfFormExtraPlugin');
