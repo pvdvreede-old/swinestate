@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Base class that represents a row from the 'interest' table.
+ * Base class that represents a row from the 'alert_property_type' table.
  *
  * 
  *
@@ -11,14 +11,14 @@
  *
  * @package    lib.model.om
  */
-abstract class BaseInterest extends BaseObject  implements Persistent {
+abstract class BaseAlertPropertyType extends BaseObject  implements Persistent {
 
 
 	/**
 	 * The Peer class.
 	 * Instance provides a convenient way of calling static methods on a class
 	 * that calling code may not be able to identify.
-	 * @var        InterestPeer
+	 * @var        AlertPropertyTypePeer
 	 */
 	protected static $peer;
 
@@ -29,51 +29,36 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 	protected $id;
 
 	/**
-	 * The value for the listing_id field.
+	 * The value for the alert_id field.
 	 * @var        int
 	 */
-	protected $listing_id;
+	protected $alert_id;
 
 	/**
-	 * The value for the user_id field.
+	 * The value for the property_type_id field.
 	 * @var        int
 	 */
-	protected $user_id;
+	protected $property_type_id;
 
 	/**
-	 * The value for the interest_status field.
-	 * Note: this column has a database default value of: 'Pending'
-	 * @var        string
+	 * @var        Alert
 	 */
-	protected $interest_status;
+	protected $aAlert;
 
 	/**
-	 * The value for the new_marker field.
-	 * @var        boolean
+	 * @var        PropertyType
 	 */
-	protected $new_marker;
+	protected $aPropertyType;
 
 	/**
-	 * The value for the created_at field.
-	 * @var        string
+	 * @var        array Alert[] Collection to store aggregation of Alert objects.
 	 */
-	protected $created_at;
+	protected $collAlerts;
 
 	/**
-	 * The value for the updated_at field.
-	 * @var        string
+	 * @var        Criteria The criteria used to select the current contents of collAlerts.
 	 */
-	protected $updated_at;
-
-	/**
-	 * @var        Listing
-	 */
-	protected $aListing;
-
-	/**
-	 * @var        sfGuardUser
-	 */
-	protected $asfGuardUser;
+	private $lastAlertCriteria = null;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -91,28 +76,7 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 
 	// symfony behavior
 	
-	const PEER = 'InterestPeer';
-
-	/**
-	 * Applies default values to this object.
-	 * This method should be called from the object's constructor (or
-	 * equivalent initialization method).
-	 * @see        __construct()
-	 */
-	public function applyDefaultValues()
-	{
-		$this->interest_status = 'Pending';
-	}
-
-	/**
-	 * Initializes internal state of BaseInterest object.
-	 * @see        applyDefaults()
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-		$this->applyDefaultValues();
-	}
+	const PEER = 'AlertPropertyTypePeer';
 
 	/**
 	 * Get the [id] column value.
@@ -125,126 +89,30 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [listing_id] column value.
+	 * Get the [alert_id] column value.
 	 * 
 	 * @return     int
 	 */
-	public function getListingId()
+	public function getAlertId()
 	{
-		return $this->listing_id;
+		return $this->alert_id;
 	}
 
 	/**
-	 * Get the [user_id] column value.
+	 * Get the [property_type_id] column value.
 	 * 
 	 * @return     int
 	 */
-	public function getUserId()
+	public function getPropertyTypeId()
 	{
-		return $this->user_id;
-	}
-
-	/**
-	 * Get the [interest_status] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getInterestStatus()
-	{
-		return $this->interest_status;
-	}
-
-	/**
-	 * Get the [new_marker] column value.
-	 * 
-	 * @return     boolean
-	 */
-	public function getNewMarker()
-	{
-		return $this->new_marker;
-	}
-
-	/**
-	 * Get the [optionally formatted] temporal [created_at] column value.
-	 * 
-	 *
-	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
-	 *							If format is NULL, then the raw DateTime object will be returned.
-	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
-	 * @throws     PropelException - if unable to parse/validate the date/time value.
-	 */
-	public function getCreatedAt($format = 'Y-m-d H:i:s')
-	{
-		if ($this->created_at === null) {
-			return null;
-		}
-
-
-		if ($this->created_at === '0000-00-00 00:00:00') {
-			// while technically this is not a default value of NULL,
-			// this seems to be closest in meaning.
-			return null;
-		} else {
-			try {
-				$dt = new DateTime($this->created_at);
-			} catch (Exception $x) {
-				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->created_at, true), $x);
-			}
-		}
-
-		if ($format === null) {
-			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
-			return $dt;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $dt->format('U'));
-		} else {
-			return $dt->format($format);
-		}
-	}
-
-	/**
-	 * Get the [optionally formatted] temporal [updated_at] column value.
-	 * 
-	 *
-	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
-	 *							If format is NULL, then the raw DateTime object will be returned.
-	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
-	 * @throws     PropelException - if unable to parse/validate the date/time value.
-	 */
-	public function getUpdatedAt($format = 'Y-m-d H:i:s')
-	{
-		if ($this->updated_at === null) {
-			return null;
-		}
-
-
-		if ($this->updated_at === '0000-00-00 00:00:00') {
-			// while technically this is not a default value of NULL,
-			// this seems to be closest in meaning.
-			return null;
-		} else {
-			try {
-				$dt = new DateTime($this->updated_at);
-			} catch (Exception $x) {
-				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->updated_at, true), $x);
-			}
-		}
-
-		if ($format === null) {
-			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
-			return $dt;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $dt->format('U'));
-		} else {
-			return $dt->format($format);
-		}
+		return $this->property_type_id;
 	}
 
 	/**
 	 * Set the value of [id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     Interest The current object (for fluent API support)
+	 * @return     AlertPropertyType The current object (for fluent API support)
 	 */
 	public function setId($v)
 	{
@@ -254,197 +122,59 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 
 		if ($this->id !== $v) {
 			$this->id = $v;
-			$this->modifiedColumns[] = InterestPeer::ID;
+			$this->modifiedColumns[] = AlertPropertyTypePeer::ID;
 		}
 
 		return $this;
 	} // setId()
 
 	/**
-	 * Set the value of [listing_id] column.
+	 * Set the value of [alert_id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     Interest The current object (for fluent API support)
+	 * @return     AlertPropertyType The current object (for fluent API support)
 	 */
-	public function setListingId($v)
+	public function setAlertId($v)
 	{
 		if ($v !== null) {
 			$v = (int) $v;
 		}
 
-		if ($this->listing_id !== $v) {
-			$this->listing_id = $v;
-			$this->modifiedColumns[] = InterestPeer::LISTING_ID;
+		if ($this->alert_id !== $v) {
+			$this->alert_id = $v;
+			$this->modifiedColumns[] = AlertPropertyTypePeer::ALERT_ID;
 		}
 
-		if ($this->aListing !== null && $this->aListing->getId() !== $v) {
-			$this->aListing = null;
+		if ($this->aAlert !== null && $this->aAlert->getId() !== $v) {
+			$this->aAlert = null;
 		}
 
 		return $this;
-	} // setListingId()
+	} // setAlertId()
 
 	/**
-	 * Set the value of [user_id] column.
+	 * Set the value of [property_type_id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     Interest The current object (for fluent API support)
+	 * @return     AlertPropertyType The current object (for fluent API support)
 	 */
-	public function setUserId($v)
+	public function setPropertyTypeId($v)
 	{
 		if ($v !== null) {
 			$v = (int) $v;
 		}
 
-		if ($this->user_id !== $v) {
-			$this->user_id = $v;
-			$this->modifiedColumns[] = InterestPeer::USER_ID;
+		if ($this->property_type_id !== $v) {
+			$this->property_type_id = $v;
+			$this->modifiedColumns[] = AlertPropertyTypePeer::PROPERTY_TYPE_ID;
 		}
 
-		if ($this->asfGuardUser !== null && $this->asfGuardUser->getId() !== $v) {
-			$this->asfGuardUser = null;
-		}
-
-		return $this;
-	} // setUserId()
-
-	/**
-	 * Set the value of [interest_status] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     Interest The current object (for fluent API support)
-	 */
-	public function setInterestStatus($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->interest_status !== $v || $this->isNew()) {
-			$this->interest_status = $v;
-			$this->modifiedColumns[] = InterestPeer::INTEREST_STATUS;
+		if ($this->aPropertyType !== null && $this->aPropertyType->getId() !== $v) {
+			$this->aPropertyType = null;
 		}
 
 		return $this;
-	} // setInterestStatus()
-
-	/**
-	 * Set the value of [new_marker] column.
-	 * 
-	 * @param      boolean $v new value
-	 * @return     Interest The current object (for fluent API support)
-	 */
-	public function setNewMarker($v)
-	{
-		if ($v !== null) {
-			$v = (boolean) $v;
-		}
-
-		if ($this->new_marker !== $v) {
-			$this->new_marker = $v;
-			$this->modifiedColumns[] = InterestPeer::NEW_MARKER;
-		}
-
-		return $this;
-	} // setNewMarker()
-
-	/**
-	 * Sets the value of [created_at] column to a normalized version of the date/time value specified.
-	 * 
-	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
-	 *						be treated as NULL for temporal objects.
-	 * @return     Interest The current object (for fluent API support)
-	 */
-	public function setCreatedAt($v)
-	{
-		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
-		// -- which is unexpected, to say the least.
-		if ($v === null || $v === '') {
-			$dt = null;
-		} elseif ($v instanceof DateTime) {
-			$dt = $v;
-		} else {
-			// some string/numeric value passed; we normalize that so that we can
-			// validate it.
-			try {
-				if (is_numeric($v)) { // if it's a unix timestamp
-					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
-					// We have to explicitly specify and then change the time zone because of a
-					// DateTime bug: http://bugs.php.net/bug.php?id=43003
-					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
-				} else {
-					$dt = new DateTime($v);
-				}
-			} catch (Exception $x) {
-				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
-			}
-		}
-
-		if ( $this->created_at !== null || $dt !== null ) {
-			// (nested ifs are a little easier to read in this case)
-
-			$currNorm = ($this->created_at !== null && $tmpDt = new DateTime($this->created_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
-			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
-
-			if ( ($currNorm !== $newNorm) // normalized values don't match 
-					)
-			{
-				$this->created_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
-				$this->modifiedColumns[] = InterestPeer::CREATED_AT;
-			}
-		} // if either are not null
-
-		return $this;
-	} // setCreatedAt()
-
-	/**
-	 * Sets the value of [updated_at] column to a normalized version of the date/time value specified.
-	 * 
-	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
-	 *						be treated as NULL for temporal objects.
-	 * @return     Interest The current object (for fluent API support)
-	 */
-	public function setUpdatedAt($v)
-	{
-		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
-		// -- which is unexpected, to say the least.
-		if ($v === null || $v === '') {
-			$dt = null;
-		} elseif ($v instanceof DateTime) {
-			$dt = $v;
-		} else {
-			// some string/numeric value passed; we normalize that so that we can
-			// validate it.
-			try {
-				if (is_numeric($v)) { // if it's a unix timestamp
-					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
-					// We have to explicitly specify and then change the time zone because of a
-					// DateTime bug: http://bugs.php.net/bug.php?id=43003
-					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
-				} else {
-					$dt = new DateTime($v);
-				}
-			} catch (Exception $x) {
-				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
-			}
-		}
-
-		if ( $this->updated_at !== null || $dt !== null ) {
-			// (nested ifs are a little easier to read in this case)
-
-			$currNorm = ($this->updated_at !== null && $tmpDt = new DateTime($this->updated_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
-			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
-
-			if ( ($currNorm !== $newNorm) // normalized values don't match 
-					)
-			{
-				$this->updated_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
-				$this->modifiedColumns[] = InterestPeer::UPDATED_AT;
-			}
-		} // if either are not null
-
-		return $this;
-	} // setUpdatedAt()
+	} // setPropertyTypeId()
 
 	/**
 	 * Indicates whether the columns in this object are only set to default values.
@@ -456,10 +186,6 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 	 */
 	public function hasOnlyDefaultValues()
 	{
-			if ($this->interest_status !== 'Pending') {
-				return false;
-			}
-
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -483,12 +209,8 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 		try {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-			$this->listing_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-			$this->user_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->interest_status = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-			$this->new_marker = ($row[$startcol + 4] !== null) ? (boolean) $row[$startcol + 4] : null;
-			$this->created_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->updated_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->alert_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
+			$this->property_type_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -498,10 +220,10 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 7; // 7 = InterestPeer::NUM_COLUMNS - InterestPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 3; // 3 = AlertPropertyTypePeer::NUM_COLUMNS - AlertPropertyTypePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating Interest object", $e);
+			throw new PropelException("Error populating AlertPropertyType object", $e);
 		}
 	}
 
@@ -521,11 +243,11 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
-		if ($this->aListing !== null && $this->listing_id !== $this->aListing->getId()) {
-			$this->aListing = null;
+		if ($this->aAlert !== null && $this->alert_id !== $this->aAlert->getId()) {
+			$this->aAlert = null;
 		}
-		if ($this->asfGuardUser !== null && $this->user_id !== $this->asfGuardUser->getId()) {
-			$this->asfGuardUser = null;
+		if ($this->aPropertyType !== null && $this->property_type_id !== $this->aPropertyType->getId()) {
+			$this->aPropertyType = null;
 		}
 	} // ensureConsistency
 
@@ -550,13 +272,13 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(InterestPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(AlertPropertyTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		// We don't need to alter the object instance pool; we're just modifying this instance
 		// already in the pool.
 
-		$stmt = InterestPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
+		$stmt = AlertPropertyTypePeer::doSelectStmt($this->buildPkeyCriteria(), $con);
 		$row = $stmt->fetch(PDO::FETCH_NUM);
 		$stmt->closeCursor();
 		if (!$row) {
@@ -566,8 +288,11 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
-			$this->aListing = null;
-			$this->asfGuardUser = null;
+			$this->aAlert = null;
+			$this->aPropertyType = null;
+			$this->collAlerts = null;
+			$this->lastAlertCriteria = null;
+
 		} // if (deep)
 	}
 
@@ -587,14 +312,14 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(InterestPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(AlertPropertyTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
 		try {
 			$ret = $this->preDelete($con);
 			// symfony_behaviors behavior
-			foreach (sfMixer::getCallables('BaseInterest:delete:pre') as $callable)
+			foreach (sfMixer::getCallables('BaseAlertPropertyType:delete:pre') as $callable)
 			{
 			  if (call_user_func($callable, $this, $con))
 			  {
@@ -605,10 +330,10 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 			}
 
 			if ($ret) {
-				InterestPeer::doDelete($this, $con);
+				AlertPropertyTypePeer::doDelete($this, $con);
 				$this->postDelete($con);
 				// symfony_behaviors behavior
-				foreach (sfMixer::getCallables('BaseInterest:delete:post') as $callable)
+				foreach (sfMixer::getCallables('BaseAlertPropertyType:delete:post') as $callable)
 				{
 				  call_user_func($callable, $this, $con);
 				}
@@ -644,7 +369,7 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(InterestPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(AlertPropertyTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
@@ -652,7 +377,7 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 		try {
 			$ret = $this->preSave($con);
 			// symfony_behaviors behavior
-			foreach (sfMixer::getCallables('BaseInterest:save:pre') as $callable)
+			foreach (sfMixer::getCallables('BaseAlertPropertyType:save:pre') as $callable)
 			{
 			  if (is_integer($affectedRows = call_user_func($callable, $this, $con)))
 			  {
@@ -662,20 +387,8 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 			  }
 			}
 
-			// symfony_timestampable behavior
-			if ($this->isModified() && !$this->isColumnModified(InterestPeer::UPDATED_AT))
-			{
-			  $this->setUpdatedAt(time());
-			}
-
 			if ($isInsert) {
 				$ret = $ret && $this->preInsert($con);
-				// symfony_timestampable behavior
-				if (!$this->isColumnModified(InterestPeer::CREATED_AT))
-				{
-				  $this->setCreatedAt(time());
-				}
-
 			} else {
 				$ret = $ret && $this->preUpdate($con);
 			}
@@ -688,12 +401,12 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 				}
 				$this->postSave($con);
 				// symfony_behaviors behavior
-				foreach (sfMixer::getCallables('BaseInterest:save:post') as $callable)
+				foreach (sfMixer::getCallables('BaseAlertPropertyType:save:post') as $callable)
 				{
 				  call_user_func($callable, $this, $con, $affectedRows);
 				}
 
-				InterestPeer::addInstanceToPool($this);
+				AlertPropertyTypePeer::addInstanceToPool($this);
 			} else {
 				$affectedRows = 0;
 			}
@@ -727,28 +440,28 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
 
-			if ($this->aListing !== null) {
-				if ($this->aListing->isModified() || $this->aListing->isNew()) {
-					$affectedRows += $this->aListing->save($con);
+			if ($this->aAlert !== null) {
+				if ($this->aAlert->isModified() || $this->aAlert->isNew()) {
+					$affectedRows += $this->aAlert->save($con);
 				}
-				$this->setListing($this->aListing);
+				$this->setAlert($this->aAlert);
 			}
 
-			if ($this->asfGuardUser !== null) {
-				if ($this->asfGuardUser->isModified() || $this->asfGuardUser->isNew()) {
-					$affectedRows += $this->asfGuardUser->save($con);
+			if ($this->aPropertyType !== null) {
+				if ($this->aPropertyType->isModified() || $this->aPropertyType->isNew()) {
+					$affectedRows += $this->aPropertyType->save($con);
 				}
-				$this->setsfGuardUser($this->asfGuardUser);
+				$this->setPropertyType($this->aPropertyType);
 			}
 
 			if ($this->isNew() ) {
-				$this->modifiedColumns[] = InterestPeer::ID;
+				$this->modifiedColumns[] = AlertPropertyTypePeer::ID;
 			}
 
 			// If this object has been modified, then save it to the database.
 			if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = InterestPeer::doInsert($this, $con);
+					$pk = AlertPropertyTypePeer::doInsert($this, $con);
 					$affectedRows += 1; // we are assuming that there is only 1 row per doInsert() which
 										 // should always be true here (even though technically
 										 // BasePeer::doInsert() can insert multiple rows).
@@ -757,10 +470,18 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 
 					$this->setNew(false);
 				} else {
-					$affectedRows += InterestPeer::doUpdate($this, $con);
+					$affectedRows += AlertPropertyTypePeer::doUpdate($this, $con);
 				}
 
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
+			}
+
+			if ($this->collAlerts !== null) {
+				foreach ($this->collAlerts as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
 			}
 
 			$this->alreadyInSave = false;
@@ -834,23 +555,31 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
 
-			if ($this->aListing !== null) {
-				if (!$this->aListing->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aListing->getValidationFailures());
+			if ($this->aAlert !== null) {
+				if (!$this->aAlert->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aAlert->getValidationFailures());
 				}
 			}
 
-			if ($this->asfGuardUser !== null) {
-				if (!$this->asfGuardUser->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->asfGuardUser->getValidationFailures());
+			if ($this->aPropertyType !== null) {
+				if (!$this->aPropertyType->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aPropertyType->getValidationFailures());
 				}
 			}
 
 
-			if (($retval = InterestPeer::doValidate($this, $columns)) !== true) {
+			if (($retval = AlertPropertyTypePeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collAlerts !== null) {
+					foreach ($this->collAlerts as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 
 			$this->alreadyInValidation = false;
@@ -870,7 +599,7 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 	 */
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = InterestPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = AlertPropertyTypePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		$field = $this->getByPosition($pos);
 		return $field;
 	}
@@ -889,22 +618,10 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getListingId();
+				return $this->getAlertId();
 				break;
 			case 2:
-				return $this->getUserId();
-				break;
-			case 3:
-				return $this->getInterestStatus();
-				break;
-			case 4:
-				return $this->getNewMarker();
-				break;
-			case 5:
-				return $this->getCreatedAt();
-				break;
-			case 6:
-				return $this->getUpdatedAt();
+				return $this->getPropertyTypeId();
 				break;
 			default:
 				return null;
@@ -925,15 +642,11 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 	 */
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true)
 	{
-		$keys = InterestPeer::getFieldNames($keyType);
+		$keys = AlertPropertyTypePeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getListingId(),
-			$keys[2] => $this->getUserId(),
-			$keys[3] => $this->getInterestStatus(),
-			$keys[4] => $this->getNewMarker(),
-			$keys[5] => $this->getCreatedAt(),
-			$keys[6] => $this->getUpdatedAt(),
+			$keys[1] => $this->getAlertId(),
+			$keys[2] => $this->getPropertyTypeId(),
 		);
 		return $result;
 	}
@@ -950,7 +663,7 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 	 */
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = InterestPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = AlertPropertyTypePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -969,22 +682,10 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setListingId($value);
+				$this->setAlertId($value);
 				break;
 			case 2:
-				$this->setUserId($value);
-				break;
-			case 3:
-				$this->setInterestStatus($value);
-				break;
-			case 4:
-				$this->setNewMarker($value);
-				break;
-			case 5:
-				$this->setCreatedAt($value);
-				break;
-			case 6:
-				$this->setUpdatedAt($value);
+				$this->setPropertyTypeId($value);
 				break;
 		} // switch()
 	}
@@ -1008,15 +709,11 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 	 */
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = InterestPeer::getFieldNames($keyType);
+		$keys = AlertPropertyTypePeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setListingId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setUserId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setInterestStatus($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setNewMarker($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setUpdatedAt($arr[$keys[6]]);
+		if (array_key_exists($keys[1], $arr)) $this->setAlertId($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setPropertyTypeId($arr[$keys[2]]);
 	}
 
 	/**
@@ -1026,15 +723,11 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 	 */
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(InterestPeer::DATABASE_NAME);
+		$criteria = new Criteria(AlertPropertyTypePeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(InterestPeer::ID)) $criteria->add(InterestPeer::ID, $this->id);
-		if ($this->isColumnModified(InterestPeer::LISTING_ID)) $criteria->add(InterestPeer::LISTING_ID, $this->listing_id);
-		if ($this->isColumnModified(InterestPeer::USER_ID)) $criteria->add(InterestPeer::USER_ID, $this->user_id);
-		if ($this->isColumnModified(InterestPeer::INTEREST_STATUS)) $criteria->add(InterestPeer::INTEREST_STATUS, $this->interest_status);
-		if ($this->isColumnModified(InterestPeer::NEW_MARKER)) $criteria->add(InterestPeer::NEW_MARKER, $this->new_marker);
-		if ($this->isColumnModified(InterestPeer::CREATED_AT)) $criteria->add(InterestPeer::CREATED_AT, $this->created_at);
-		if ($this->isColumnModified(InterestPeer::UPDATED_AT)) $criteria->add(InterestPeer::UPDATED_AT, $this->updated_at);
+		if ($this->isColumnModified(AlertPropertyTypePeer::ID)) $criteria->add(AlertPropertyTypePeer::ID, $this->id);
+		if ($this->isColumnModified(AlertPropertyTypePeer::ALERT_ID)) $criteria->add(AlertPropertyTypePeer::ALERT_ID, $this->alert_id);
+		if ($this->isColumnModified(AlertPropertyTypePeer::PROPERTY_TYPE_ID)) $criteria->add(AlertPropertyTypePeer::PROPERTY_TYPE_ID, $this->property_type_id);
 
 		return $criteria;
 	}
@@ -1049,9 +742,9 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 	 */
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(InterestPeer::DATABASE_NAME);
+		$criteria = new Criteria(AlertPropertyTypePeer::DATABASE_NAME);
 
-		$criteria->add(InterestPeer::ID, $this->id);
+		$criteria->add(AlertPropertyTypePeer::ID, $this->id);
 
 		return $criteria;
 	}
@@ -1082,24 +775,30 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 	 * If desired, this method can also make copies of all associated (fkey referrers)
 	 * objects.
 	 *
-	 * @param      object $copyObj An object of Interest (or compatible) type.
+	 * @param      object $copyObj An object of AlertPropertyType (or compatible) type.
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
 	 * @throws     PropelException
 	 */
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setListingId($this->listing_id);
+		$copyObj->setAlertId($this->alert_id);
 
-		$copyObj->setUserId($this->user_id);
+		$copyObj->setPropertyTypeId($this->property_type_id);
 
-		$copyObj->setInterestStatus($this->interest_status);
 
-		$copyObj->setNewMarker($this->new_marker);
+		if ($deepCopy) {
+			// important: temporarily setNew(false) because this affects the behavior of
+			// the getter/setter methods for fkey referrer objects.
+			$copyObj->setNew(false);
 
-		$copyObj->setCreatedAt($this->created_at);
+			foreach ($this->getAlerts() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addAlert($relObj->copy($deepCopy));
+				}
+			}
 
-		$copyObj->setUpdatedAt($this->updated_at);
+		} // if ($deepCopy)
 
 
 		$copyObj->setNew(true);
@@ -1117,7 +816,7 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 	 * objects.
 	 *
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-	 * @return     Interest Clone of current object.
+	 * @return     AlertPropertyType Clone of current object.
 	 * @throws     PropelException
 	 */
 	public function copy($deepCopy = false)
@@ -1136,37 +835,37 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 	 * same instance for all member of this class. The method could therefore
 	 * be static, but this would prevent one from overriding the behavior.
 	 *
-	 * @return     InterestPeer
+	 * @return     AlertPropertyTypePeer
 	 */
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new InterestPeer();
+			self::$peer = new AlertPropertyTypePeer();
 		}
 		return self::$peer;
 	}
 
 	/**
-	 * Declares an association between this object and a Listing object.
+	 * Declares an association between this object and a Alert object.
 	 *
-	 * @param      Listing $v
-	 * @return     Interest The current object (for fluent API support)
+	 * @param      Alert $v
+	 * @return     AlertPropertyType The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
-	public function setListing(Listing $v = null)
+	public function setAlert(Alert $v = null)
 	{
 		if ($v === null) {
-			$this->setListingId(NULL);
+			$this->setAlertId(NULL);
 		} else {
-			$this->setListingId($v->getId());
+			$this->setAlertId($v->getId());
 		}
 
-		$this->aListing = $v;
+		$this->aAlert = $v;
 
 		// Add binding for other direction of this n:n relationship.
-		// If this object has already been added to the Listing object, it will not be re-added.
+		// If this object has already been added to the Alert object, it will not be re-added.
 		if ($v !== null) {
-			$v->addInterest($this);
+			$v->addAlertPropertyType($this);
 		}
 
 		return $this;
@@ -1174,48 +873,48 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 
 
 	/**
-	 * Get the associated Listing object
+	 * Get the associated Alert object
 	 *
 	 * @param      PropelPDO Optional Connection object.
-	 * @return     Listing The associated Listing object.
+	 * @return     Alert The associated Alert object.
 	 * @throws     PropelException
 	 */
-	public function getListing(PropelPDO $con = null)
+	public function getAlert(PropelPDO $con = null)
 	{
-		if ($this->aListing === null && ($this->listing_id !== null)) {
-			$this->aListing = ListingPeer::retrieveByPk($this->listing_id);
+		if ($this->aAlert === null && ($this->alert_id !== null)) {
+			$this->aAlert = AlertPeer::retrieveByPk($this->alert_id);
 			/* The following can be used additionally to
 			   guarantee the related object contains a reference
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->aListing->addInterests($this);
+			   $this->aAlert->addAlertPropertyTypes($this);
 			 */
 		}
-		return $this->aListing;
+		return $this->aAlert;
 	}
 
 	/**
-	 * Declares an association between this object and a sfGuardUser object.
+	 * Declares an association between this object and a PropertyType object.
 	 *
-	 * @param      sfGuardUser $v
-	 * @return     Interest The current object (for fluent API support)
+	 * @param      PropertyType $v
+	 * @return     AlertPropertyType The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
-	public function setsfGuardUser(sfGuardUser $v = null)
+	public function setPropertyType(PropertyType $v = null)
 	{
 		if ($v === null) {
-			$this->setUserId(NULL);
+			$this->setPropertyTypeId(NULL);
 		} else {
-			$this->setUserId($v->getId());
+			$this->setPropertyTypeId($v->getId());
 		}
 
-		$this->asfGuardUser = $v;
+		$this->aPropertyType = $v;
 
 		// Add binding for other direction of this n:n relationship.
-		// If this object has already been added to the sfGuardUser object, it will not be re-added.
+		// If this object has already been added to the PropertyType object, it will not be re-added.
 		if ($v !== null) {
-			$v->addInterest($this);
+			$v->addAlertPropertyType($this);
 		}
 
 		return $this;
@@ -1223,25 +922,226 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 
 
 	/**
-	 * Get the associated sfGuardUser object
+	 * Get the associated PropertyType object
 	 *
 	 * @param      PropelPDO Optional Connection object.
-	 * @return     sfGuardUser The associated sfGuardUser object.
+	 * @return     PropertyType The associated PropertyType object.
 	 * @throws     PropelException
 	 */
-	public function getsfGuardUser(PropelPDO $con = null)
+	public function getPropertyType(PropelPDO $con = null)
 	{
-		if ($this->asfGuardUser === null && ($this->user_id !== null)) {
-			$this->asfGuardUser = sfGuardUserPeer::retrieveByPk($this->user_id);
+		if ($this->aPropertyType === null && ($this->property_type_id !== null)) {
+			$this->aPropertyType = PropertyTypePeer::retrieveByPk($this->property_type_id);
 			/* The following can be used additionally to
 			   guarantee the related object contains a reference
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->asfGuardUser->addInterests($this);
+			   $this->aPropertyType->addAlertPropertyTypes($this);
 			 */
 		}
-		return $this->asfGuardUser;
+		return $this->aPropertyType;
+	}
+
+	/**
+	 * Clears out the collAlerts collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addAlerts()
+	 */
+	public function clearAlerts()
+	{
+		$this->collAlerts = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collAlerts collection (array).
+	 *
+	 * By default this just sets the collAlerts collection to an empty array (like clearcollAlerts());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initAlerts()
+	{
+		$this->collAlerts = array();
+	}
+
+	/**
+	 * Gets an array of Alert objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this AlertPropertyType has previously been saved, it will retrieve
+	 * related Alerts from storage. If this AlertPropertyType is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array Alert[]
+	 * @throws     PropelException
+	 */
+	public function getAlerts($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AlertPropertyTypePeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collAlerts === null) {
+			if ($this->isNew()) {
+			   $this->collAlerts = array();
+			} else {
+
+				$criteria->add(AlertPeer::ALERT_PROPERTY_TYPE_ID, $this->id);
+
+				AlertPeer::addSelectColumns($criteria);
+				$this->collAlerts = AlertPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(AlertPeer::ALERT_PROPERTY_TYPE_ID, $this->id);
+
+				AlertPeer::addSelectColumns($criteria);
+				if (!isset($this->lastAlertCriteria) || !$this->lastAlertCriteria->equals($criteria)) {
+					$this->collAlerts = AlertPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastAlertCriteria = $criteria;
+		return $this->collAlerts;
+	}
+
+	/**
+	 * Returns the number of related Alert objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related Alert objects.
+	 * @throws     PropelException
+	 */
+	public function countAlerts(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AlertPropertyTypePeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collAlerts === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(AlertPeer::ALERT_PROPERTY_TYPE_ID, $this->id);
+
+				$count = AlertPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(AlertPeer::ALERT_PROPERTY_TYPE_ID, $this->id);
+
+				if (!isset($this->lastAlertCriteria) || !$this->lastAlertCriteria->equals($criteria)) {
+					$count = AlertPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collAlerts);
+				}
+			} else {
+				$count = count($this->collAlerts);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a Alert object to this object
+	 * through the Alert foreign key attribute.
+	 *
+	 * @param      Alert $l Alert
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addAlert(Alert $l)
+	{
+		if ($this->collAlerts === null) {
+			$this->initAlerts();
+		}
+		if (!in_array($l, $this->collAlerts, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collAlerts, $l);
+			$l->setAlertPropertyType($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this AlertPropertyType is new, it will return
+	 * an empty collection; or if this AlertPropertyType has previously
+	 * been saved, it will retrieve related Alerts from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in AlertPropertyType.
+	 */
+	public function getAlertsJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AlertPropertyTypePeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collAlerts === null) {
+			if ($this->isNew()) {
+				$this->collAlerts = array();
+			} else {
+
+				$criteria->add(AlertPeer::ALERT_PROPERTY_TYPE_ID, $this->id);
+
+				$this->collAlerts = AlertPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(AlertPeer::ALERT_PROPERTY_TYPE_ID, $this->id);
+
+			if (!isset($this->lastAlertCriteria) || !$this->lastAlertCriteria->equals($criteria)) {
+				$this->collAlerts = AlertPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastAlertCriteria = $criteria;
+
+		return $this->collAlerts;
 	}
 
 	/**
@@ -1256,10 +1156,16 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
+			if ($this->collAlerts) {
+				foreach ((array) $this->collAlerts as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 		} // if ($deep)
 
-			$this->aListing = null;
-			$this->asfGuardUser = null;
+		$this->collAlerts = null;
+			$this->aAlert = null;
+			$this->aPropertyType = null;
 	}
 
 	// symfony_behaviors behavior
@@ -1269,9 +1175,9 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 	 */
 	public function __call($method, $arguments)
 	{
-	  if (!$callable = sfMixer::getCallable('BaseInterest:'.$method))
+	  if (!$callable = sfMixer::getCallable('BaseAlertPropertyType:'.$method))
 	  {
-	    throw new sfException(sprintf('Call to undefined method BaseInterest::%s', $method));
+	    throw new sfException(sprintf('Call to undefined method BaseAlertPropertyType::%s', $method));
 	  }
 	
 	  array_unshift($arguments, $this);
@@ -1279,4 +1185,4 @@ abstract class BaseInterest extends BaseObject  implements Persistent {
 	  return call_user_func_array($callable, $arguments);
 	}
 
-} // BaseInterest
+} // BaseAlertPropertyType

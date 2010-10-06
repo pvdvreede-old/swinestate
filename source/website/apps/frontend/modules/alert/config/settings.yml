@@ -1,0 +1,7 @@
+## YAML Template.
+---
+
+# turn off csrf secret to disable cross browser protectino so that we can create an alert from the search page
+all:
+  settings:
+    csrf_secret: false

@@ -35,7 +35,7 @@ class MultiFileValidatorSchema extends sfValidatedFile {
         $thumb->save($thumb_dir . $return_value);
 
         // create medium size
-        $thumb = new sfThumbnail(600);
+        $thumb = new sfThumbnail(500);
 
         $thumb->loadFile($full_dir . $return_value);
 

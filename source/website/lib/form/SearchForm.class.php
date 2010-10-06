@@ -27,8 +27,16 @@ class SearchForm extends sfForm {
         $list_criteria = new Criteria();
         $list_criteria->addAscendingOrderByColumn(PropertyTypePeer::NAME);
 
+        $suburb_criteria = new Criteria();
+        $suburb_criteria->setDistinct(SuburbPeer::NAME);
+
         $this->setWidgets(array(
-            'suburb' => new sfWidgetFormInputText(),
+            'suburb' => new sfWidgetFormPropelChoice(array(
+                'model' => 'Suburb',
+                'criteria' => $suburb_criteria,
+                'expanded' => false,
+                'multiple' => 'true')
+            ),
             'property_type' => new sfWidgetFormPropelChoice(array(
                 'model' => 'PropertyType',
                 'criteria' => $list_criteria,
@@ -42,7 +50,8 @@ class SearchForm extends sfForm {
                 'choices' => self::$bathroom_choices
             )),
             'min_price' => new sfWidgetFormInputText(),
-            'max_price' => new sfWidgetFormInputText()
+            'max_price' => new sfWidgetFormInputText(),
+            'postcode' => new sfWidgetFormInputText()
         ));
 
         $this->setValidators(array(
@@ -51,7 +60,8 @@ class SearchForm extends sfForm {
             'bedrooms' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false)),
             'bathrooms' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false)),
             'min_price' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false)),
-            'max_price' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false))
+            'max_price' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false)),
+            'postcode' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false))
         ));
 
         // check that the user types in a max price that is greater than the min if they are both there

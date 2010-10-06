@@ -18,6 +18,8 @@ class AlertForm extends BaseAlertForm {
             'car_spaces',
             'suburb',
             'postcode',
+            'min_price',
+            'max_price',
             'active'
         ));
 

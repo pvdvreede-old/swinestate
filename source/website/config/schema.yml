@@ -125,10 +125,18 @@ propel:
     car_spaces: integer
     suburb: varchar(100)
     postcode: integer
+    min_price: float
+    max_price: float
+    alert_property_type_id: { type: integer, foreignTable: alert_property_type, foreignReference: id, required: false }
     amount_alerted: { type: integer, default: 0 }
     active: boolean
     created_at: ~
     updated_at: ~
+
+  alert_property_type:
+    id: ~
+    alert_id: { type: integer, foreignTable: alert, foreignReference: id, required: true }
+    property_type_id: { type: integer, foreignTable: property_type, foreignReference: id, required: true }
 
   interest:
     id: ~

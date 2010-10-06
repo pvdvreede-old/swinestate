@@ -19,6 +19,9 @@ PropertyType:
   townhouse:
     name: Townhouse
 
+  other:
+    name: Other
+
 ListingStatus:
   active:
     name: Available

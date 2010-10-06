@@ -4,6 +4,6 @@
 
 <p><strong>This receipt has also been emailed to you.</strong></p>
 
-<?php include_partial('reciept', array(
+<?php include_partial('receipt', array(
 		'receiptObject' => $receiptObject
 		));  ?>

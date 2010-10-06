@@ -1,4 +1,23 @@
+<?php if (count($pager) < 1) : ?>
 
+<?php if ($sf_request->hasParameter('search')) : ?>
+
+    <form action="<?php echo url_for('alert/create'); ?>" method="post" >
+        <input type="hidden" name="alert[name]" value="Search for <?php echo time(); ?>" />
+        <input type="hidden" name="alert[active]" value="1" />
+    <?php foreach($sf_request->getParameter('search') as $key => $value) : ?>
+        <?php if ($value == '0') { $value = null; } ?>
+      
+    <input type="hidden" name="alert[<?php echo $key; ?>]" value="<?php echo $value; ?>" />
+    <?php endforeach; ?>
+        <p>There were no results found for this query, click the button to add this search to your alerts so you are notified by email when a listing matches the search:
+        <input type="submit" value="Add this search to my alerts" /></p>
+        </form>
+
+    <?php endif; ?>
+
+
+<?php else : ?>
 <?php    include_partial('global/pagination', array(
     'pager' => $pager,
     'page_url' => $page_url,
@@ -27,3 +46,5 @@
     'page_url' => $page_url,
     'get_string' => $get_string
 )); ?>
+
+<?php endif; ?>

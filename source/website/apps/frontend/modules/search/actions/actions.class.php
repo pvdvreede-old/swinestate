@@ -46,6 +46,9 @@ class searchActions extends sfActions {
                 // add criteria as we go along
                 $c = new Criteria();
 
+                // order the listings with the newest one first
+                $c->addDescendingOrderByColumn(ListingPeer::CREATED_AT);
+
                 // set criteria that only gets listings that have paid
                 $c->addJoin(ListingPeer::ID, ListingTimePeer::LISTING_ID);
                 $c->add(ListingTimePeer::START_DATE, time(), Criteria::LESS_THAN);
@@ -61,7 +64,14 @@ class searchActions extends sfActions {
                 // set the listing type as a selling property
                 $c->add(ListingPeer::LISTING_TYPE_ID, ListingTypePeer::getIdFromName($this->listing_type));
 
-                if ($values['suburb'] != '') {
+                if ($values['postcode'] != '') {
+                   // create the join to the postcode to filter it
+                    $c->addJoin(ListingPeer::ADDRESS_ID, AddressPeer::ID);
+                    $c->addJoin(AddressPeer::SUBURB_ID, SuburbPeer::ID);
+                    $c->add(SuburbPeer::POSTCODE, $values['postcode']);
+                }
+                // only allow either the suburb or the post code for filtering
+                elseif ($values['suburb'] != '') {
                     // create the join to the suburb to filter it
                     $c->addJoin(ListingPeer::ADDRESS_ID, AddressPeer::ID);
                     $c->addJoin(AddressPeer::SUBURB_ID, SuburbPeer::ID);

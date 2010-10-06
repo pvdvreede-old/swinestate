@@ -326,6 +326,9 @@ CREATE TABLE `alert`
 	`car_spaces` INTEGER,
 	`suburb` VARCHAR(100),
 	`postcode` INTEGER,
+	`min_price` FLOAT,
+	`max_price` FLOAT,
+	`alert_property_type_id` INTEGER,
 	`amount_alerted` INTEGER default 0,
 	`active` TINYINT,
 	`created_at` DATETIME,
@@ -335,7 +338,34 @@ CREATE TABLE `alert`
 	CONSTRAINT `alert_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
-		ON DELETE CASCADE
+		ON DELETE CASCADE,
+	INDEX `alert_FI_2` (`alert_property_type_id`),
+	CONSTRAINT `alert_FK_2`
+		FOREIGN KEY (`alert_property_type_id`)
+		REFERENCES `alert_property_type` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- alert_property_type
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `alert_property_type`;
+
+
+CREATE TABLE `alert_property_type`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`alert_id` INTEGER  NOT NULL,
+	`property_type_id` INTEGER  NOT NULL,
+	PRIMARY KEY (`id`),
+	INDEX `alert_property_type_FI_1` (`alert_id`),
+	CONSTRAINT `alert_property_type_FK_1`
+		FOREIGN KEY (`alert_id`)
+		REFERENCES `alert` (`id`),
+	INDEX `alert_property_type_FI_2` (`property_type_id`),
+	CONSTRAINT `alert_property_type_FK_2`
+		FOREIGN KEY (`property_type_id`)
+		REFERENCES `property_type` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

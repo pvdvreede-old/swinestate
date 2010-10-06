@@ -14,6 +14,11 @@ $sf_response->addJavascript('gmapaddress');
     <h2 class="title"><?php echo $Listing->getName(); ?></h2>
     <p class="rooms">ba: <?php echo $Listing->getBathrooms(); ?> be: <?php echo $Listing->getBedrooms(); ?> ca: <?php echo $Listing->getCarSpaces(); ?></p>
     <p class="address"><?php echo $Listing->getAddress(); ?></p>
+
+    <p>Asking price: $<?php echo $Listing->getSaleDetails()->getAskingPrice(); ?></p>
+    <?php if ($Listing->getSaleDetails()->getAuctionDate() != null) : ?>
+    <p>Auction Date: <?php echo $Listing->getSaleDetails()->getAuctionDate(); ?> </p>
+    <?php endif; ?>
     <?php if (count($photos = $Listing->getListingPhotoss()) > 0) : ?>
         <?php if ($photos[0]->getPath() != '') : ?>
         <p><img data-magnifysrc="<?php echo $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/' . $photos[0]->getPath(); ?>" id="photo_main" src="<?php echo $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/med/' . $photos[0]->getPath(); ?>" /></p>
