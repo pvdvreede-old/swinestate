@@ -22,7 +22,7 @@
   <tbody>
     <?php foreach ($pager->getResults() as $Alert): ?>
     <tr>
-      <td><a href="<?php echo url_for('alert/show?id='.$Alert->getId()) ?>"><?php echo $Alert->getName() ?></a></td>
+      <td><a href="<?php echo url_for('alert/edit?id='.$Alert->getId()) ?>"><?php echo $Alert->getName() ?></a></td>
       <td><?php echo $Alert->getBedrooms() ?></td>
       <td><?php echo $Alert->getBathrooms() ?></td>
       <td><?php echo $Alert->getCarSpaces() ?></td>

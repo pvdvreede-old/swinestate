@@ -46,7 +46,7 @@ class searchActions extends sfActions {
                 // add criteria as we go along
                 $c = new Criteria();
 
-                // order the listings with the newest one first
+                // order the listings with the newest one first, then order by price
                 $c->addDescendingOrderByColumn(ListingPeer::CREATED_AT);
 
                 // set criteria that only gets listings that have paid
@@ -132,6 +132,7 @@ class searchActions extends sfActions {
                                 sfConfig::get('app_search_items_on_page')
                 );
                 $this->pager->setCriteria($c);
+                $this->pager->setPeerMethod('doSelectJoinAll');
                 $this->pager->setPage($request->getParameter('page', 1));
                 $this->pager->init();
                 $this->show_results = true;

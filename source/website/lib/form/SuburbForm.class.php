@@ -28,4 +28,23 @@ class SuburbForm extends BaseSuburbForm {
         }
     }
 
+    // override the save function so that if the postcode and suburb name already exist, then just use that object
+    public function save($con = null) {
+
+        if (!$this->isValid()) {
+            throw $this->getErrorSchema();
+        }
+
+        sfContext::getInstance()->getLogger()->log('in new save');
+
+        $suburb = SuburbPeer::getSameSuburb($name, $postcode);
+        sfContext::getInstance()->getLogger()->log('getting new suburb');
+        if (!$suburb) {
+            sfContext::getInstance()->getLogger()->log('change the suburb');
+            $this->object = $suburb;
+        }
+
+        return parent::save($con);
+    }
+
 }

@@ -28,7 +28,6 @@ class SearchForm extends sfForm {
         $list_criteria->addAscendingOrderByColumn(PropertyTypePeer::NAME);
 
         $suburb_criteria = new Criteria();
-        $suburb_criteria->setDistinct(SuburbPeer::NAME);
 
         $this->setWidgets(array(
             'suburb' => new sfWidgetFormPropelChoice(array(

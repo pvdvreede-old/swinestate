@@ -24,12 +24,6 @@ class alertActions extends sfActions {
         
     }
 
-    public function executeShow(sfWebRequest $request) {
-        $this->redirectUnless($this->getUser()->isAuthenticated(), '@sf_guard_signin');
-        $this->Alert = AlertPeer::retrieveByPk($request->getParameter('id'));
-        $this->forward404Unless($this->Alert);
-    }
-
     public function executeNew(sfWebRequest $request) {
         $this->redirectUnless($this->getUser()->isAuthenticated(), '@sf_guard_signin');
         $this->form = new AlertForm();

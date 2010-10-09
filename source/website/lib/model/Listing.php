@@ -41,19 +41,17 @@ class Listing extends BaseListing {
 
     public function getShortDescription() {
 
-        // only get the first 30 words of the description for a taste
-        $space_limit = strrpos($this->getDescription(), ' ', 30);
+        // if the description is longer than 500 characters then only take the first 500 chars up to the end of a word!
+        if (strlen($this->getDescription()) > 500) {
 
-        // if the space limit isnt false it is longer than thirty words and should be cut
-        if ($space_limit !== false) {
-            // create the new string and append '...' so people know it is continued
-            $new_desc = substr($this->getDescription(), 0, $space_limit);
+            $cleaned_string = strip_tags(substr(substr($this->getDescription(), 0, 500), 0, strrpos(substr($this->getDescription(), 0, 500), ' ')));
 
-            return $new_desc . '...';
+            return $cleaned_string.'...';
         }
 
-        // if false then the whole thing is less than 30 words, so return the whole thing
         return $this->getDescription();
+
+       
     }
 
     // function to return and print to the webpage the status of the listing and let the user pay to have it shown
@@ -119,14 +117,28 @@ class Listing extends BaseListing {
 
                 return true;
             }
-
         } elseif (ListingTimePeer::isCurrentListing($this->getId())) {
 
             return true;
-
         }
 
         return false;
+    }
+
+    public function hasPhoto() {
+
+        if (count($this->getListingPhotoss()) > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getFirstPhotoPath() {
+
+        $photos = $this->getListingPhotoss();
+
+        return $photos[0]->getPath();
     }
 
 }

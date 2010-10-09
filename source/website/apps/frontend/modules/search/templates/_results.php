@@ -10,8 +10,7 @@
       
     <input type="hidden" name="alert[<?php echo $key; ?>]" value="<?php echo $value; ?>" />
     <?php endforeach; ?>
-        <p>There were no results found for this query, click the button to add this search to your alerts so you are notified by email when a listing matches the search:
-        <input type="submit" value="Add this search to my alerts" /></p>
+        <p>There were no results found for this query, if you have signed up you can add this search to your alerts to be notified of a listing matchin this description.</p>
         </form>
 
     <?php endif; ?>
@@ -29,7 +28,15 @@
     <tr>
         <td>
             <div class="listing">
+                <?php if ($listing->hasPhoto()) : ?>
+                <div class="photo">
+                    
+                    <?php echo image_tag($sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/thumb/' . $listing->getFirstPhotoPath()); ?>
+                    
+                </div>
+                <?php endif; ?>
                 <p class="listing_title"><?php echo $listing->getName(); ?></p>
+                <p class="address"><?php echo $listing->getAddress(); ?></p>
                 <p class="listing_desc"><?php echo html_entity_decode($listing->getShortDescription()); ?></p>
                 <p class="listing_count">Bathrooms: <?php echo $listing->getBathrooms(); ?>
                 Bedrooms: <?php echo $listing->getBedrooms(); ?>

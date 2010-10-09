@@ -22,9 +22,13 @@ class saleActions extends sfActions {
     }
 
     public function executeShow(sfWebRequest $request) {
-        $this->Listing = ListingPeer::retrieveByPk($request->getParameter('id'));
+
+        $c = new Criteria();
+        $c->add(ListingPeer::ID, $request->getParameter('id'));
+        $listings = ListingPeer::doSelectJoinAll($c);
+        $this->Listing = $listings[0];
         $this->forward404Unless($this->Listing);
-		$this->forward404Unless($this->Listing->canView());
+	$this->forward404Unless($this->Listing->canView());
     }
 
     public function executeNew(sfWebRequest $request) {

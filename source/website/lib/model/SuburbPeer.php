@@ -18,4 +18,25 @@
  */
 class SuburbPeer extends BaseSuburbPeer {
 
+    public static function getSameSuburb($name, $postcode) {
+
+        $c = new Criteria();
+
+        $c->add(SuburbPeer::NAME, $name);
+        $c->add(SuburbPeer::POSTCODE, $postcode);
+
+        $suburb = SuburbPeer::doSelect($c);
+
+        if (empty ($suburb)) {
+
+            return false;
+
+        }
+
+        return $suburb[0];
+
+
+    }
+
+
 } // SuburbPeer
