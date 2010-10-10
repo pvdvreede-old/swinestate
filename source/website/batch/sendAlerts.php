@@ -29,7 +29,7 @@ $c->add(ListingTimePeer::START_DATE, time(), Criteria::LESS_THAN);
 $c->add(ListingTimePeer::PAYMENT_STATUS, 'Paid');
 
 // only get listings that havent been alerted
-$c->add(ListingPeer::ALERT_ACTIVATED, false);
+$c->add(ListingPeer::ALERT_ACTIVATED, 0);
 
 $listings = ListingPeer::doSelect($c);
 
@@ -41,7 +41,7 @@ if (!empty($listings)) {
     foreach ($listings as $listing) {
 
         $c = new Criteria();
-
+        
         $c->add(AlertPeer::BEDROOMS, $listing->getBedrooms());
 
         $c->add(AlertPeer::BATHROOMS, $listing->getBathrooms());
@@ -49,9 +49,10 @@ if (!empty($listings)) {
         $c->add(AlertPeer::CAR_SPACES, $listing->getCarSpaces());
 
         // add in the post code with an or for being empty
+        $c->add(AlertPeer::POSTCODE, $listing->getAddress()->getSuburb()->getPostcode());
 
         // make sure to only get the active alerts!!!
-        $c->add(AlertPeer::ACTIVE, true);
+        $c->add(AlertPeer::ACTIVE, 1);
 
         $alerts = AlertPeer::doSelect($c);
 
@@ -89,6 +90,8 @@ if (!empty($listings)) {
 
         // set the listing as having been alerted so it isnt alerted the next time
         $listing->setAlertActivated(1);
+
+        $listing->save();
     }
 }
 ?>

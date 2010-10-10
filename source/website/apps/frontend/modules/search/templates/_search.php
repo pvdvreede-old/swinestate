@@ -1,5 +1,7 @@
 <?php use_stylesheets_for_form($form) ?>
 <?php use_javascripts_for_form($form) ?>
+<?php use_javascript('jquery.autocompleter.js') ?>
+<?php use_stylesheet('jquery.autocompleter.css') ?>
 
 <div id='search'>
     <?php if ($sf_request->hasParameter('search') && $sf_user->isAuthenticated()) : ?>

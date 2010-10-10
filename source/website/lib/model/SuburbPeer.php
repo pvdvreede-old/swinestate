@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Skeleton subclass for performing query and update operations on the 'suburb' table.
  *
@@ -27,16 +26,29 @@ class SuburbPeer extends BaseSuburbPeer {
 
         $suburb = SuburbPeer::doSelect($c);
 
-        if (empty ($suburb)) {
+        if (empty($suburb)) {
 
             return false;
-
         }
 
         return $suburb[0];
-
-
     }
 
+    public static function retrieveForAutoComplete($name, $limit) {
 
-} // SuburbPeer
+        $c = new Criteria();
+        $c->add(SuburbPeer::NAME, $name . '%', Criteria::LIKE);
+
+        $c->addAscendingOrderByColumn(SuburbPeer::NAME);
+
+        $suburbs = array();
+        foreach (SuburbPeer::doSelect($c) as $suburb) {
+            $suburbs[$suburb->getId()] = (string) $suburb;
+        }
+
+        return $suburbs;
+    }
+
+}
+
+// SuburbPeer

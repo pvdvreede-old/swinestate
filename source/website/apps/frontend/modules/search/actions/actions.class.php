@@ -21,9 +21,18 @@ class searchActions extends sfActions {
         $this->executeSale($request);
     }
 
+    public function executeAjax(sfWebRequest $request) {
+
+        $this->getResponse()->setContentType('application/json');
+
+        $suburbs = SuburbPeer::retrieveForAutoComplete($request->getParameter('q'), $request->getParameter('limit'));
+
+        return $this->renderText(json_encode($suburbs));
+    }
+
     public function executeSale(sfWebRequest $request) {
 
-        $this->form = new SearchForm();
+        $this->form = new SearchForm(null, array('url' => $this->getController()->genUrl('search/ajax')));
         $this->listing_type = 'Sale';
         $this->module_link = 'sale';
         $this->page_url = 'search/sale';

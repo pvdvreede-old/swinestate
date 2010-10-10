@@ -31,11 +31,8 @@ class SearchForm extends sfForm {
 
         $this->setWidgets(array(
             'suburb' => new sfWidgetFormPropelChoice(array(
-                'model' => 'Suburb',
-                'criteria' => $suburb_criteria,
-                'expanded' => false,
-                'multiple' => 'true')
-            ),
+                'model' => 'PropertyType',
+            )),
             'property_type' => new sfWidgetFormPropelChoice(array(
                 'model' => 'PropertyType',
                 'criteria' => $list_criteria,
@@ -54,7 +51,7 @@ class SearchForm extends sfForm {
         ));
 
         $this->setValidators(array(
-            'suburb' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+            'suburb' => new sfValidatorPropelChoice(array('model' => 'Suburb', 'column' => 'id', 'required' => false, 'multiple' => 'true')),
             'property_type' => new sfValidatorPropelChoice(array('model' => 'PropertyType', 'column' => 'id', 'required' => false, 'multiple' => 'true')),
             'bedrooms' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false)),
             'bathrooms' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false)),
@@ -67,6 +64,13 @@ class SearchForm extends sfForm {
         $this->validatorSchema->setPostValidator(
                 new MinMaxValidatorSchema('min_price', 'max_price', array(), array())
         );
+
+        // set options for ajax autocomplete    
+        $this->widgetSchema['suburb']->setOption('renderer_class', 'sfWidgetFormPropelJQueryAutocompleter');
+        $this->widgetSchema['suburb']->setOption('renderer_options', array(
+            'model' => 'Suburb',
+            'url' => $this->getOption('url'),
+        ));
 
         $this->widgetSchema->setNameFormat('search[%s]');
 
