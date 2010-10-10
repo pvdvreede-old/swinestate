@@ -84,7 +84,7 @@ class searchActions extends sfActions {
                     // create the join to the suburb to filter it
                     $c->addJoin(ListingPeer::ADDRESS_ID, AddressPeer::ID);
                     $c->addJoin(AddressPeer::SUBURB_ID, SuburbPeer::ID);
-                    $c->add(SuburbPeer::NAME, '%' . strtolower($values['suburb']) . '%', Criteria::LIKE);
+                    $c->add(SuburbPeer::ID, $values['suburb'], Criteria::IN);
                 }
 
                 if ($values['bathrooms'] != 0) {
