@@ -39,22 +39,28 @@ if (!empty($listings)) {
 
     // for each new listing do a query to see if any alerts match them
     foreach ($listings as $listing) {
-
-        $c = new Criteria();
-        
-        $c->add(AlertPeer::BEDROOMS, $listing->getBedrooms());
-
-        $c->add(AlertPeer::BATHROOMS, $listing->getBathrooms());
-
-        $c->add(AlertPeer::CAR_SPACES, $listing->getCarSpaces());
-
-        // add in the post code with an or for being empty
-        $c->add(AlertPeer::POSTCODE, $listing->getAddress()->getSuburb()->getPostcode());
-
-        // make sure to only get the active alerts!!!
-        $c->add(AlertPeer::ACTIVE, 1);
-
-        $alerts = AlertPeer::doSelect($c);
+		
+		$price = ($listing->getSaleDetailsId() == null) ? $listing->getRentDetails->getAmountMontPrice() : $listing->getSaleDetails->getAskingPrice();
+		$type = $listing->getListingTypeId(); 
+		
+		$con = Propel::getConnection(DATABASE_NAME);
+		$sql = "select alert.* 
+				from alert, listing, address, suburb 
+				where listing.address_id = ad.id 
+				and address.suburb_id = suburb.id 
+				and alert.listing_type_id = {$listing->getListingTypeId()}
+				and listing.bedrooms = coalesce(alert.bedrooms, listing.bedrooms) 
+				and listing.bathrooms = coalesce(alert.bathrooms, listing.bathrooms) 
+				and listing.car_spaces = coalesce(alert.car_spaces, listing.car_spaces) 
+				and suburb.postcode = coalesce(alert.postcode, suburb.postcode) 
+				and suburb.name = coalesce(alert.suburb, suburb.name) 
+				and {$price} >= coalesce(alert.min_price, {$price})
+				and {$price} <= coalesce(alert.max_price, {$price})
+				and listing.id = {$listing->getId()} 				
+				and alert.active = 1";
+		$stmt = $con->createStatement();
+		$rs = $stmt->executeQuery($sql, ResultSet::FETCHMODE_NUM);
+		$alerts = AlertPeer::populateObjects($rs);
 
         // if there is a match then loop through all the matching alerts
         if (!empty($alerts)) {
@@ -80,6 +86,7 @@ if (!empty($listings)) {
 
                     echo 'Error when sending email';
                 }
+				
                 // mark that alert as having been activated
                 $alert->setAmountAlerted($alert->getAmountAlerted() + 1);
 

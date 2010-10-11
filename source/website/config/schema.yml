@@ -120,6 +120,7 @@ propel:
     id: ~
     user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade }
     name: { type: varchar(100), required: true }
+    listing_type_id: { type: integer, required: true, foreignTable: listing_type, foreignReference: id }
     bedrooms: integer
     bathrooms: integer
     car_spaces: integer
