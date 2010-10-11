@@ -14,7 +14,7 @@ define('SF_DEBUG', true);
 
 require_once(dirname(__FILE__) . '/../config/ProjectConfiguration.class.php');
 
-$configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'dev', true);
+$configuration = ProjectConfiguration::getApplicationConfiguration('frontend', SF_ENVIRONMENT, true);
 sfContext::createInstance($configuration); //->dispatch();
 
 $instance = sfContext::getInstance();
@@ -27,66 +27,63 @@ $c->add(ListingPeer::LISTING_STATUS_ID, ListingStatusPeer::getIdFromName('Availa
 $c->addJoin(ListingPeer::ID, ListingTimePeer::LISTING_ID);
 $c->add(ListingTimePeer::START_DATE, time(), Criteria::LESS_THAN);
 $c->add(ListingTimePeer::PAYMENT_STATUS, 'Paid');
-
 // only get listings that havent been alerted
 $c->add(ListingPeer::ALERT_ACTIVATED, 0);
 
 $listings = ListingPeer::doSelect($c);
-
+//print_r($listings);
 if (!empty($listings)) {
 
-    print_r($listings);
-
+    //print_r($listings);
     // for each new listing do a query to see if any alerts match them
     foreach ($listings as $listing) {
-		
-		$price = ($listing->getSaleDetailsId() == null) ? $listing->getRentDetails->getAmountMontPrice() : $listing->getSaleDetails->getAskingPrice();
-		$type = $listing->getListingTypeId(); 
-		
-		$con = Propel::getConnection(DATABASE_NAME);
-		$sql = "select alert.* 
-				from alert, listing, address, suburb 
-				where listing.address_id = ad.id 
-				and address.suburb_id = suburb.id 
-				and alert.listing_type_id = {$listing->getListingTypeId()}
-				and listing.bedrooms = coalesce(alert.bedrooms, listing.bedrooms) 
-				and listing.bathrooms = coalesce(alert.bathrooms, listing.bathrooms) 
-				and listing.car_spaces = coalesce(alert.car_spaces, listing.car_spaces) 
-				and suburb.postcode = coalesce(alert.postcode, suburb.postcode) 
-				and suburb.name = coalesce(alert.suburb, suburb.name) 
-				and {$price} >= coalesce(alert.min_price, {$price})
-				and {$price} <= coalesce(alert.max_price, {$price})
-				and listing.id = {$listing->getId()} 				
-				and alert.active = 1";
-		$stmt = $con->createStatement();
-		$rs = $stmt->executeQuery($sql, ResultSet::FETCHMODE_NUM);
-		$alerts = AlertPeer::populateObjects($rs);
 
+        $price = ($listing->getSaleDetailsId() == null) ? $listing->getRentDetails->getAmountMontPrice() : $listing->getSaleDetails()->getAskingPrice();
+        $type = $listing->getListingTypeId();
+
+        $con = Propel::getConnection();
+        $sql = "select *
+                from alert, listing, address, suburb
+                where listing.address_id = address.id
+                and address.suburb_id = suburb.id
+
+                and listing.bedrooms = coalesce(alert.bedrooms, listing.bedrooms)
+                and listing.bathrooms = coalesce(alert.bathrooms, listing.bathrooms)
+                and listing.car_spaces = coalesce(alert.car_spaces, listing.car_spaces)
+                and suburb.postcode = coalesce(alert.postcode, suburb.postcode)
+
+                and listing.id = {$listing->getId()}
+				";
+        $stmt = $con->prepare($sql);
+        $stmt->execute();
+        $alerts = AlertPeer::populateObjects($stmt);
+
+        //print_r($stmt);
+       // print_r($alerts);
         // if there is a match then loop through all the matching alerts
         if (!empty($alerts)) {
-            print_r($alerts);
+           // print_r($alerts);
             // for each alert get the user
             foreach ($alerts as $alert) {
 
                 $user = sfGuardUserProfilePeer::retrieveByPK($alert->getUserId());
-
-                // send that user an email
-                // send an email to the user with the details of the property and a link to it
-                $email = Swift_Message::newInstance()->setContentType('text/html')
-                                ->setFrom(sfConfig::get('app_from_email'))
-                                ->setTo($user->getEmailAddress())
-                                ->setSubject(sfConfig::get('app_app_name') . ' - Listing Alert Activated')
-                                ->setBody(include('alertEmail.php'));
-
                 try {
+                    // send that user an email
+                    // send an email to the user with the details of the property and a link to it
+                    $email = Swift_Message::newInstance()->setContentType('text/html')
+                                    ->setFrom(sfConfig::get('app_from_email'))
+                                    ->setTo($user->getEmailAddress())
+                                    ->setSubject(sfConfig::get('app_app_name') . ' - Listing Alert Activated')
+                                    ->setBody(file_get_contents('alertEmail.php'));
+                    echo $user->getEmailAddress();
+
 
                     $instance->getMailer()->send($email);
-                    
-                } catch (Swift_TransportException $ex) {
+                } catch (Exception $ex) {
 
                     echo 'Error when sending email';
                 }
-				
+
                 // mark that alert as having been activated
                 $alert->setAmountAlerted($alert->getAmountAlerted() + 1);
 

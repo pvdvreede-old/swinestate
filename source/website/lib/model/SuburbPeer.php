@@ -24,14 +24,14 @@ class SuburbPeer extends BaseSuburbPeer {
         $c->add(SuburbPeer::NAME, $name);
         $c->add(SuburbPeer::POSTCODE, $postcode);
 
-        $suburb = SuburbPeer::doSelect($c);
+        $suburb = SuburbPeer::doSelectOne($c);
 
-        if (empty($suburb)) {
+//        if (empty($suburb)) {
+//
+//            return false;
+//        }
 
-            return false;
-        }
-
-        return $suburb[0];
+        return $suburb;
     }
 
     public static function retrieveForAutoComplete($name, $limit) {

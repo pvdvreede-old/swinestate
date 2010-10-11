@@ -47,9 +47,25 @@ class AddressForm extends BaseAddressForm {
 
     public function save($con = null) {
 
+        sfContext::getInstance()->getLogger()->log("Running custom save for address form.");
 
-        parent::save($con);
+        if ($this->getObject()->isNew()) {
 
+            sfContext::getInstance()->getLogger()->log("Inside suburb check.");
+
+            $suburb = SuburbPeer::getSameSuburb($this->getObject()->getSuburb()->getName(), $this->getObject()->getSuburb()->getPostcode());
+            sfContext::getInstance()->getLogger()->log($suburb->getId());
+            if (!$suburb) {
+
+                sfContext::getInstance()->getLogger()->log("Replacing suburb with old one.");
+
+                $this->getObject()->setSuburb($suburb);
+                
+            }
+        }
+
+
+        return parent::save($con);
     }
 
 }

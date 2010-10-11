@@ -97,28 +97,30 @@ class ListingForm extends BaseListingForm {
         parent::save($con);
     }
 
-    protected function doSave687($con = null) {
+    protected function doUpdateObject($values) {
+        
+        sfContext::getInstance()->getLogger()->log("Running custom save for address form.");
 
+        if ($this->getObject()->isNew()) {
 
-        $photos = $this->getValue('photos');
-        $forms = $this->embeddedForms;
+            sfContext::getInstance()->getLogger()->log("Inside suburb check.");
 
-        // loop through all the photo forms and if they are not filled in remove them from saving
-        foreach ($this->embeddedForms['photos'] as $name => $form) {
-            sfContext::getInstance()->getLogger()->info($name);
-            if (!isset($photos[$name])) {
+            $suburb = SuburbPeer::getSameSuburb('kew', 3101);
+            sfContext::getInstance()->getLogger()->log($suburb->getId());
+            //if ($suburb instanceof Suburb) {
 
-                unset($forms['photos'][$name]);
-                sfContext::getInstance()->getLogger()->info('unset');
-            }
+                sfContext::getInstance()->getLogger()->log("Replacing suburb with old one.");
+
+                $this->getObject()->getAddress()->setSuburb($suburb);
+            //throw new Exception('poo');
         }
 
-        sfContext::getInstance()->getLogger()->info('before');
-        parent::doSave($con);
-        sfContext::getInstance()->getLogger()->info('after');
     }
 
     public function saveEmbeddedForms($con = null, $forms = null) {
+
+
+
 
         // if any of the photos arent filled in then dont insert them in the database
         if ($forms === NULL) {
