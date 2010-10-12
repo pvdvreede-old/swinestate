@@ -9,10 +9,15 @@
     <form action="<?php echo url_for('alert/create'); ?>" method="post" >
         <input type="hidden" name="alert[name]" value="Search for <?php echo time(); ?>" />
         <input type="hidden" name="alert[active]" value="1" />
+        <input type="hidden" name="alert[listing_type_id]" value="<?php echo $listing_type_id; ?>" />
     <?php foreach($sf_request->getParameter('search') as $key => $value) : ?>
         <?php if ($value == '0') { $value = null; } ?>
+        <?php if ($key == 'suburb') : ?>
 
-    <input type="hidden" name="alert[<?php echo $key; ?>]" value="<?php echo $value; ?>" />
+        <input type="hidden" name="alert[<?php echo $key; ?>]" value="<?php echo SuburbPeer::getNameFromId($value); ?>" />
+        <?php else : ?>
+            <input type="hidden" name="alert[<?php echo $key; ?>]" value="<?php echo $value; ?>" />
+        <?php endif; ?>
     <?php endforeach; ?>
         <input type="submit" value="Add this search to my alerts" />
         </form>

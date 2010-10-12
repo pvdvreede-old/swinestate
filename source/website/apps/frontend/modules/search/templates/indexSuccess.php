@@ -2,6 +2,7 @@
 <?php include_partial('search', array(
     'form' => $form,
     'listing_type' => $listing_type,
+    'listing_type_id' => $listing_type_id,
     'module_link' => $module_link
         )); ?>
 

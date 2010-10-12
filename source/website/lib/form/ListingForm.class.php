@@ -98,22 +98,28 @@ class ListingForm extends BaseListingForm {
     }
 
     protected function doUpdateObject($values) {
-        
+        parent::doUpdateObject($values);
         sfContext::getInstance()->getLogger()->log("Running custom save for address form.");
 
-        if ($this->getObject()->isNew()) {
 
-            sfContext::getInstance()->getLogger()->log("Inside suburb check.");
 
-            $suburb = SuburbPeer::getSameSuburb('kew', 3101);
-            sfContext::getInstance()->getLogger()->log($suburb->getId());
-            //if ($suburb instanceof Suburb) {
+        //if ($this->getObject()->isNew()) {
+
+            sfContext::getInstance()->getLogger()->log("Inside suburb check. ".$values['address']['suburb']['name'].$values['address']['suburb']['postcode']);
+
+            $suburb = SuburbPeer::getSameSuburb($values['address']['suburb']['name'], $values['address']['suburb']['postcode']);
+            //sfContext::getInstance()->getLogger()->log($suburb->getId());
+            if ($suburb instanceof Suburb) {
 
                 sfContext::getInstance()->getLogger()->log("Replacing suburb with old one.");
 
+                $this->getObject()->getAddress()->setSuburbId($suburb->getId());
                 $this->getObject()->getAddress()->setSuburb($suburb);
+            }
+
+            //print_r($this->getObject());
             //throw new Exception('poo');
-        }
+
 
     }
 

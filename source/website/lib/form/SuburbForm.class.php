@@ -28,23 +28,29 @@ class SuburbForm extends BaseSuburbForm {
         }
     }
 
-    // override the save function so that if the postcode and suburb name already exist, then just use that object
-    public function save($con = null) {
+    protected function doUpdateObject($values) {
+        parent::doUpdateObject($values);
+        sfContext::getInstance()->getLogger()->log("Running custom save for address form.");
 
-        if (!$this->isValid()) {
-            throw $this->getErrorSchema();
-        }
 
-        sfContext::getInstance()->getLogger()->log('in new save');
 
-        $suburb = SuburbPeer::getSameSuburb($name, $postcode);
-        sfContext::getInstance()->getLogger()->log('getting new suburb');
-        if (!$suburb) {
-            sfContext::getInstance()->getLogger()->log('change the suburb');
-            $this->object = $suburb;
-        }
+        //if ($this->getObject()->isNew()) {
 
-        return parent::save($con);
+            sfContext::getInstance()->getLogger()->log("Inside suburb check. ".$values['name'].$values['postcode']);
+
+            $suburb = SuburbPeer::getSameSuburb($values['name'], $values['postcode']);
+            //sfContext::getInstance()->getLogger()->log($suburb->getId());
+            if ($suburb instanceof Suburb) {
+
+                sfContext::getInstance()->getLogger()->log("Replacing suburb with old one.");
+
+                $this->object = $suburb;
+            }
+
+            //print_r($this->getObject());
+            //throw new Exception('poo');
+
+
     }
 
 }

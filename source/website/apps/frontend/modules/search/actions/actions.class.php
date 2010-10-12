@@ -34,6 +34,7 @@ class searchActions extends sfActions {
 
         $this->form = new SearchForm(null, array('url' => $this->getController()->genUrl('search/ajax')));
         $this->listing_type = 'Sale';
+        $this->listing_type_id = ListingTypePeer::getIdFromName('Sale');
         $this->module_link = 'sale';
         $this->page_url = 'search/sale';
 
@@ -185,6 +186,7 @@ class searchActions extends sfActions {
         $this->form = new SearchForm();
         $this->listing_type = 'Rent';
         $this->module_link = 'rent';
+        $this->listing_type_id = ListingTypePeer::getIdFromName('Rent');
         $this->page_url = 'search/rent';
 
         $this->buildSearchQuery($request);

@@ -321,6 +321,7 @@ CREATE TABLE `alert`
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`user_id` INTEGER  NOT NULL,
 	`name` VARCHAR(100)  NOT NULL,
+	`listing_type_id` INTEGER  NOT NULL,
 	`bedrooms` INTEGER,
 	`bathrooms` INTEGER,
 	`car_spaces` INTEGER,
@@ -339,8 +340,12 @@ CREATE TABLE `alert`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
 		ON DELETE CASCADE,
-	INDEX `alert_FI_2` (`alert_property_type_id`),
+	INDEX `alert_FI_2` (`listing_type_id`),
 	CONSTRAINT `alert_FK_2`
+		FOREIGN KEY (`listing_type_id`)
+		REFERENCES `listing_type` (`id`),
+	INDEX `alert_FI_3` (`alert_property_type_id`),
+	CONSTRAINT `alert_FK_3`
 		FOREIGN KEY (`alert_property_type_id`)
 		REFERENCES `alert_property_type` (`id`)
 )Type=InnoDB;

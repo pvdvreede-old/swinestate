@@ -13,6 +13,7 @@ class AlertForm extends BaseAlertForm {
         // only show certain fields to the user
         $this->useFields(array(
             'name',
+            'listing_type_id',
             'bedrooms',
             'bathrooms',
             'car_spaces',

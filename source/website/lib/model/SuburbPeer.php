@@ -49,6 +49,12 @@ class SuburbPeer extends BaseSuburbPeer {
         return $suburbs;
     }
 
+    public static function getNameFromId($value) {
+
+        return self::retrieveByPK($value)->getName();
+        
+    }
+
 }
 
 // SuburbPeer
