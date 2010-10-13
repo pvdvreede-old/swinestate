@@ -43,7 +43,7 @@ class SuburbPeer extends BaseSuburbPeer {
 
         $suburbs = array();
         foreach (SuburbPeer::doSelect($c) as $suburb) {
-            $suburbs[$suburb->getId()] = (string) $suburb;
+            $suburbs[$suburb->getId()] = $suburb->getName().', '.$suburb->getCountry()->getDisplayName();
         }
 
         return $suburbs;

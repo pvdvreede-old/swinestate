@@ -4,7 +4,7 @@ dev:
     param:
       classname: DebugPDO
       debug: { realmemoryusage: true, details: { time: { enabled: true }, slow: { enabled: true, threshold: 0.1 }, mem: { enabled: true }, mempeak: { enabled: true }, memdelta: { enabled: true } } }
-      dsn: 'mysql:host=localhost;dbname=swinestate-pt'
+      dsn: 'mysql:host=localhost;dbname=swinestate'
       username: swinestate
       password: test
 test:

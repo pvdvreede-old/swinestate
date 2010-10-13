@@ -31,7 +31,7 @@ class searchActions extends sfActions {
     }
 
     public function executeSale(sfWebRequest $request) {
-
+     
         $this->form = new SearchForm(null, array('url' => $this->getController()->genUrl('search/ajax')));
         $this->listing_type = 'Sale';
         $this->listing_type_id = ListingTypePeer::getIdFromName('Sale');
@@ -73,7 +73,9 @@ class searchActions extends sfActions {
 
                 // set the listing type as a selling property
                 $c->add(ListingPeer::LISTING_TYPE_ID, ListingTypePeer::getIdFromName($this->listing_type));
-
+                
+                $suburb_search = $request->getParameter('autocomplete_search');
+                
                 if ($values['postcode'] != '') {
                    // create the join to the postcode to filter it
                     $c->addJoin(ListingPeer::ADDRESS_ID, AddressPeer::ID);
@@ -81,11 +83,24 @@ class searchActions extends sfActions {
                     $c->add(SuburbPeer::POSTCODE, $values['postcode']);
                 }
                 // only allow either the suburb or the post code for filtering
-                elseif ($values['suburb'] != '') {
+                elseif ($suburb_search['suburb'] != '') {
+                    // split if there is comma for the country
+                    $parts = explode(',', $suburb_search['suburb']);
+                    
                     // create the join to the suburb to filter it
                     $c->addJoin(ListingPeer::ADDRESS_ID, AddressPeer::ID);
                     $c->addJoin(AddressPeer::SUBURB_ID, SuburbPeer::ID);
-                    $c->add(SuburbPeer::ID, $values['suburb'], Criteria::IN);
+                    $c->add(SuburbPeer::NAME, '%'.$parts[0].'%', Criteria::LIKE);
+                    
+                    if (count($parts) == 2) {
+                        
+                        $c->addJoin(SuburbPeer::COUNTRY_ID, CountryPeer::ID);
+                        $c->add(CountryPeer::DISPLAY_NAME, $parts[1]);
+                        
+                    }
+                    
+                    // set a var so that the template can grab the suburb text for the alert saving
+                    $this->suburb_text = $parts[0];
                 }
 
                 if ($values['bathrooms'] != 0) {
@@ -159,9 +174,9 @@ class searchActions extends sfActions {
 
         // re build the url for the pagination to return the same search with the next page number.
         $gets = $request->getGetParameters();
-
-        $gets_string = '';
- 
+        $auto = $request->getParameter('autocomplete_search');
+        $gets_string = 'autocomplete_search[suburb]='.$auto['suburb'];
+        
         foreach ($gets['search'] as $k => $v) {
 
             if (is_array($v)) {

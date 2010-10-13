@@ -13,10 +13,9 @@
     <?php foreach($sf_request->getParameter('search') as $key => $value) : ?>
         <?php if ($value == '0') { $value = null; } ?>
         <?php if ($key == 'suburb') : ?>
-
-        <input type="hidden" name="alert[<?php echo $key; ?>]" value="<?php echo SuburbPeer::getNameFromId($value); ?>" />
+        <input type="hidden" name="alert[<?php echo $key; ?>]" value="<?php echo $suburb_text; ?>" />
         <?php else : ?>
-            <input type="hidden" name="alert[<?php echo $key; ?>]" value="<?php echo $value; ?>" />
+        <input type="hidden" name="alert[<?php echo $key; ?>]" value="<?php echo $value; ?>" />
         <?php endif; ?>
     <?php endforeach; ?>
         <input type="submit" value="Add this search to my alerts" />
