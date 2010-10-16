@@ -10,4 +10,6 @@
 ?>
 
 
-<p>This is to see if this is gotten.</p>
+<p>The alert <?php echo $alert->getName(); ?> that you created has found a listing that matches its criteria. Click on the link below to be taken to the listing:</p>
+
+<p><?php echo link_to(url_for($module.'/show?id='.$listing->getId()), $module.'/show?id='.$listing->getId()); ?></p>

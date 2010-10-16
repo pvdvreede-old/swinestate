@@ -14,7 +14,7 @@ define('SF_DEBUG', true);
 
 require_once(dirname(__FILE__) . '/../config/ProjectConfiguration.class.php');
 
-$configuration = ProjectConfiguration::getApplicationConfiguration('frontend', SF_ENVIRONMENT, true);
+$configuration = ProjectConfiguration::getApplicationConfiguration(SF_APP, SF_ENVIRONMENT, SF_DEBUG);
 sfContext::createInstance($configuration); //->dispatch();
 
 $instance = sfContext::getInstance();
@@ -40,19 +40,21 @@ if (!empty($listings)) {
 
         $price = ($listing->getSaleDetailsId() == null) ? $listing->getRentDetails->getAmountMontPrice() : $listing->getSaleDetails()->getAskingPrice();
         $type = $listing->getListingTypeId();
-
+        // get the module link that will be used in the email template for the notification
+        $module = strtolower($listing->getListingType()->getName());
         $con = Propel::getConnection();
         $sql = "select *
                 from alert, listing, address, suburb
                 where listing.address_id = address.id
                 and address.suburb_id = suburb.id
-
+                and listing.listing_type_id = alert.listing_type_id
                 and listing.bedrooms = coalesce(alert.bedrooms, listing.bedrooms)
                 and listing.bathrooms = coalesce(alert.bathrooms, listing.bathrooms)
                 and listing.car_spaces = coalesce(alert.car_spaces, listing.car_spaces)
                 and suburb.postcode = coalesce(alert.postcode, suburb.postcode)
-
+                and suburb.name = coalesce(alert.suburb, suburb.name)
                 and listing.id = {$listing->getId()}
+                and alert.active = 1
 				";
         $stmt = $con->prepare($sql);
         $stmt->execute();
@@ -65,8 +67,14 @@ if (!empty($listings)) {
            // print_r($alerts);
             // for each alert get the user
             foreach ($alerts as $alert) {
-
-                $user = sfGuardUserProfilePeer::retrieveByPK($alert->getUserId());
+                echo $listing->getName().'     ';
+                echo $alert->getName();
+                
+                $c = new Criteria();
+                
+                $c->add(sfGuardUserProfilePeer::USER_ID, $alert->getUserId());
+                
+                $user = sfGuardUserProfilePeer::doSelectOne($c);
                 try {
                     // send that user an email
                     // send an email to the user with the details of the property and a link to it
