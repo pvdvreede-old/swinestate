@@ -13,9 +13,19 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
-      list:    ~
+      fields:  ~    
+      list:    
+        max_per_page: 15
+        display: [id, =start_date, end_state, payment_status]
       filter:  ~
-      form:    ~
+      form:    
+        display: 
+          Content: [start_date, end_date]
+          Authorise: [payment_status]
       edit:    ~
-      new:     ~
+      new:
+        title: New Payment     
+        display: 
+          Content: [listing_id, start_date, end_date]
+          Authorise: [payment_status, user_id]
+          PaymentDetails: [payer_account_name, total_paid, payment_date]

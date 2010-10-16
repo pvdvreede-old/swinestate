@@ -30,6 +30,7 @@
 
         <?php echo $form['bedrooms']->renderLabel(); ?>: <?php echo $form['bedrooms']->render(); ?> <?php echo $form['bedrooms']->renderError(); ?>
         <?php echo $form['bathrooms']->renderLabel(); ?>: <?php echo $form['bathrooms']->render(); ?> <?php echo $form['bathrooms']->renderError(); ?>
+        <?php echo $form['car_spaces']->renderLabel(); ?>: <?php echo $form['car_spaces']->render(); ?> <?php echo $form['car_spaces']->renderError(); ?>
         <?php echo $form['min_price']->renderLabel(); ?>: <?php echo $form['min_price']->render(); ?> <?php echo $form['min_price']->renderError(); ?>
         <?php echo $form['max_price']->renderLabel(); ?>: <?php echo $form['max_price']->render(); ?> <?php echo $form['max_price']->renderError(); ?>
         <?php echo $form->renderHiddenFields(false) ?>

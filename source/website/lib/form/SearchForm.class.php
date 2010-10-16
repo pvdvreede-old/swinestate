@@ -13,10 +13,13 @@
 class SearchForm extends sfForm {
 
     private static $bedrooms_choices = array(0 => 'Any',
-        1 => '1+',
-        2 => '2+',
-        3 => '3+',
-        4 => '4+');
+        1 => '1',
+        2 => '2',
+        3 => '3',
+        4 => '4',
+        5 => '5',
+        6 => '6',
+        7 => '7');
     private static $bathroom_choices = array(0 => 'Any',
         1 => '1+',
         2 => '2+');
@@ -40,10 +43,13 @@ class SearchForm extends sfForm {
                 'multiple' => 'true')
             ),
             'bedrooms' => new sfWidgetFormChoice(array(
-                'choices' => self::$bathroom_choices
+                'choices' => self::$bedrooms_choices
             )),
             'bathrooms' => new sfWidgetFormChoice(array(
-                'choices' => self::$bathroom_choices
+                'choices' => self::$bedrooms_choices
+            )),
+            'car_spaces' => new sfWidgetFormChoice(array(
+                'choices' => self::$bedrooms_choices
             )),
             'min_price' => new sfWidgetFormInputText(),
             'max_price' => new sfWidgetFormInputText(),
@@ -55,6 +61,7 @@ class SearchForm extends sfForm {
             'property_type' => new sfValidatorPropelChoice(array('model' => 'PropertyType', 'column' => 'id', 'required' => false, 'multiple' => 'true')),
             'bedrooms' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false)),
             'bathrooms' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false)),
+            'car_spaces' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false)),
             'min_price' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false)),
             'max_price' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false)),
             'postcode' => new sfValidatorInteger(array('min' => 0, 'max' => 2147483647, 'required' => false))

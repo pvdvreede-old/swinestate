@@ -105,12 +105,17 @@ class searchActions extends sfActions {
 
                 if ($values['bathrooms'] != 0) {
 
-                    $c->add(ListingPeer::BATHROOMS, $values['bathrooms'], Criteria::GREATER_EQUAL);
+                    $c->add(ListingPeer::BATHROOMS, $values['bathrooms']);
                 }
 
                 if ($values['bedrooms'] != 0) {
 
-                    $c->add(ListingPeer::BEDROOMS, $values['bedrooms'], Criteria::GREATER_EQUAL);
+                    $c->add(ListingPeer::BEDROOMS, $values['bedrooms']);
+                }
+                
+                if ($values['car_spaces'] != 0) {
+
+                    $c->add(ListingPeer::CAR_SPACES, $values['car_spaces']);
                 }
 
                 if (isset($values['property_type'])) {

@@ -26,6 +26,8 @@ class ListingTimeForm extends BaseListingTimeForm
               'end_date'
               ));
 
+       // unset($this['payment_status'], $this['updated_at'], $this['created_at']);
+
       $this->validatorSchema->setPostValidator(
               new sfValidatorSchemaCompare('start_date', '<', 'end_date', array(), array(
 
