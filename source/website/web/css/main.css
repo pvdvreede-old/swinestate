@@ -166,10 +166,11 @@ p.listing_title {
     font-weight: bold;
 }
 
-p.listing_count {
+div.listing_count {
     position: absolute;
     top: 5px;
     right: 8px;
+    padding-top: 20px;
 
 }
 
@@ -216,4 +217,39 @@ table.search_listing {
     border-bottom-color: #1305fc;
     border-top-color: #1305fc;
 
+}
+
+.bath_pic {
+    
+      background-image: url(../images/realestate_bathroom_icon.jpg);
+      background-repeat: no-repeat;
+      background-position: left top;
+      padding-top: 15px;
+      margin-bottom: 5px;
+      display: inline;
+      padding-left: 55px;
+}
+
+.bed_pic {
+    
+      background-image: url(../images/realestate_bedroom_icon.jpg);
+      background-repeat: no-repeat;
+      background-position: left top;
+      padding-top: 15px;
+      margin-bottom: 5px;
+      display: inline;
+      padding-left: 55px;
+    
+}
+
+.car_pic {
+    
+      background-image: url(../images/realestate_garage_icon.jpg);
+      background-repeat: no-repeat;
+      background-position: left top;
+      padding-top: 15px;
+      margin-bottom: 5px;
+      display: inline;
+      padding-left: 55px;
+    
 }

@@ -12,7 +12,9 @@ $sf_response->addJavascript('gmapaddress');
 
 <div class="single_listing">
     <h2 class="title"><?php echo $Listing->getName(); ?></h2>
-    <p class="rooms">ba: <?php echo $Listing->getBathrooms(); ?> be: <?php echo $Listing->getBedrooms(); ?> ca: <?php echo $Listing->getCarSpaces(); ?></p>
+    <div><div class="bath_pic"><?php echo $Listing->getBathrooms(); ?></div> 
+                <div class="bed_pic"><?php echo $Listing->getBedrooms(); ?></div>
+                <div class="car_pic"><?php echo $Listing->getCarSpaces(); ?></div></div>
     <p class="address"><?php echo $Listing->getAddress(); ?></p>
 
     <p>Asking price: $<?php echo $Listing->getSaleDetails()->getAskingPrice(); ?></p>

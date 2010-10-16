@@ -38,9 +38,9 @@
                 <p class="listing_title"><?php echo $listing->getName(); ?></p>
                 <p class="address"><?php echo $listing->getAddress(); ?></p>
                 <p class="listing_desc"><?php echo html_entity_decode($listing->getShortDescription()); ?></p>
-                <p class="listing_count">Bathrooms: <?php echo $listing->getBathrooms(); ?>
-                Bedrooms: <?php echo $listing->getBedrooms(); ?>
-                Car spaces: <?php echo $listing->getCarSpaces(); ?></p>
+                <div class="listing_count"><div class="bath_pic"><?php echo $listing->getBathrooms(); ?></div> 
+                <div class="bed_pic"><?php echo $listing->getBedrooms(); ?></div>
+                <div class="car_pic"><?php echo $listing->getCarSpaces(); ?></div></div>
                 <p class="listing_link"><?php echo link_to('More details...', $module_link.'/show?id='.$listing->getId()); ?></p>
             </div>
         </td>
