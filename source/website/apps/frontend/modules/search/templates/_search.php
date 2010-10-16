@@ -11,10 +11,11 @@
         <input type="hidden" name="alert[active]" value="1" />
         <input type="hidden" name="alert[listing_type_id]" value="<?php echo $listing_type_id; ?>" />
     <?php foreach($sf_request->getParameter('search') as $key => $value) : ?>
+   
         <?php if ($value == '0') { $value = null; } ?>
         <?php if ($key == 'suburb') : ?>
         <input type="hidden" name="alert[<?php echo $key; ?>]" value="<?php echo $suburb_text; ?>" />
-        <?php else : ?>
+        <?php elseif ($key != 'property_type') : ?>
         <input type="hidden" name="alert[<?php echo $key; ?>]" value="<?php echo $value; ?>" />
         <?php endif; ?>
     <?php endforeach; ?>

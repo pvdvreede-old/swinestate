@@ -2,14 +2,6 @@
 
 <?php if ($sf_request->hasParameter('search')) : ?>
 
-    <form action="<?php echo url_for('alert/create'); ?>" method="post" >
-        <input type="hidden" name="alert[name]" value="Search for <?php echo time(); ?>" />
-        <input type="hidden" name="alert[active]" value="1" />
-    <?php foreach($sf_request->getParameter('search') as $key => $value) : ?>
-        <?php if ($value == '0') { $value = null; } ?>
-      
-    <input type="hidden" name="alert[<?php echo $key; ?>]" value="<?php echo $value; ?>" />
-    <?php endforeach; ?>
         <p>There were no results found for this query, if you have signed up you can add this search to your alerts to be notified of a listing matchin this description.</p>
         </form>
 
