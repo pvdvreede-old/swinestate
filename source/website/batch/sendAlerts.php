@@ -38,7 +38,7 @@ if (!empty($listings)) {
     // for each new listing do a query to see if any alerts match them
     foreach ($listings as $listing) {
 
-        $price = ($listing->getSaleDetailsId() == null) ? $listing->getRentDetails->getAmountMontPrice() : $listing->getSaleDetails()->getAskingPrice();
+        $price = ($listing->getSaleDetailsId() == null) ? $listing->getRentDetails->getAmountMonthPrice() : $listing->getSaleDetails()->getAskingPrice();
         $type = $listing->getListingTypeId();
         // get the module link that will be used in the email template for the notification
         $module = strtolower($listing->getListingType()->getName());
@@ -60,11 +60,9 @@ if (!empty($listings)) {
         $stmt->execute();
         $alerts = AlertPeer::populateObjects($stmt);
 
-        //print_r($stmt);
-       // print_r($alerts);
         // if there is a match then loop through all the matching alerts
         if (!empty($alerts)) {
-           // print_r($alerts);
+
             // for each alert get the user
             foreach ($alerts as $alert) {
                 echo $listing->getName().'     ';
