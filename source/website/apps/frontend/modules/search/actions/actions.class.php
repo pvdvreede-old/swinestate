@@ -92,12 +92,12 @@ class searchActions extends sfActions {
                     $c->addJoin(AddressPeer::SUBURB_ID, SuburbPeer::ID);
                     $c->add(SuburbPeer::NAME, '%'.$parts[0].'%', Criteria::LIKE);
                     
-                    if (count($parts) == 2) {
-                        
-                        $c->addJoin(SuburbPeer::COUNTRY_ID, CountryPeer::ID);
-                        $c->add(CountryPeer::DISPLAY_NAME, $parts[1]);
-                        
-                    }
+//                    if (count($parts) == 2) {
+//                        
+//                        $c->addJoin(SuburbPeer::COUNTRY_ID, CountryPeer::ID);
+//                        $c->add(CountryPeer::DISPLAY_NAME, $parts[1]);
+//                        
+//                    }
                     
                     // set a var so that the template can grab the suburb text for the alert saving
                     $this->suburb_text = $parts[0];
