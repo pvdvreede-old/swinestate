@@ -10,22 +10,32 @@ $sf_response->addJavascript('http://maps.google.com/maps/api/js?sensor=false');
 $sf_response->addJavascript('gmapaddress');
 ?>
 
-<p><a href="<?php echo url_for('search/sale') . '?' . $sf_user->getFlash('last_url'); ?>">Back to search results</a></p>
 <div class="single_listing">
     <h2 class="title"><?php echo $Listing->getName(); ?></h2>
-    <p class="rooms">ba: <?php echo $Listing->getBathrooms(); ?> be: <?php echo $Listing->getBedrooms(); ?> ca: <?php echo $Listing->getCarSpaces(); ?></p>
+    <div><div class="bath_pic"><?php echo $Listing->getBathrooms(); ?></div> 
+                <div class="bed_pic"><?php echo $Listing->getBedrooms(); ?></div>
+                <div class="car_pic"><?php echo $Listing->getCarSpaces(); ?></div></div>
     <p class="address"><?php echo $Listing->getAddress(); ?></p>
+
+    <p>Rental price per month: $<?php echo $Listing->getRentDetails()->getAmountMonthPrice(); ?></p>
+    <?php if ($Listing->getRentDetails()->getRentingDate() != null) : ?>
+    <p>Available from: <?php echo $Listing->getRentDetails()->getRentingDate(); ?> </p>
+    <?php endif; ?>
     <?php if (count($photos = $Listing->getListingPhotoss()) > 0) : ?>
+        <?php if ($photos[0]->getPath() != '') : ?>
         <p><img data-magnifysrc="<?php echo $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/' . $photos[0]->getPath(); ?>" id="photo_main" src="<?php echo $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/med/' . $photos[0]->getPath(); ?>" /></p>
         <p class="listing_photos11">
+        <?php endif; ?>
         <?php foreach ($Listing->getListingPhotoss() as $photo) : ?>
+	<?php if ($photo->getPath() != '') : ?>
         <?php echo '<img src="' . $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/thumb/' . $photo->getPath() . '" onclick="changePhoto(\'' . $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/med/' . $photo->getPath() . '\',\'' . $sf_request->getUriPrefix() . $sf_request->getRelativeUrlRoot() . '/uploads/listings/' . $photo->getPath() . '\');" />' ?>
-        <?php endforeach; ?>
+        <?php endif; ?>
+	<?php endforeach; ?>
         </p>
     <?php endif; ?>
             <p>
         <?php
-//            $gmap = new sfWidgetFormGMapAddress();
+            //$gmap = new sfWidgetFormGMapAddress();
 //            echo $gmap->render('user[location][address]', array(
 //                'address' => $Listing->getAddress(),
 //                'longitude' => '2.294359',

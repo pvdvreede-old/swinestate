@@ -126,8 +126,10 @@ class Listing extends BaseListing {
     }
 
     public function hasPhoto() {
-
-        if (count($this->getListingPhotoss()) > 0) {
+        
+        $photos = $this->getListingPhotoss();
+        
+        if (count($this->getListingPhotoss()) > 0 && $photos[0]->getPath() != '') {
             return true;
         }
 
