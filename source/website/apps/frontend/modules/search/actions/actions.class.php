@@ -180,7 +180,7 @@ class searchActions extends sfActions {
         // re build the url for the pagination to return the same search with the next page number.
         $gets = $request->getGetParameters();
         $auto = $request->getParameter('autocomplete_search');
-        $gets_string = 'autocomplete_search[suburb]='.$auto['suburb'];
+        $gets_string = 'autocomplete_search[suburb]='.$auto['suburb'].'&';
         
         foreach ($gets['search'] as $k => $v) {
 

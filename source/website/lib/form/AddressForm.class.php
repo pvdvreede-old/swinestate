@@ -39,7 +39,7 @@ class AddressForm extends BaseAddressForm {
         // Add *  to our required fields
         foreach ($this->getFormFieldSchema()->getWidget()->getFields() as $key => $object) {
             $label = $this->getFormFieldSchema()->offsetGet($key)->renderLabelName();
-            if ($this->validatorSchema[$key]->getOption('required') == true) {
+            if ($this->validatorSchema[$key]->getOption('required') == true && $label != 'Suburb') {
                 $this->widgetSchema->setLabel($key, $label . " *");
             }
         }

@@ -26,6 +26,6 @@ prod:
   propel:
     class: sfPropelDatabase
     param:
-      dsn: 'mysql:host=mysql.vdvreede.net;dbname=swinestate'
+      dsn: 'mysql:host=mysql.vdvreede.net;dbname=swinestate2'
       username: swinestate
       password: bestteamever

@@ -9,29 +9,23 @@
  */
 class ListingTimeForm extends BaseListingTimeForm
 {
-  public function configure()
-  {
+    public function configure()
+    {
 
-      $this->widgetSchema['start_date'] = new sfWidgetFormJQueryDate(array(
-          'config' => '{minDate: +0}'
-      ));
-      
-      $this->widgetSchema['end_date'] = new sfWidgetFormJQueryDate(array(
-          'config' => '{minDate: +1}'
-      ));
-      
-      $this->useFields(array(
-              'listing_id',
-              'start_date',
-              'end_date'
-              ));
+        $this->widgetSchema['start_date'] = new sfWidgetFormJQueryDate(array('config' =>
+            '{minDate: +0}'));
 
-       // unset($this['payment_status'], $this['updated_at'], $this['created_at']);
+        $this->widgetSchema['end_date'] = new sfWidgetFormJQueryDate(array('config' =>
+            '{minDate: +1}'));
 
-      $this->validatorSchema->setPostValidator(
-              new sfValidatorSchemaCompare('start_date', '<', 'end_date', array(), array(
+        $this->removeFields();
 
-              ))
-              );
-  }
+        $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('start_date',
+            '<', 'end_date', array(), array()));
+    }
+
+    protected function removeFields()
+    {
+        $this->useFields(array('listing_id', 'start_date', 'end_date'));
+    }
 }

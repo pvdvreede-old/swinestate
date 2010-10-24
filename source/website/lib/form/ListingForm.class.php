@@ -66,7 +66,7 @@ class ListingForm extends BaseListingForm {
         }
 
         // only use certain fields for the form
-        $this->useFields($fields);
+        $this->removeFields($fields);
 
         // Add *  to our required fields
         foreach ($this->getFormFieldSchema()->getWidget()->getFields() as $key => $object) {
@@ -77,24 +77,9 @@ class ListingForm extends BaseListingForm {
         }
     }
 
-    public function save768($con = null) {
-
-        $photos = $this->getValue('photos');
-        $forms = $this->embeddedForms;
-
-        // loop through all the photo forms and if they are not filled in remove them from saving
-        foreach ($this->embeddedForms['photos'] as $name => $form) {
-            sfContext::getInstance()->getLogger()->info($name);
-            if (!isset($photos[$name])) {
-
-                unset($forms['photos'][$name]);
-                sfContext::getInstance()->getLogger()->info('unset');
-            }
-        }
-
-
-
-        parent::save($con);
+    protected function removeFields($fields = null)
+    {
+        $this->useFields($fields);
     }
 
     protected function doUpdateObject($values) {

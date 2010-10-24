@@ -72,7 +72,7 @@ class alertActions extends sfActions {
         if ($form->isValid()) {
             $Alert = $form->save();
             $this->getUser()->setFlash('notice', 'The alert has been saved.');
-            $this->redirect('alert/edit?id=' . $Alert->getId());
+            $this->redirect('alert/index');
         }
     }
 

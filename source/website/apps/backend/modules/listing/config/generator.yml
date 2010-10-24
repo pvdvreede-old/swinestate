@@ -18,6 +18,7 @@ generator:
         max_per_page: 15
         display: [id, =name, bedrooms, bathrooms, car_spaces, created_at, updated_at]
       filter:  ~
-      form:    ~
+      form:  
+        class: ListingAdminForm
       edit:    ~
       new:     ~
