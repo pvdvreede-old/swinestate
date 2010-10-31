@@ -9,6 +9,11 @@
  */
 class sfGuardUserProfileForm extends BasesfGuardUserProfileForm
 {
+  /**
+   * sfGuardUserProfileForm::configure()
+   * 
+   * @return
+   */
   public function configure()
   {
       unset($this['updated_at']);

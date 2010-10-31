@@ -18,6 +18,11 @@
  */
 class Suburb extends BaseSuburb {
 
+    /**
+     * Suburb::__toString()
+     * 
+     * @return
+     */
     public function  __toString() {
         return $this->getName();
     }

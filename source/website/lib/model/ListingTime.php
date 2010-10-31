@@ -18,6 +18,12 @@
  */
 class ListingTime extends BaseListingTime {
 
+    /**
+     * ListingTime::save()
+     * 
+     * @param mixed $con
+     * @return
+     */
     public function save(PropelPDO $con = null) {
 
         // make sure that there is not another entry in the table which include part or all
@@ -58,6 +64,11 @@ class ListingTime extends BaseListingTime {
         return $object;
     }
 
+    /**
+     * ListingTime::getTotalDays()
+     * 
+     * @return
+     */
     public function getTotalDays() {
 
         // get the difference between the first date and last date
@@ -67,6 +78,11 @@ class ListingTime extends BaseListingTime {
 
     }
 
+    /**
+     * ListingTime::getPaidTotalFromDays()
+     * 
+     * @return
+     */
     public function getPaidTotalFromDays() {
 
         // get the total amount due from the difference in days

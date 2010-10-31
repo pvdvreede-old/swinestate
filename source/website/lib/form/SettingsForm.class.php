@@ -9,6 +9,11 @@
  */
 class SettingsForm extends BaseSettingsForm
 {
+  /**
+   * SettingsForm::configure()
+   * 
+   * @return
+   */
   public function configure()
   {
   }

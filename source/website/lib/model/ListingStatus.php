@@ -18,6 +18,11 @@
  */
 class ListingStatus extends BaseListingStatus {
 
+    /**
+     * ListingStatus::__toString()
+     * 
+     * @return
+     */
     public function  __toString() {
         return $this->getName();
     }

@@ -18,6 +18,11 @@
  */
 class PropertyType extends BasePropertyType {
 
+    /**
+     * PropertyType::__toString()
+     * 
+     * @return
+     */
     public function  __toString() {
         return $this->getName();
     }

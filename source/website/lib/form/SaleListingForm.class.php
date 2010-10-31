@@ -9,6 +9,11 @@
  */
 class SaleListingForm extends ListingForm
 {
+  /**
+   * SaleListingForm::configure()
+   * 
+   * @return
+   */
   public function configure()
   {
 

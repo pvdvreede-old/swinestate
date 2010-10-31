@@ -18,6 +18,11 @@
  */
 class AlertPropertyType extends BaseAlertPropertyType {
 
+    /**
+     * AlertPropertyType::__toString()
+     * 
+     * @return
+     */
     public function  __toString() {
 
         return $this->getPropertyType()->getName();

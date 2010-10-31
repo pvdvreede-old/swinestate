@@ -9,6 +9,11 @@
  */
 class CountryForm extends BaseCountryForm
 {
+  /**
+   * CountryForm::configure()
+   * 
+   * @return
+   */
   public function configure()
   {
   }

@@ -9,6 +9,11 @@
  */
 class SuburbForm extends BaseSuburbForm {
 
+    /**
+     * SuburbForm::configure()
+     * 
+     * @return
+     */
     public function configure() {
 
         // removed the updated and created fields by selecting only the fields to use
@@ -28,6 +33,12 @@ class SuburbForm extends BaseSuburbForm {
         }
     }
 
+    /**
+     * SuburbForm::doUpdateObject()
+     * 
+     * @param mixed $values
+     * @return
+     */
     protected function doUpdateObject($values) {
         parent::doUpdateObject($values);
         sfContext::getInstance()->getLogger()->log("Running custom save for address form.");

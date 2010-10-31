@@ -9,6 +9,11 @@
  */
 class RentListingForm extends ListingForm
 {
+  /**
+   * RentListingForm::configure()
+   * 
+   * @return
+   */
   public function configure()
   {
 

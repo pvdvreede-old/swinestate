@@ -9,6 +9,11 @@
  */
 class PropertyTypeForm extends BasePropertyTypeForm
 {
+  /**
+   * PropertyTypeForm::configure()
+   * 
+   * @return
+   */
   public function configure()
   {
   }

@@ -7,6 +7,15 @@
 
 class MultiFileValidatorSchema extends sfValidatedFile {
 
+    /**
+     * MultiFileValidatorSchema::save()
+     * 
+     * @param mixed $file
+     * @param integer $fileMode
+     * @param bool $create
+     * @param integer $dirMode
+     * @return
+     */
     public function save($file = null, $fileMode = 0776, $create = true, $dirMode = 0777) {
 
         $full_dir = sfConfig::get('sf_upload_dir') . '/listings/';

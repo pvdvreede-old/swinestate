@@ -18,6 +18,11 @@
  */
 class ListingType extends BaseListingType {
 
+    /**
+     * ListingType::__toString()
+     * 
+     * @return
+     */
     public function  __toString() {
         return $this->getName();
     }

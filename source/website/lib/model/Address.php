@@ -18,6 +18,11 @@
  */
 class Address extends BaseAddress {
 
+    /**
+     * Address::__toString()
+     * 
+     * @return
+     */
     public function  __toString() {
 
         $address = '';

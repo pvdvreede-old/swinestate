@@ -18,6 +18,12 @@
  */
 class ListingStatusPeer extends BaseListingStatusPeer {
 
+    /**
+     * ListingStatusPeer::getIdFromName()
+     * 
+     * @param mixed $name
+     * @return
+     */
     public static function getIdFromName($name) {
 
         // build the criteria for SQL

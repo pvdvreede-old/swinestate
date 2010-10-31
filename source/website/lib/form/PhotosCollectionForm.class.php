@@ -9,6 +9,11 @@
  */
 class PhotosCollectionForm extends sfForm {
 
+    /**
+     * PhotosCollectionForm::configure()
+     * 
+     * @return
+     */
     public function configure() {
         // must provide a listing object with the form
         if (!$listing = $this->getOption('listing')) {

@@ -9,6 +9,11 @@
  */
 class ListingTimeForm extends BaseListingTimeForm
 {
+    /**
+     * ListingTimeForm::configure()
+     * 
+     * @return
+     */
     public function configure()
     {
 
@@ -24,6 +29,11 @@ class ListingTimeForm extends BaseListingTimeForm
             '<', 'end_date', array(), array()));
     }
 
+    /**
+     * ListingTimeForm::removeFields()
+     * 
+     * @return
+     */
     protected function removeFields()
     {
         $this->useFields(array('listing_id', 'start_date', 'end_date'));

@@ -18,6 +18,11 @@
  */
 class Interest extends BaseInterest {
 
+    /**
+     * Interest::getUserEmailForInterest()
+     * 
+     * @return
+     */
     public function getUserEmailForInterest() {
 
         // retrieve by the user_id which isnt the primary key!
@@ -28,6 +33,11 @@ class Interest extends BaseInterest {
 
     }
 
+    /**
+     * Interest::getUserNameForInterest()
+     * 
+     * @return
+     */
     public function getUserNameForInterest() {
 
         return sfGuardUserPeer::retrieveByPK($this->getUserId())->getUsername();

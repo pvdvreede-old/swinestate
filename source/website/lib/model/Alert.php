@@ -17,6 +17,12 @@
  */
 class Alert extends BaseAlert {
 
+    /**
+     * Alert::save()
+     * 
+     * @param mixed $con
+     * @return
+     */
     public function save(PropelPDO $con = null) {
 
         // if this is the first save attach the user id

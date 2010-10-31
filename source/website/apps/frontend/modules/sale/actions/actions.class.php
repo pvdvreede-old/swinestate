@@ -20,6 +20,12 @@ class saleActions extends sfActions
      * @param mixed $request
      * @return
      */
+    /**
+     * saleActions::executeIndex()
+     * 
+     * @param mixed $request
+     * @return
+     */
     public function executeIndex(sfWebRequest $request)
     {
         $this->pager = new sfPropelPager('Listing', sfConfig::get('app_items_on_page'));
@@ -28,6 +34,12 @@ class saleActions extends sfActions
         $this->page_url = 'sale/index';
     }
 
+    /**
+     * saleActions::executeShow()
+     * 
+     * @param mixed $request
+     * @return
+     */
     /**
      * saleActions::executeShow()
      * 
@@ -53,11 +65,23 @@ class saleActions extends sfActions
      * @param mixed $request
      * @return
      */
+    /**
+     * saleActions::executeNew()
+     * 
+     * @param mixed $request
+     * @return
+     */
     public function executeNew(sfWebRequest $request)
     {
         $this->form = new $this->_formObjectType();
     }
 
+    /**
+     * saleActions::executeCreate()
+     * 
+     * @param mixed $request
+     * @return
+     */
     /**
      * saleActions::executeCreate()
      * 
@@ -81,6 +105,12 @@ class saleActions extends sfActions
      * @param mixed $request
      * @return
      */
+    /**
+     * saleActions::executeEdit()
+     * 
+     * @param mixed $request
+     * @return
+     */
     public function executeEdit(sfWebRequest $request)
     {
         $this->forward404Unless($Listing = ListingPeer::retrieveByPk($request->
@@ -89,6 +119,12 @@ class saleActions extends sfActions
         $this->form = new $this->_formObjectType($Listing);
     }
 
+    /**
+     * saleActions::executeUpdate()
+     * 
+     * @param mixed $request
+     * @return
+     */
     /**
      * saleActions::executeUpdate()
      * 
@@ -115,6 +151,12 @@ class saleActions extends sfActions
      * @param mixed $request
      * @return
      */
+    /**
+     * saleActions::executeDelete()
+     * 
+     * @param mixed $request
+     * @return
+     */
     public function executeDelete(sfWebRequest $request)
     {
         $request->checkCSRFProtection();
@@ -131,6 +173,13 @@ class saleActions extends sfActions
      * This function checks any forms from this module and makes sure they are valid then
      * saves then. If they are not valid then the form is return to the posting page 
      * with the errors displayed.
+     * 
+     * @param mixed $request
+     * @param mixed $form
+     * @return
+     */
+    /**
+     * saleActions::processForm()
      * 
      * @param mixed $request
      * @param mixed $form

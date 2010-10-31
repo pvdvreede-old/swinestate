@@ -18,6 +18,11 @@
  */
 class SaleDetails extends BaseSaleDetails {
 
+    /**
+     * SaleDetails::__toString()
+     * 
+     * @return
+     */
     public function  __toString() {
         return '';
     }

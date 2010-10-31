@@ -17,6 +17,11 @@
  */
 class ListingTimePeer extends BaseListingTimePeer {
 
+    /**
+     * ListingTimePeer::getPendingPaymentCount()
+     * 
+     * @return
+     */
     public static function getPendingPaymentCount() {
 
         // get a count of any payments that are still 'pending'
@@ -29,6 +34,12 @@ class ListingTimePeer extends BaseListingTimePeer {
     }
 
     // function to determine if there is a current view
+    /**
+     * ListingTimePeer::isCurrentListing()
+     * 
+     * @param mixed $listing_id
+     * @return
+     */
     public static function isCurrentListing($listing_id) {
 
         $c = new Criteria();
@@ -50,6 +61,11 @@ class ListingTimePeer extends BaseListingTimePeer {
     }
     
     // function to see if the user has any payments
+    /**
+     * ListingTimePeer::hasPayments()
+     * 
+     * @return
+     */
     public static function hasPayments() {
         
         $c = new Criteria();

@@ -18,6 +18,12 @@
  */
 class ListingTypePeer extends BaseListingTypePeer {
 
+    /**
+     * ListingTypePeer::getIdFromName()
+     * 
+     * @param mixed $name
+     * @return
+     */
     public static function getIdFromName($name) {
 
         // build the criteria for SQL

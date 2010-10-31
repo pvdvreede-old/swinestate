@@ -9,6 +9,11 @@
  */
 class RentDetailsForm extends BaseRentDetailsForm {
 
+    /**
+     * RentDetailsForm::configure()
+     * 
+     * @return
+     */
     public function configure() {
         unset(
                 $this['created_at'],

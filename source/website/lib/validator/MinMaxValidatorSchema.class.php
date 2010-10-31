@@ -7,6 +7,15 @@
 
 class MinMaxValidatorSchema extends sfValidatorSchema {
 
+    /**
+     * MinMaxValidatorSchema::__construct()
+     * 
+     * @param mixed $leftField
+     * @param mixed $rightField
+     * @param mixed $options
+     * @param mixed $messages
+     * @return
+     */
     public function __construct($leftField, $rightField, $options = array(), $messages = array()) {
         $this->addOption('left_field', $leftField);
         $this->addOption('right_field', $rightField);
@@ -16,11 +25,24 @@ class MinMaxValidatorSchema extends sfValidatorSchema {
         parent::__construct(null, $options, $messages);
     }
 
+    /**
+     * MinMaxValidatorSchema::configure()
+     * 
+     * @param mixed $options
+     * @param mixed $messages
+     * @return
+     */
     protected function configure($options = array(), $messages = array()) {
         $this->addMessage('left_field', 'The min is not set properly');
         $this->addMessage('right_field', 'The max is not set properly.');
     }
 
+    /**
+     * MinMaxValidatorSchema::doClean()
+     * 
+     * @param mixed $values
+     * @return
+     */
     protected function doClean($values) {
 
         $errorSchemaLocal = new sfValidatorErrorSchema($this);

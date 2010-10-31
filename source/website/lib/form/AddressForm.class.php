@@ -9,6 +9,11 @@
  */
 class AddressForm extends BaseAddressForm {
 
+    /**
+     * AddressForm::configure()
+     * 
+     * @return
+     */
     public function configure() {
 
         // when there is an edit we need to get the address from the db
@@ -45,6 +50,12 @@ class AddressForm extends BaseAddressForm {
         }
     }
 
+    /**
+     * AddressForm::save()
+     * 
+     * @param mixed $con
+     * @return
+     */
     public function save($con = null) {
 
         sfContext::getInstance()->getLogger()->log("Running custom save for address form.");

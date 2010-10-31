@@ -18,6 +18,12 @@
  */
 class sfGuardUserProfile extends BasesfGuardUserProfile {
 
+    /**
+     * sfGuardUserProfile::hasInterestIn()
+     * 
+     * @param mixed $listing_id
+     * @return
+     */
     public function hasInterestIn($listing_id) {
 
         // check and see if the user has any interests in the listing

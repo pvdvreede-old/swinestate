@@ -18,6 +18,11 @@
  */
 class Country extends BaseCountry {
 
+    /**
+     * Country::__toString()
+     * 
+     * @return
+     */
     public function  __toString() {
         return $this->getDisplayName();
     }

@@ -19,6 +19,11 @@
 class InterestPeer extends BaseInterestPeer {
 
     // function to check if a user has any interests
+    /**
+     * InterestPeer::hasInterests()
+     * 
+     * @return
+     */
     public static function hasInterests() {
 
         $c = new Criteria();

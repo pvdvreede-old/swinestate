@@ -9,6 +9,11 @@
  */
 abstract class BaseFormPropel extends sfFormPropel
 {
+  /**
+   * BaseFormPropel::setup()
+   * 
+   * @return
+   */
   public function setup()
   {
   }

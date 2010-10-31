@@ -9,6 +9,11 @@
  */
 class AlertPropertyTypeForm extends BaseAlertPropertyTypeForm
 {
+  /**
+   * AlertPropertyTypeForm::configure()
+   * 
+   * @return
+   */
   public function configure()
   {
   }

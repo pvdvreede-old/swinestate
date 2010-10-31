@@ -18,6 +18,11 @@
  */
 class RentDetails extends BaseRentDetails {
 
+    /**
+     * RentDetails::__toString()
+     * 
+     * @return
+     */
     public function  __toString() {
         return '';
     }

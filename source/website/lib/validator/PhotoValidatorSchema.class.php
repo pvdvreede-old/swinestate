@@ -7,11 +7,24 @@
 
 class PhotoValidatorSchema extends sfValidatorSchema {
 
+    /**
+     * PhotoValidatorSchema::configure()
+     * 
+     * @param mixed $options
+     * @param mixed $messages
+     * @return
+     */
     protected function configure($options = array(), $messages = array()) {
         $this->addMessage('caption', 'The caption is required.');
         $this->addMessage('path', 'The filename is required.');
     }
 
+    /**
+     * PhotoValidatorSchema::doClean()
+     * 
+     * @param mixed $values
+     * @return
+     */
     protected function doClean($values) {
         $errorSchema = new sfValidatorErrorSchema($this);
 

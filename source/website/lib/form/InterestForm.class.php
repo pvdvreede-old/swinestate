@@ -9,6 +9,11 @@
  */
 class InterestForm extends BaseInterestForm
 {
+  /**
+   * InterestForm::configure()
+   * 
+   * @return
+   */
   public function configure()
   {
   }

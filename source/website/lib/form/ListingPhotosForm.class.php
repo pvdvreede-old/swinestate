@@ -9,6 +9,11 @@
  */
 class ListingPhotosForm extends BaseListingPhotosForm {
 
+    /**
+     * ListingPhotosForm::configure()
+     * 
+     * @return
+     */
     public function configure() {
 
         $this->useFields(array(

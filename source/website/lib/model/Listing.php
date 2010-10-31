@@ -17,10 +17,21 @@
  */
 class Listing extends BaseListing {
 
+    /**
+     * Listing::__toString()
+     * 
+     * @return
+     */
     public function __toString() {
         return $this->getName() . ' - ' . $this->getAddress();
     }
 
+    /**
+     * Listing::save()
+     * 
+     * @param mixed $con
+     * @return
+     */
     public function save(PropelPDO $con = null) {
 
         // if this is the first save attach the user id, and the listing status
@@ -39,6 +50,11 @@ class Listing extends BaseListing {
         return $object;
     }
 
+    /**
+     * Listing::getShortDescription()
+     * 
+     * @return
+     */
     public function getShortDescription() {
 
         // if the description is longer than 500 characters then only take the first 500 chars up to the end of a word!
@@ -56,6 +72,11 @@ class Listing extends BaseListing {
 
     // function to return and print to the webpage the status of the listing and let the user pay to have it shown
     // if it isnt already active
+    /**
+     * Listing::getViewStatus()
+     * 
+     * @return
+     */
     public function getViewStatus() {
 
         if ($this->getListingStatus()->getName() == 'Sold') {
@@ -76,6 +97,11 @@ class Listing extends BaseListing {
     }
 
     // simple function to tell the view if there is any payment history for the listing
+    /**
+     * Listing::getPaymentHistory()
+     * 
+     * @return
+     */
     public function getPaymentHistory() {
 
         if (count($this->getListingTimes()) > 0) {
@@ -85,6 +111,11 @@ class Listing extends BaseListing {
         }
     }
 
+    /**
+     * Listing::getInterestsCount()
+     * 
+     * @return
+     */
     public function getInterestsCount() {
 
         // get the interests for the listing but double check to make sure its for the logged in user
@@ -95,6 +126,11 @@ class Listing extends BaseListing {
         return InterestPeer::doCount($c);
     }
 
+    /**
+     * Listing::getListingTypeName()
+     * 
+     * @return
+     */
     public function getListingTypeName() {
 
         if ($this->getRentDetailsId() == null) {
@@ -107,6 +143,11 @@ class Listing extends BaseListing {
     }
 
     // function to check security and see if the user should be able to view this listing
+    /**
+     * Listing::canView()
+     * 
+     * @return
+     */
     public function canView() {
 
         if (sfContext::getInstance()->getUser()->isAuthenticated()) {
@@ -125,6 +166,11 @@ class Listing extends BaseListing {
         return false;
     }
 
+    /**
+     * Listing::hasPhoto()
+     * 
+     * @return
+     */
     public function hasPhoto() {
         
         $photos = $this->getListingPhotoss();
@@ -136,6 +182,11 @@ class Listing extends BaseListing {
         return false;
     }
 
+    /**
+     * Listing::getFirstPhotoPath()
+     * 
+     * @return
+     */
     public function getFirstPhotoPath() {
 
         $photos = $this->getListingPhotoss();

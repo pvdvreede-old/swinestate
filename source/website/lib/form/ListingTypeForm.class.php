@@ -9,6 +9,11 @@
  */
 class ListingTypeForm extends BaseListingTypeForm
 {
+  /**
+   * ListingTypeForm::configure()
+   * 
+   * @return
+   */
   public function configure()
   {
   }

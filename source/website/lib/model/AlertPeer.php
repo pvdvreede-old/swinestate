@@ -18,6 +18,12 @@
  */
 class AlertPeer extends BaseAlertPeer {
 
+    /**
+     * AlertPeer::getAlertCriteriaForUser()
+     * 
+     * @param mixed $user_id
+     * @return
+     */
     public static function getAlertCriteriaForUser($user_id) {
 
         $c = new Criteria();

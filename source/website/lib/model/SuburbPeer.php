@@ -17,6 +17,13 @@
  */
 class SuburbPeer extends BaseSuburbPeer {
 
+    /**
+     * SuburbPeer::getSameSuburb()
+     * 
+     * @param mixed $name
+     * @param mixed $postcode
+     * @return
+     */
     public static function getSameSuburb($name, $postcode) {
 
         $c = new Criteria();
@@ -34,6 +41,13 @@ class SuburbPeer extends BaseSuburbPeer {
         return $suburb;
     }
 
+    /**
+     * SuburbPeer::retrieveForAutoComplete()
+     * 
+     * @param mixed $name
+     * @param mixed $limit
+     * @return
+     */
     public static function retrieveForAutoComplete($name, $limit) {
 
         $c = new Criteria();
@@ -49,6 +63,12 @@ class SuburbPeer extends BaseSuburbPeer {
         return $suburbs;
     }
 
+    /**
+     * SuburbPeer::getNameFromId()
+     * 
+     * @param mixed $value
+     * @return
+     */
     public static function getNameFromId($value) {
 
         return self::retrieveByPK($value)->getName();

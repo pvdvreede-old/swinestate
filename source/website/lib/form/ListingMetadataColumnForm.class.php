@@ -9,6 +9,11 @@
  */
 class ListingMetadataColumnForm extends BaseListingMetadataColumnForm
 {
+  /**
+   * ListingMetadataColumnForm::configure()
+   * 
+   * @return
+   */
   public function configure()
   {
   }

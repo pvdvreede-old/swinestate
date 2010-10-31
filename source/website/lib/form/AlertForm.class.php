@@ -9,6 +9,16 @@
  */
 class AlertForm extends BaseAlertForm {
 
+    /**
+     * AlertForm::configure()
+     * 
+     * @return
+     */
+    /**
+     * AlertForm::configure()
+     * 
+     * @return
+     */
     public function configure() {
         // only show certain fields to the user
         $this->useFields(array(

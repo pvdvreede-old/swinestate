@@ -9,6 +9,11 @@
  */
 class ListingStatusForm extends BaseListingStatusForm
 {
+  /**
+   * ListingStatusForm::configure()
+   * 
+   * @return
+   */
   public function configure()
   {
   }

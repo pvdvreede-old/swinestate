@@ -9,6 +9,11 @@
  */
 class ListingMetadataValueForm extends BaseListingMetadataValueForm
 {
+  /**
+   * ListingMetadataValueForm::configure()
+   * 
+   * @return
+   */
   public function configure()
   {
   }

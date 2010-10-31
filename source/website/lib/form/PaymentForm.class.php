@@ -11,6 +11,11 @@ class PaymentForm extends sfForm {
 
     public $listing_time_id;
 
+    /**
+     * PaymentForm::configure()
+     * 
+     * @return
+     */
     public function configure() {
         // create inputs for details of the user's paypal account
         $this->setWidgets(array(
@@ -51,6 +56,12 @@ class PaymentForm extends sfForm {
         $this->widgetSchema->setNameFormat('payment[%s]');
     }
 
+    /**
+     * PaymentForm::save()
+     * 
+     * @param mixed $con
+     * @return
+     */
     public function save(PropelPDO $con = null) {
 
         $fail = false;

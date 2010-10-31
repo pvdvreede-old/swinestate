@@ -9,6 +9,11 @@
  */
 class ListingVideosForm extends BaseListingVideosForm {
 
+    /**
+     * ListingVideosForm::configure()
+     * 
+     * @return
+     */
     public function configure() {
 
         $this->widgetSchema['url'] = new sfWidgetFormTextarea(array(

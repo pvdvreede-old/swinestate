@@ -9,6 +9,11 @@
  */
 class SaleDetailsForm extends BaseSaleDetailsForm {
 
+    /**
+     * SaleDetailsForm::configure()
+     * 
+     * @return
+     */
     public function configure() {
         $this->widgetSchema['auction_date'] = new sfWidgetFormJQueryDate(array(
                     'config' => '{minDate: +1}'

@@ -9,6 +9,16 @@
  */
 class ListingForm extends BaseListingForm {
 
+    /**
+     * ListingForm::configure()
+     * 
+     * @return
+     */
+    /**
+     * ListingForm::configure()
+     * 
+     * @return
+     */
     public function configure() {
 
         // set the widget for the description to the text editor
@@ -77,11 +87,35 @@ class ListingForm extends BaseListingForm {
         }
     }
 
+    /**
+     * ListingForm::removeFields()
+     * 
+     * @param mixed $fields
+     * @return
+     */
+    /**
+     * ListingForm::removeFields()
+     * 
+     * @param mixed $fields
+     * @return
+     */
     protected function removeFields($fields = null)
     {
         $this->useFields($fields);
     }
 
+    /**
+     * ListingForm::doUpdateObject()
+     * 
+     * @param mixed $values
+     * @return
+     */
+    /**
+     * ListingForm::doUpdateObject()
+     * 
+     * @param mixed $values
+     * @return
+     */
     protected function doUpdateObject($values) {
         parent::doUpdateObject($values);
         sfContext::getInstance()->getLogger()->log("Running custom save for address form.");
@@ -108,6 +142,20 @@ class ListingForm extends BaseListingForm {
 
     }
 
+    /**
+     * ListingForm::saveEmbeddedForms()
+     * 
+     * @param mixed $con
+     * @param mixed $forms
+     * @return
+     */
+    /**
+     * ListingForm::saveEmbeddedForms()
+     * 
+     * @param mixed $con
+     * @param mixed $forms
+     * @return
+     */
     public function saveEmbeddedForms($con = null, $forms = null) {
 
 

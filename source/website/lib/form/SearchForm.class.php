@@ -24,6 +24,11 @@ class SearchForm extends sfForm {
         1 => '1+',
         2 => '2+');
 
+    /**
+     * SearchForm::configure()
+     * 
+     * @return
+     */
     public function configure() {
 
         // order by name column for listing type
