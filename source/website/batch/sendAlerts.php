@@ -37,8 +37,16 @@ if (!empty($listings)) {
     //print_r($listings);
     // for each new listing do a query to see if any alerts match them
     foreach ($listings as $listing) {
-
-        $price = ($listing->getSaleDetailsId() == null) ? $listing->getRentDetails->getAmountMonthPrice() : $listing->getSaleDetails()->getAskingPrice();
+        
+        if ($listing->getSaleDetailsId() != null)
+        {
+            $price = $listing->getSaleDetails->getAskingPrice();
+        }
+        elseif ($listing->getRentDetailsId() != null)
+        {
+            $price = $listing->getRentDetails->getAmountMonthPrice();
+        }
+        
         $type = $listing->getListingTypeId();
         // get the module link that will be used in the email template for the notification
         $module = strtolower($listing->getListingType()->getName());
