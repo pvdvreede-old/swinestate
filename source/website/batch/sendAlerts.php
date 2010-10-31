@@ -40,11 +40,11 @@ if (!empty($listings)) {
         
         if ($listing->getSaleDetailsId() != null)
         {
-            $price = $listing->getSaleDetails->getAskingPrice();
+            $price = $listing->getSaleDetails()->getAskingPrice();
         }
         elseif ($listing->getRentDetailsId() != null)
         {
-            $price = $listing->getRentDetails->getAmountMonthPrice();
+            $price = $listing->getRentDetails()->getAmountMonthPrice();
         }
         
         $type = $listing->getListingTypeId();
@@ -88,7 +88,7 @@ if (!empty($listings)) {
                                     ->setFrom(sfConfig::get('app_from_email'))
                                     ->setTo($user->getEmailAddress())
                                     ->setSubject(sfConfig::get('app_app_name') . ' - Listing Alert Activated')
-                                    ->setBody(file_get_contents('alertEmail.php'));
+                                    ->setBody(file_get_contents(dirname(__FILE__).'/alertEmail.php'));
                     echo $user->getEmailAddress();
 
 
