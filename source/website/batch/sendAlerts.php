@@ -18,7 +18,7 @@ $configuration = ProjectConfiguration::getApplicationConfiguration(SF_APP, SF_EN
 sfContext::createInstance($configuration); //->dispatch();
 
 $instance = sfContext::getInstance();
-
+sfContext::getInstance()->getConfiguration()->loadHelpers(array('url', 'tag'));
 // get all the listings that are available for view from today
 $c = new Criteria();
 
@@ -37,16 +37,13 @@ if (!empty($listings)) {
     //print_r($listings);
     // for each new listing do a query to see if any alerts match them
     foreach ($listings as $listing) {
-        
-        if ($listing->getSaleDetailsId() != null)
-        {
+        echo 'Listings being checked: ' . $listing->getName();
+        if ($listing->getSaleDetailsId() != null) {
             $price = $listing->getSaleDetails()->getAskingPrice();
-        }
-        elseif ($listing->getRentDetailsId() != null)
-        {
+        } elseif ($listing->getRentDetailsId() != null) {
             $price = $listing->getRentDetails()->getAmountMonthPrice();
         }
-        
+
         $type = $listing->getListingTypeId();
         // get the module link that will be used in the email template for the notification
         $module = strtolower($listing->getListingType()->getName());
@@ -60,7 +57,7 @@ if (!empty($listings)) {
                 and listing.bathrooms = coalesce(alert.bathrooms, listing.bathrooms)
                 and listing.car_spaces = coalesce(alert.car_spaces, listing.car_spaces)
                 and suburb.postcode = coalesce(alert.postcode, suburb.postcode)
-                and suburb.name = coalesce(alert.suburb, suburb.name)
+                and suburb.name = coalesce(IF(LENGTH(TRIM(alert.suburb))=0,NULL,alert.suburb), suburb.name)
                 and listing.id = {$listing->getId()}
                 and alert.active = 1
 				";
@@ -73,22 +70,27 @@ if (!empty($listings)) {
 
             // for each alert get the user
             foreach ($alerts as $alert) {
-                echo $listing->getName().'     ';
-                echo $alert->getName();
-                
+
+                echo '  Alert being actioned: ' . $alert->getName();
+
                 $c = new Criteria();
-                
+
                 $c->add(sfGuardUserProfilePeer::USER_ID, $alert->getUserId());
-                
+
                 $user = sfGuardUserProfilePeer::doSelectOne($c);
                 try {
+
+                    // the text for the body of the email
+                    $emailContent = "<p>The alert " . $alert->getName() . " that you created has found a listing that matches its criteria. Click on the link below to be taken to the listing:</p> <p>" . link_to(url_for($module . '/show?id=' . $listing->getId()), $module . '/show?id=' . $listing->getId()) . "</p>";
+
+                    echo 'Email contents: ' . $emailContent;
                     // send that user an email
                     // send an email to the user with the details of the property and a link to it
                     $email = Swift_Message::newInstance()->setContentType('text/html')
                                     ->setFrom(sfConfig::get('app_from_email'))
                                     ->setTo($user->getEmailAddress())
                                     ->setSubject(sfConfig::get('app_app_name') . ' - Listing Alert Activated')
-                                    ->setBody(file_get_contents(dirname(__FILE__).'/alertEmail.php'));
+                                    ->setBody($emailContent);
                     echo $user->getEmailAddress();
 
 
