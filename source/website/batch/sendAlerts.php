@@ -9,7 +9,7 @@
 // call the symfony stuff to have access to the frame work
 define('SF_ROOT_DIR', realpath(dirname(__FILE__) . '/..'));
 define('SF_APP', 'frontend');
-define('SF_ENVIRONMENT', 'dev');
+define('SF_ENVIRONMENT', 'prod');
 define('SF_DEBUG', true);
 
 require_once(dirname(__FILE__) . '/../config/ProjectConfiguration.class.php');
@@ -18,7 +18,7 @@ $configuration = ProjectConfiguration::getApplicationConfiguration(SF_APP, SF_EN
 sfContext::createInstance($configuration); //->dispatch();
 
 $instance = sfContext::getInstance();
-sfContext::getInstance()->getConfiguration()->loadHelpers(array('url', 'tag'));
+sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url', 'Tag'));
 // get all the listings that are available for view from today
 $c = new Criteria();
 
